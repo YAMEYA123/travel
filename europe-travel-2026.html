@@ -634,23 +634,23 @@ const CL_ITEMS = [
   ]},
   // D1
   {day:'D1', date:'9/26 周六', label:'阿姆斯特丹 · 羊角村 + 安妮之家', items:[
-    {id:'cl_anne_frank', name:'安妮之家 19:00 场次', type:'🏛 景点', urgent:2, price:'€16.50/人', note:'旺季极易售罄，无法现场购票；必须在官网选 9/26 19:00 场', url:'https://www.annefrank.org/en/museum/tickets/', done:false},
-    {id:'cl_ic60403', name:'IC 60403 阿姆斯特丹→科隆（21:01）', type:'🚆 城际', urgent:1, price:'€19/人', note:'越早越便宜；nsinternational.com 购票', url:'https://www.nsinternational.com/en/train/amsterdam-cologne', done:false}
+    {id:'cl_anne_frank', name:'安妮之家 19:00 场次', type:'🏛 景点', urgent:2, price:'€16.50/人', note:'旺季极易售罄，无法现场购票；必须在官网选 9/26 19:00 场', url:'https://www.annefrank.org/en/museum/tickets/', done:false}
   ]},
   // D2
   {day:'D2', date:'9/27 周日', label:'阿姆斯特丹 · 博物馆广场 + 海尼根', items:[
     {id:'cl_vangogh', name:'梵高博物馆（09:15 场）', type:'🏛 景点', urgent:2, price:'€25/人', note:'不提前购票旺季现场几乎无票', url:'https://www.vangoghmuseum.nl/en/visit/tickets-and-opening-hours', done:false},
     {id:'cl_rijks', name:'国立博物馆（12:30 场）', type:'🏛 景点', urgent:2, price:'€21.50/人', note:'选 9/27 12:30 场次', url:'https://www.rijksmuseum.nl/en/buy-tickets', done:false},
-    {id:'cl_heineken', name:'海尼根体验馆', type:'🍺 景点', urgent:0, price:'€25/人', note:'建议提前选时段，旺季周日较热门', url:'https://www.heinekenexperience.com/en/tickets/', done:false}
+    {id:'cl_heineken', name:'海尼根体验馆', type:'🍺 景点', urgent:0, price:'€25/人', note:'建议提前选时段，旺季周日较热门', url:'https://www.heinekenexperience.com/en/tickets/', done:false},
+    {id:'cl_ic60403', name:'IC 60403 阿姆斯特丹→科隆（21:01→23:45）', type:'🚆 城际', urgent:1, price:'€19/人', note:'越早越便宜；nsinternational.com 购票', url:'https://www.nsinternational.com/en/train/amsterdam-cologne', done:false}
   ]},
   // D3
   {day:'D3', date:'9/28 周一', label:'科隆 · 大教堂 + 晚程出发', items:[
-    {id:'cl_ic2440', name:'IC 2440 科隆→曼海姆（18:53）', type:'🚆 城际', urgent:2, price:'约€6/人', note:'提前购票价更低；int.bahn.de', url:'https://int.bahn.de/en', done:false},
+    {id:'cl_ic2440', name:'IC 2440 科隆→曼海姆（18:53→21:21）', type:'🚆 城际', urgent:2, price:'约€6/人', note:'提前购票价更低；int.bahn.de', url:'https://int.bahn.de/en', done:false},
     {id:'cl_koeln_tower', name:'科隆大教堂南塔', type:'🏛 景点', urgent:0, price:'€8', note:'现场购票即可', url:'', done:false}
   ]},
   // D4
   {day:'D4', date:'9/29 周二', label:'曼海姆→慕尼黑 · 城市初探', items:[
-    {id:'cl_ice1091', name:'ICE 1091 曼海姆→慕尼黑（07:11）', type:'🚆 城际', urgent:2, price:'约€6/人', note:'与 IC 2440 分开购，提前锁定早班车', url:'https://int.bahn.de/en', done:false},
+    {id:'cl_ice1091', name:'ICE 1091 曼海姆→慕尼黑（07:11→10:10）', type:'🚆 城际', urgent:2, price:'约€6/人', note:'与 IC 2440 分开购，提前锁定早班车', url:'https://int.bahn.de/en', done:false},
     {id:'cl_deutsches', name:'德意志博物馆', type:'🏛 景点', urgent:0, price:'€16', note:'可现场购，建议提前避免排队', url:'https://www.deutsches-museum.de/en/visit/tickets', done:false},
     {id:'cl_residenz', name:'慕尼黑王宫', type:'🏛 景点', urgent:0, price:'€9', note:'可现场购', url:'https://www.residenz-muenchen.de/englisch/tourist/index.htm', done:false}
   ]},
@@ -673,7 +673,7 @@ const CL_ITEMS = [
   {day:'D8', date:'10/3 周六', label:'萨尔茨堡 · 全天游 + 晚程出发', items:[
     {id:'cl_fortress', name:'霍亨萨尔茨堡要塞', type:'🏰 景点', urgent:0, price:'€19.20', note:'萨尔茨堡卡含；单独购可官网或现场', url:'https://www.salzburg-burgen.at/en/hohensalzburg/', done:false},
     {id:'cl_mozart_birth', name:'莫扎特出生地', type:'🏛 景点', urgent:0, price:'€15', note:'现场购票即可', url:'https://mozarteum.at/en/mozarts-birthplace', done:false},
-    {id:'cl_westbahn', name:'ÖBB RJX19977 萨尔茨堡→维也纳（14:07）', type:'🚆 城际', urgent:2, price:'¥150起/人', note:'10/3 14:07发，16:32抵Wien Hbf，在 ÖBB 官网购票', url:'https://tickets.oebb.at/en/ticket', done:false}
+    {id:'cl_westbahn', name:'ÖBB RJX19977 萨尔茨堡→维也纳（14:07→16:32）', type:'🚆 城际', urgent:2, price:'¥150起/人', note:'10/3 14:07发，16:32抵Wien Hbf，在 ÖBB 官网购票', url:'https://tickets.oebb.at/en/ticket', done:false}
   ]},
   // D9
   {day:'D9', date:'10/4 周日', label:'维也纳 · 初日', items:[
