@@ -1401,7 +1401,9 @@ const DAYS=[
 // ═══════════════════════════════════
 // MAP
 // ═══════════════════════════════════
-const map=L.map('map',{zoomControl:true}).setView([49,10],5)
+let map=null, overviewLayer=null, dayLayer=null, openIdx=-1
+try {
+map=L.map('map',{zoomControl:true}).setView([49,10],5)
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
   attribution:'© OpenStreetMap © CARTO',maxZoom:19
 }).addTo(map)
@@ -1412,7 +1414,7 @@ const OVERVIEW=[
   {lat:48.140,lng:11.559,c:'#3B82F6',l:'MUC'},{lat:47.809,lng:13.055,c:'#10B981',l:'SZG'},
   {lat:48.208,lng:16.374,c:'#10B981',l:'VIE'},
 ]
-const overviewLayer=L.layerGroup()
+overviewLayer=L.layerGroup()
 OVERVIEW.forEach(v=>{
   L.marker([v.lat,v.lng],{icon:L.divIcon({className:'',html:`<div class="cm" style="background:${v.c}">${v.l}</div>`,iconSize:[28,28],iconAnchor:[14,14]})})
     .addTo(overviewLayer)
@@ -1423,15 +1425,17 @@ L.polyline([[52.374,4.900],[50.942,6.958],[48.140,11.559],[47.809,13.055],[48.20
   {color:'#94A3B8',weight:2,dashArray:'6,4',opacity:.5}).addTo(map)
 
 // Day route layer
-const dayLayer=L.layerGroup().addTo(map)
-let openIdx=-1
+dayLayer=L.layerGroup().addTo(map)
+} catch(e) { console.warn('Leaflet init failed:',e) }
 
 function clearDayRoute(){
+  if(!map) return
   dayLayer.clearLayers()
   document.getElementById('mapInfo').classList.remove('show')
 }
 
 function drawDayRoute(idx){
+  if(!map) return
   const day=DAYS[idx]
   const pts=day.acts.filter(a=>a.lat)
   if(!pts.length) return
