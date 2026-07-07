@@ -616,7 +616,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
     <!-- 汇总卡 -->
     <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;box-shadow:0 1px 6px rgba(0,0,0,.06)">
       <div style="font-weight:700;font-size:.9rem;margin-bottom:12px">📊 费用汇总</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
         <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 12px;text-align:center">
           <div style="font-size:.7rem;color:#DC2626;font-weight:600;margin-bottom:4px">必买项合计</div>
           <div id="bd-sum-must" style="font-size:1.1rem;font-weight:800;color:#DC2626">¥0</div>
@@ -631,6 +631,18 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
           <div style="font-size:.7rem;color:#059669;font-weight:600;margin-bottom:4px">当前勾选合计</div>
           <div id="bd-sum-checked" style="font-size:1.1rem;font-weight:800;color:#059669">¥0</div>
           <div id="bd-sum-checked-pp" style="font-size:.7rem;color:#64748B;margin-top:2px">¥0/人</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:10px 12px;text-align:center">
+          <div style="font-size:.7rem;color:#C2410C;font-weight:600;margin-bottom:4px">🎫 景点类（已勾）</div>
+          <div id="bd-sum-attraction" style="font-size:1.1rem;font-weight:800;color:#C2410C">¥0</div>
+          <div id="bd-sum-attraction-pp" style="font-size:.7rem;color:#64748B;margin-top:2px">¥0/人</div>
+        </div>
+        <div style="background:#F5F3FF;border:1px solid #DDD6FE;border-radius:8px;padding:10px 12px;text-align:center">
+          <div style="font-size:.7rem;color:#7C3AED;font-weight:600;margin-bottom:4px">🚆 交通类（已勾）</div>
+          <div id="bd-sum-transport" style="font-size:1.1rem;font-weight:800;color:#7C3AED">¥0</div>
+          <div id="bd-sum-transport-pp" style="font-size:.7rem;color:#64748B;margin-top:2px">¥0/人</div>
         </div>
       </div>
       <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:7px;padding:9px 12px;font-size:.73rem;color:#78350F;line-height:1.8">
@@ -1703,7 +1715,7 @@ function updateBudget(){
   const n=getPeople(),rate=getRate()
   const hd=document.getElementById('bd-total-hd')
   if(hd) hd.textContent=n+'人合计(¥)'
-  let sumAll=0,sumMust=0,sumRec=0
+  let sumAll=0,sumMust=0,sumRec=0,sumAttr=0,sumTrans=0
 
   COST_ITEMS.forEach(item=>{
     const cb=document.querySelector(`.bd-check[data-id="${item.id}"]`)
@@ -1713,7 +1725,11 @@ function updateBudget(){
     const total=priceCNY*n
     row.querySelector('.bd-total').textContent='¥'+(total).toFixed(0)
     row.style.opacity=cb.checked?'1':'.4'
-    if(cb.checked) sumAll+=total
+    if(cb.checked){
+      sumAll+=total
+      if(item.cat.includes('景点')) sumAttr+=total
+      if(item.cat.includes('铁路')||item.cat.includes('交通')) sumTrans+=total
+    }
     if(item.type===0) sumMust+=priceCNY
     if(item.type<=1) sumRec+=priceCNY
   })
@@ -1724,6 +1740,10 @@ function updateBudget(){
   document.getElementById('bd-sum-must-pp').textContent='¥'+(sumMust).toFixed(0)
   document.getElementById('bd-sum-rec').textContent='¥'+(sumRec*n).toFixed(0)
   document.getElementById('bd-sum-rec-pp').textContent='¥'+(sumRec).toFixed(0)
+  document.getElementById('bd-sum-attraction').textContent='¥'+(sumAttr).toFixed(0)
+  document.getElementById('bd-sum-attraction-pp').textContent='¥'+(sumAttr/n).toFixed(0)+'/人'
+  document.getElementById('bd-sum-transport').textContent='¥'+(sumTrans).toFixed(0)
+  document.getElementById('bd-sum-transport-pp').textContent='¥'+(sumTrans/n).toFixed(0)+'/人'
 }
 
 function bdSetAll(maxType){
