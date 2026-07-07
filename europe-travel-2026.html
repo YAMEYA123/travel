@@ -410,8 +410,8 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       </div>
 
       <div>
-        <div style="font-weight:600;font-size:.82rem">4. D8 萨尔茨堡行程极满 + 当晚需赶 Westbahn 18:52</div>
-        <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">要塞→午饭→莫扎特故居→米拉贝尔宫→格特雷德街→晚饭→18:52 Westbahn，全程无缓冲。任一环节超时将产生连锁压力。建议提前在 westbahn.at 购票锁定座位，避免现场抢票。</div>
+        <div style="font-weight:600;font-size:.82rem">4. D8 萨尔茨堡上午需赶 RJX19977 14:07，13:45前须到站</div>
+        <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">要塞09:00→大教堂/彼得墓地11:30→午饭12:10→取行李13:15→14:07 RJX19977出发。午饭后无缓冲，Stiftskeller用餐须控制在1小时内，建议提前在 ÖBB 购票。</div>
       </div>
     </div>
 
@@ -475,7 +475,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
         🔴 <b>立刻</b>：新天鹅堡门票预订（选定 9/30 <b>10:30</b> 场次）<br>
         🔴 <b>确认</b>：D5（9/30 周三）购买普通来回票，非 Bayern Ticket<br>
         🟠 <b>尽快</b>：萨尔茨堡酒店选定并预订（靠近中央站或老城）<br>
-        🟠 <b>尽快</b>：Westbahn 萨尔茨堡→Hütteldorf 10/3 18:52 在 westbahn.at 购票<br>
+        🟠 <b>尽快</b>：ÖBB RJX19977 萨尔茨堡→维也纳火车总站 10/3 14:07 在 ÖBB 购票<br>
         🟡 <b>行前</b>：D6 退房后先到慕尼黑 Hbf 寄存行李，12:09 前取回上车
       </div>
     </div>
@@ -572,11 +572,11 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 ↔ 菲森（新天鹅堡）来回</td><td style="padding:5px 8px;text-align:right">约€32</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 → 萨尔茨堡（ICE 1215，10/1 12:09）</td><td style="padding:5px 8px;text-align:right">€6.99</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">萨尔茨堡 → 哈尔施塔特往返<br><span style="font-size:.65rem;color:#94A3B8">经Attnang-Puchheim换乘；站在湖对岸，另需渡船约€4来回</span></td><td style="padding:5px 8px;text-align:right">约€24</td></tr>
-        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">萨尔茨堡 → 维也纳 Hütteldorf（Westbahn，10/3 18:52）</td><td style="padding:5px 8px;text-align:right">€15/人（约¥117）</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">萨尔茨堡 → 维也纳（RJX19977，10/3 14:07）</td><td style="padding:5px 8px;text-align:right">¥150起/人</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px;font-weight:600">单独买票合计/人</td><td style="padding:5px 8px;text-align:right;font-weight:600;color:#166534">约 €105–115</td></tr>
         <tr><td style="padding:5px 8px;color:#B45309">Eurail/Interrail 3国通票</td><td style="padding:5px 8px;text-align:right;color:#B45309">约 €280–350 ❌</td></tr>
       </table>
-      <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 越早购票越便宜；萨尔茨堡→维也纳选 Westbahn 18:52→Hütteldorf（21:14），直乘U4到酒店无需换乘，在 westbahn.at 购票，含座位预订</div>
+      <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 越早购票越便宜；萨尔茨堡→维也纳选 ÖBB RJX19977 14:07→16:32 Wien Hbf（维也纳火车总站），在 ÖBB 官网购票</div>
     </div>
 
     <!-- 汇总 -->
@@ -673,7 +673,7 @@ const CL_ITEMS = [
   {day:'D8', date:'10/3 周六', label:'萨尔茨堡 · 全天游 + 晚程出发', items:[
     {id:'cl_fortress', name:'霍亨萨尔茨堡要塞', type:'🏰 景点', urgent:0, price:'€19.20', note:'萨尔茨堡卡含；单独购可官网或现场', url:'https://www.salzburg-burgen.at/en/hohensalzburg/', done:false},
     {id:'cl_mozart_birth', name:'莫扎特出生地', type:'🏛 景点', urgent:0, price:'€15', note:'现场购票即可', url:'https://mozarteum.at/en/mozarts-birthplace', done:false},
-    {id:'cl_westbahn', name:'Westbahn 萨尔茨堡→Hütteldorf（18:52）', type:'🚆 城际', urgent:2, price:'€15/人', note:'行程最紧的一天，务必提前在 westbahn.at 锁定座位', url:'https://westbahn.at/en/', done:false}
+    {id:'cl_westbahn', name:'ÖBB RJX19977 萨尔茨堡→维也纳（14:07）', type:'🚆 城际', urgent:2, price:'¥150起/人', note:'10/3 14:07发，16:32抵Wien Hbf，在 ÖBB 官网购票', url:'https://tickets.oebb.at/en/ticket', done:false}
   ]},
   // D9
   {day:'D9', date:'10/4 周日', label:'维也纳 · 初日', items:[
@@ -1277,7 +1277,7 @@ const DAYS=[
   ]
 },
 {
-  num:8, date:'10月3日 周六', title:'萨尔茨堡精华游', color:'#10B981',
+  num:8, date:'10月3日 周六', title:'萨尔茨堡上午游 + 下午抵维也纳', color:'#10B981',
   hotel:'今晚前往维也纳 → DoubleTree by Hilton Vienna Schönbrunn',
   hotelLat:48.1822, hotelLng:16.3283, hotelName:'DoubleTree by Hilton Vienna Schönbrunn',
   center:[47.800, 13.047], zoom:15,
@@ -1287,41 +1287,36 @@ const DAYS=[
       desc:'🕘 每日09:00–17:00（10月）。缆车上山（含票€19.20），王子厅+魔法剧场+城墙全景，预留2–2.5小时',
       book:{text:'购票（建议提前）',cls:'book-btn opt',
         url:'https://www.salzburg-burgen.at/en/hohensalzburg/', price:'€19.20', mustBook:false}},
-    {n:'萨尔茨堡大教堂', en:'Salzburg Cathedral', time:'11:30',
+    {n:'萨尔茨堡大教堂 + 彼得墓地', en:'Salzburg Cathedral + Petersfriedhof', time:'11:30',
       lat:47.7983, lng:13.0472,
       transport:'🚠 缆车下山→步行2min', tcls:'tr-walk',
-      desc:'🕘 每日08:00–19:00，免费。从要塞下山步行2分钟即达，巴洛克穹顶壮观，快看约20–30min'},
-    {n:'Stiftskeller St. Peter 午饭', en:'Stiftskeller St. Peter', time:'12:00',
+      desc:'大教堂免费快看20min，出门右转即彼得修道院墓地（免费，《音乐之声》取景地），合计约30–40min'},
+    {n:'Stiftskeller St. Peter 午饭', en:'Stiftskeller St. Peter', time:'12:10',
       lat:47.7975, lng:13.0460,
       transport:'🚶 步行1min', tcls:'tr-walk',
-      desc:'要塞山脚修道院餐厅，全球现存最古老餐厅之一，建议提前查座位'},
-    {n:'彼得修道院墓地', en:'Petersfriedhof', time:'13:00–13:20',
-      lat:47.7974, lng:13.0464,
-      transport:'🚶 步行1min', tcls:'tr-walk',
-      desc:'欧洲保存最完整的中世纪修道院墓地，Stiftskeller出门右转即入口，免费。约15分钟，石龛小礼拜堂嵌于悬崖岩壁，《音乐之声》取景地，氛围静谧'},
-    {n:'莫扎特故居（出生地）', en:"Mozart's Birthplace", time:'13:30', key:true,
-      lat:47.7994, lng:13.0444,
-      transport:'🚶 步行5min', tcls:'tr-walk',
-      desc:'🕘 每日09:00–17:30。格特雷德街9号，三层展示，预留1小时',
-      book:{text:'购票（Getreidegasse 9）',cls:'book-btn opt',
-        url:'https://mozarteum.at/en/mozarts-birthplace', price:'€15', mustBook:false}},
-    {n:'格特雷德街 + 大学广场', en:'Getreidegasse + Universitätsplatz', time:'14:30',
-      lat:47.7990, lng:13.0435,
-      transport:'🚶 步行即达', tcls:'tr-walk',
-      desc:'老城购物街漫步、纪念品、咖啡，大学广场周六有露天市集'},
-    {n:'轻食晚饭 + 前往中央站', time:'17:00',
+      desc:'要塞山脚修道院餐厅，全球现存最古老餐厅之一，约1小时用餐'},
+    {n:'取行李 → 前往中央站', time:'13:15',
       lat:47.8127, lng:13.0451,
       transport:'🚶 步行约15min', tcls:'tr-walk',
-      desc:'附近随意吃，17:30前到中央站取行李，18:52出发留足时间'},
-    {n:'Westbahn → 维也纳Hütteldorf', en:'Salzburg → Wien Hütteldorf (Westbahn)', time:'18:52', key:true,
+      desc:'酒店取寄存行李，步行或打车至萨尔茨堡中央站，13:45前到站充裕'},
+    {n:'RJX19977 → 维也纳火车总站', en:'Salzburg Hbf → Wien Hbf (RJX19977)', time:'14:07', key:true,
       lat:47.8127, lng:13.0451,
-      transport:'🚆 Westbahn 约2h22min', tcls:'tr-train',
-      desc:'18:52出发，21:14抵达Wien Hütteldorf（U4西端终点站）。比西站班次早8min，含座位预订，准点率约88%，¥117≈€15/人，在westbahn.at购票',
-      book:{text:'购买10/3 Westbahn票',cls:'book-btn warn',
-        url:'https://westbahn.at/en/', price:'¥117≈€15/人', mustBook:true}},
-    {n:'抵达Hütteldorf → U4 → 入住', en:'Wien Hütteldorf → U4 → Hotel', time:'21:14', key:true,
-      lat:48.1933, lng:16.2683,
-      desc:'下车即U4东向，2站到Schönbrunn站，步行约750m到酒店，全程约20min无需换乘'},
+      transport:'🚆 RJX 约2h25min', tcls:'tr-train',
+      desc:'14:07出发，16:32抵达Wien Hbf（维也纳火车总站）。ÖBB Railjet，直达无换乘',
+      book:{text:'购买10/3 ÖBB RJX票',cls:'book-btn warn',
+        url:'https://tickets.oebb.at/en/ticket', price:'¥150起/人', mustBook:true}},
+    {n:'抵达Wien Hbf → 入住酒店', en:'Wien Hbf → Hotel via U4', time:'16:32', key:true,
+      lat:48.1822, lng:16.3283,
+      transport:'🚇 U1→Karlsplatz→U4→Schönbrunn 约25min', tcls:'tr-metro',
+      desc:'Wien Hbf乘U1至Karlsplatz换U4，到Schönbrunn站步行750m到酒店，办理入住'},
+    {n:'美泉宫花园傍晚漫步', en:'Schönbrunn Palace Gardens', time:'18:00',
+      lat:48.1845, lng:16.3122,
+      transport:'🚶 酒店步行5min', tcls:'tr-walk',
+      desc:'🕘 花园全年免费开放至日落。凯旋门、海神喷泉、宫殿外立面金色夕阳光，约1小时轻松漫步，为明早宫殿参观做预热'},
+    {n:'Schönbrunn区晚饭', time:'19:30',
+      lat:48.1845, lng:16.3140,
+      transport:'🚶 步行5min', tcls:'tr-walk',
+      desc:'推荐宫殿附近的 Café Residenz im Schloss Schönbrunn 或 Meixner's Gastwirtschaft，传统维也纳菜'},
   ]
 },
 {
@@ -1593,10 +1588,10 @@ const BOOKINGS=[
     price:'€6.99/人', url:'https://int.bahn.de/en',
     urlText:'ÖBB购票（10/1）'},
   {id:'szg-vie', pri:1, cat:'城际火车',
-    date:'10月3日（周六）18:52出发', name:'萨尔茨堡 → 维也纳 Hütteldorf（Westbahn）',
-    note:'Westbahn，18:52出发→21:14抵达Wien Hütteldorf（U4终点），直乘U4 2站到Schönbrunn，约20min到酒店',
-    price:'¥117≈€15/人', url:'https://westbahn.at/en/',
-    urlText:'Westbahn购票（10/3）'},
+    date:'10月3日（周六）14:07出发', name:'萨尔茨堡 → 维也纳（RJX19977）',
+    note:'ÖBB RJX19977，14:07出发→16:32抵达Wien Hbf（维也纳火车总站），乘U1→U4约25min到酒店',
+    price:'¥150起/人', url:'https://tickets.oebb.at/en/ticket',
+    urlText:'ÖBB购票（10/3）'},
   {id:'anne-frank', pri:2, cat:'景点门票',
     date:'9月26日（周六）19:00场次', name:'安妮之家',
     note:'每周二10:00开放6周后的票，选19:00或20:00晚间场次',
@@ -1872,7 +1867,7 @@ const COST_ITEMS=[
   {id:'b06',cat:'🚆 城际铁路',name:'慕尼黑 ↔ 菲森来回（新天鹅堡）',date:'9/30',price:32,cur:'EUR',type:0,note:'⚠️ 须买普通来回票，非Bayern Ticket（07:00出发不适用）'},
   {id:'b07',cat:'🚆 城际铁路',name:'慕尼黑 → 萨尔茨堡',date:'10/1',price:6.99,cur:'EUR',type:0,note:'DB/ÖBB，12:09出发'},
   {id:'b08',cat:'🚆 城际铁路',name:'萨尔茨堡 ↔ 哈尔施塔特往返',date:'10/2',price:20,cur:'EUR',type:0,note:'ÖBB火车+渡船，约€20/人'},
-  {id:'b09',cat:'🚆 城际铁路',name:'萨尔茨堡 → 维也纳 Westbahn',date:'10/3',price:117,cur:'CNY',type:0,note:'18:52出发，westbahn.at，含座位'},
+  {id:'b09',cat:'🚆 城际铁路',name:'萨尔茨堡 → 维也纳 RJX19977',date:'10/3',price:150,cur:'CNY',type:0,note:'14:07出发，ÖBB官网购票'},
   // ── 景点门票 ──
   {id:'b10',cat:'🎫 景点门票',name:'安妮之家',date:'9/26',price:16.50,cur:'EUR',type:0,note:'须提前预约场次（选19:00），不可现场购'},
   {id:'b11',cat:'🎫 景点门票',name:'梵高博物馆',date:'9/27',price:25,cur:'EUR',type:0,note:'必须网上购，无现场票'},
