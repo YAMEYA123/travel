@@ -151,6 +151,14 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
   .nav-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .nav-tabs::-webkit-scrollbar{display:none}
   .tab-btn{padding:6px 11px;font-size:.73rem;flex-shrink:0}
+  /* ── 侧边栏字体缩小 ── */
+  .acc-title strong{font-size:.78rem}
+  .acc-title span{font-size:.64rem}
+  .act-name{font-size:.75rem}
+  .act-desc{font-size:.66rem}
+  .act-time{font-size:.62rem}
+  .act-en{font-size:.61rem}
+  .hotel-pill{font-size:.67rem}
 }
 @media(max-width:480px){
   .bi-table th:nth-child(4),
@@ -745,6 +753,11 @@ function setAllAcc(open){
     if(open) h.classList.add('open')
     else h.classList.remove('open')
   })
+  // 清掉 click handler 写入的内联 display 样式，让 CSS 类规则生效
+  document.querySelectorAll('.acc-body').forEach(b=>{
+    b.style.display = open ? 'block' : 'none'
+  })
+  if(!open) openIdx=-1
 }
 
 // ── Tab switch ──
