@@ -26,8 +26,8 @@ header p{font-size:.72rem;opacity:.6;margin-top:1px}
 .dl-btn:hover{opacity:.85}
 
 /* ── Nav tabs ── */
-.nav-tabs{display:flex;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;z-index:999;overflow-x:auto}
-.tab-btn{padding:9px 16px;border:none;background:none;font-size:.8rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s}
+.nav-tabs{display:flex;flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;z-index:999}
+.tab-btn{padding:7px 13px;border:none;background:none;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s}
 .tab-btn.active{color:#1E293B;border-bottom-color:#3B82F6}
 .tab-btn:hover:not(.active){background:#F8FAFC}
 
@@ -167,6 +167,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
   <button class="tab-btn" onclick="switchTab('risk',this)">⚠️ 风险清单</button>
   <button class="tab-btn" onclick="switchTab('tickets',this)">🎫 交通票攻略</button>
   <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
+  <button class="tab-btn" onclick="switchTab('budget',this)">💰 费用总览</button>
 </div>
 
 <!-- TAB 1: Map -->
@@ -229,7 +230,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       <tr><td class="bi-zh">新天鹅堡</td><td class="bi-en">Neuschwanstein Castle</td><td><span class="bi-tag">景点</span></td><td>须提前购票</td></tr>
       <tr><td class="bi-zh">菲森</td><td class="bi-en">Füssen</td><td><span class="bi-tag">小镇</span></td><td>最近城镇</td></tr>
       <tr><td class="bi-zh">玛丽安桥</td><td class="bi-en">Marienbrücke</td><td><span class="bi-tag">景点</span></td><td>俯瞰城堡最佳</td></tr>
-      <tr><td class="bi-zh">巴伐利亚一日票</td><td class="bi-en">Bayern Ticket</td><td><span class="bi-tag">交通</span></td><td>€34全天区域车（工作日09:00后有效，D5不适用）</td></tr>
+      <tr><td class="bi-zh">巴伐利亚一日票</td><td class="bi-en">Bayern Ticket</td><td><span class="bi-tag">交通</span></td><td>€34全天区域车（工作日09:00后有效，D6不适用）</td></tr>
       <tr><td class="bi-zh">德国铁路</td><td class="bi-en">Deutsche Bahn (DB)</td><td><span class="bi-tag">交通</span></td><td>int.bahn.de</td></tr>
       </table>
     </div>
@@ -369,12 +370,12 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       </div>
 
       <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
-        <div style="font-weight:600;font-size:.82rem">2. 新天鹅堡（D5）门票须提前预订</div>
+        <div style="font-weight:600;font-size:.82rem">2. 新天鹅堡（D6）门票须提前预订</div>
         <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">旺季现场排队 2–3 小时甚至无票，必须提前在官网选定入场时间段。9/30 是旺季热门日期，建议至少提前 2–4 周购票。</div>
       </div>
 
       <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
-        <div style="font-weight:600;font-size:.82rem">3. D5 Bayern Ticket 不适用 07:00 出发（周三工作日）</div>
+        <div style="font-weight:600;font-size:.82rem">3. D6 Bayern Ticket 不适用 07:00 出发（周三工作日）</div>
         <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">Bayern Ticket 工作日从 09:00 起才生效，07:00 的慕尼黑→菲森列车需购普通来回票（约 €32/人），切勿刷 Bayern Ticket 上车，会被补票罚款。</div>
       </div>
 
@@ -398,7 +399,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       </div>
 
       <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
-        <div style="font-weight:600;font-size:.82rem">7. D5 啤酒节：新天鹅堡后体力消耗大</div>
+        <div style="font-weight:600;font-size:.82rem">7. D6 啤酒节：新天鹅堡后体力消耗大</div>
         <div style="font-size:.75rem;color:#78350F;margin-top:3px">D5 全天爬山徒步后晚上去啤酒节，体力要求较高。帐篷座位通常需提前半年预约，walk-in 几乎没座位，以站饮体验为主。若太累可临时放弃，啤酒节免票入场无损失。</div>
       </div>
 
@@ -427,11 +428,6 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       </div>
 
       <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
-        <div style="font-weight:600;font-size:.82rem">11. D3（9/27）取行李至上车仅45分钟缓冲</div>
-        <div style="font-size:.75rem;color:#14532D;margin-top:3px">20:15从水坝广场步行至中央站取寄存行李，IC 60403 于21:01出发，中间仅约45分钟。中央站寄存柜通常位于地下层，初次找柜需留余量。建议20:00即出发前往中央站，留足60min更稳妥。IC列车无需登机式check-in，找到月台即可上车。</div>
-      </div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
         <div style="font-weight:600;font-size:.82rem">12. D10 机场时间缓冲约 3 小时</div>
         <div style="font-size:.75rem;color:#14532D;margin-top:3px">15:00 从美泉宫出发，U1→S7 约 40 分钟，约 15:45 到 VIE 机场，19:00 国际航班提前 3 小时到场基本够用。若行李多或地铁延误需留意，可改乘 CAT 快轨（16 分钟，€12）更保险。</div>
       </div>
@@ -446,8 +442,8 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">✅ 优先处理清单</div>
       <div style="font-size:.75rem;line-height:1.9">
         🔴 <b>立刻</b>：安妮之家 9/26 19:00 场次预约<br>
-        🔴 <b>立刻</b>：新天鹅堡门票预订（选定 9/30 入场时间段）<br>
-        🔴 <b>确认</b>：D5（9/30 周三）购买普通来回票，非 Bayern Ticket<br>
+        🔴 <b>立刻</b>：新天鹅堡门票预订（选定 9/30 <b>10:30</b> 场次）<br>
+        🔴 <b>确认</b>：D6（9/30 周三）购买普通来回票，非 Bayern Ticket<br>
         🟠 <b>尽快</b>：萨尔茨堡酒店选定并预订（靠近中央站或老城）<br>
         🟠 <b>尽快</b>：Westbahn 萨尔茨堡→Hütteldorf 10/3 18:52 在 westbahn.at 购票<br>
         🟡 <b>行前</b>：D7 退房后先到慕尼黑 Hbf 寄存行李，12:09 前取回上车
@@ -493,9 +489,9 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🇩🇪 慕尼黑 — MVV 单日票，按需买</div>
       <table style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#DBEAFE"><th style="padding:5px 8px;text-align:left">票种</th><th style="padding:5px 8px;text-align:left">价格</th><th style="padding:5px 8px;text-align:left">适用</th></tr>
-        <tr style="border-bottom:1px solid #BFDBFE"><td style="padding:5px 8px"><b>MVV 内区日票</b> Tageskarte Innenraum</td><td style="padding:5px 8px"><b>€9.20</b></td><td style="padding:5px 8px;color:#166534">✅ D4（行李寄存+城市游+晚上取行李）、D5（新天鹅堡返程+啤酒节）各买一张；D6直接退房去车站，无需MVV</td></tr>
+        <tr style="border-bottom:1px solid #BFDBFE"><td style="padding:5px 8px"><b>MVV 内区日票</b> Tageskarte Innenraum</td><td style="padding:5px 8px"><b>€9.20</b></td><td style="padding:5px 8px;color:#166534">✅ D5（行李寄存+城市游+晚上取行李）、D6（新天鹅堡返程+啤酒节）各买一张；D7直接退房去车站，无需MVV</td></tr>
         <tr style="border-bottom:1px solid #BFDBFE"><td style="padding:5px 8px">MVV 内区单程</td><td style="padding:5px 8px">€3.90</td><td style="padding:5px 8px;color:#92400E">仅乘1–2次时用，4次以上日票更省</td></tr>
-        <tr><td style="padding:5px 8px">Bayern Ticket</td><td style="padding:5px 8px">€29+</td><td style="padding:5px 8px;color:#B45309">❌ D5 工作日07:00出发不适用；本行程其余日程无需要</td></tr>
+        <tr><td style="padding:5px 8px">Bayern Ticket</td><td style="padding:5px 8px">€29+</td><td style="padding:5px 8px;color:#B45309">❌ D6 工作日07:00出发不适用；本行程其余日程无需要</td></tr>
       </table>
       <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 慕尼黑 U/S-Bahn 支持感应刷银行卡上车；日票可在 MVV App 或车站自动机购买</div>
     </div>
@@ -561,12 +557,87 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">阿姆斯特丹 D0–D2</td><td style="padding:5px 8px">感应刷卡上车，博物馆单独购票</td><td style="padding:5px 8px;text-align:right">—</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">科隆 D2–D3</td><td style="padding:5px 8px">步行为主，无需交通卡</td><td style="padding:5px 8px;text-align:right">—</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 D4</td><td style="padding:5px 8px">MVV 内区日票</td><td style="padding:5px 8px;text-align:right">€9.20</td></tr>
-        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 D5</td><td style="padding:5px 8px">慕尼黑↔菲森普通来回票</td><td style="padding:5px 8px;text-align:right">约€32</td></tr>
-        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 D6</td><td style="padding:5px 8px">退房→Hbf寄存→12:09出发，无需MVV</td><td style="padding:5px 8px;text-align:right">—</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 D6</td><td style="padding:5px 8px">慕尼黑↔菲森普通来回票</td><td style="padding:5px 8px;text-align:right">约€32</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 D7</td><td style="padding:5px 8px">退房→Hbf寄存→12:09出发，无需MVV</td><td style="padding:5px 8px;text-align:right">—</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px" colspan="2"><b style="color:#059669">⭐ 萨尔茨堡 D8</b> — 萨尔茨堡卡 24h（D8 早激活）</td><td style="padding:5px 8px;text-align:right;color:#059669"><b>€35</b></td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">维也纳 D9</td><td style="padding:5px 8px">24h 无限公交票</td><td style="padding:5px 8px;text-align:right">€8</td></tr>
         <tr><td style="padding:5px 8px">维也纳 D10</td><td style="padding:5px 8px">单程票（退房→机场）</td><td style="padding:5px 8px;text-align:right">约€5</td></tr>
       </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- TAB 8: Budget -->
+<div class="tab-content" id="tab-budget">
+  <div style="overflow-y:auto;flex:1;padding:14px 16px">
+
+    <!-- 控制条 -->
+    <div style="position:sticky;top:0;z-index:10;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.08);display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-weight:700;font-size:.82rem">👥 人数</span>
+        <select id="bd-people" onchange="updateBudget()" style="padding:4px 10px;border:1px solid #CBD5E1;border-radius:6px;font-size:.82rem;font-weight:600;cursor:pointer">
+          <option value="1">1人</option>
+          <option value="2" selected>2人</option>
+          <option value="3">3人</option>
+          <option value="4">4人</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-weight:700;font-size:.82rem">💱 €1 = ¥</span>
+        <input id="bd-rate" type="number" value="8.1" step="0.1" oninput="updateBudget()"
+          style="width:68px;padding:4px 8px;border:1px solid #CBD5E1;border-radius:6px;font-size:.82rem;font-weight:600">
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <button onclick="bdSetAll(0)" style="padding:3px 10px;border:1px solid #CBD5E1;border-radius:5px;font-size:.72rem;cursor:pointer;background:#fff">仅必买</button>
+        <button onclick="bdSetAll(1)" style="padding:3px 10px;border:1px solid #CBD5E1;border-radius:5px;font-size:.72rem;cursor:pointer;background:#fff">必买+建议</button>
+        <button onclick="bdSetAll(2)" style="padding:3px 10px;border:1px solid #CBD5E1;border-radius:5px;font-size:.72rem;cursor:pointer;background:#fff">全选</button>
+      </div>
+    </div>
+
+    <!-- 明细表 -->
+    <div style="border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.08);margin-bottom:16px">
+      <table style="width:100%;border-collapse:collapse;font-size:.8rem">
+        <thead>
+          <tr style="background:#334155;color:#fff">
+            <th style="padding:7px 8px;width:28px"></th>
+            <th style="padding:7px 12px;text-align:left">项目</th>
+            <th style="padding:7px 8px;white-space:nowrap">日期</th>
+            <th style="padding:7px 8px">类型</th>
+            <th style="padding:7px 8px;white-space:nowrap;text-align:right">单价/人</th>
+            <th style="padding:7px 8px;white-space:nowrap;text-align:right" id="bd-total-hd">N人合计(¥)</th>
+          </tr>
+        </thead>
+        <tbody id="bd-tbody" style="background:#fff">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 汇总卡 -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;box-shadow:0 1px 6px rgba(0,0,0,.06)">
+      <div style="font-weight:700;font-size:.9rem;margin-bottom:12px">📊 费用汇总</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+        <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 12px;text-align:center">
+          <div style="font-size:.7rem;color:#DC2626;font-weight:600;margin-bottom:4px">必买项合计</div>
+          <div id="bd-sum-must" style="font-size:1.1rem;font-weight:800;color:#DC2626">¥0</div>
+          <div id="bd-sum-must-pp" style="font-size:.7rem;color:#64748B;margin-top:2px">¥0/人</div>
+        </div>
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 12px;text-align:center">
+          <div style="font-size:.7rem;color:#1D4ED8;font-weight:600;margin-bottom:4px">必买+建议合计</div>
+          <div id="bd-sum-rec" style="font-size:1.1rem;font-weight:800;color:#1D4ED8">¥0</div>
+          <div id="bd-sum-rec-pp" style="font-size:.7rem;color:#64748B;margin-top:2px">¥0/人</div>
+        </div>
+        <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:10px 12px;text-align:center">
+          <div style="font-size:.7rem;color:#059669;font-weight:600;margin-bottom:4px">当前勾选合计</div>
+          <div id="bd-sum-checked" style="font-size:1.1rem;font-weight:800;color:#059669">¥0</div>
+          <div id="bd-sum-checked-pp" style="font-size:.7rem;color:#64748B;margin-top:2px">¥0/人</div>
+        </div>
+      </div>
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:7px;padding:9px 12px;font-size:.73rem;color:#78350F;line-height:1.8">
+        ⚠️ <b>仅含本表列出的交通票+景点票+城市交通</b>，不含住宿、餐饮、购物、行李等费用<br>
+        💡 <b>萨尔茨堡卡（€35）</b> 已涵盖霍亨萨尔茨堡要塞+莫扎特故居+城市公交，比单买省约€15——买了卡请取消勾选那两个单独门票项<br>
+        💡 欧元汇率随时波动，实际结算以购汇时为准
+      </div>
     </div>
 
   </div>
@@ -578,10 +649,10 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
 
     <!-- Header -->
     <div style="background:linear-gradient(135deg,#EEF2FF,#F0FDF4);border:1px solid #C7D2FE;border-radius:10px;padding:14px 16px;margin-bottom:14px">
-      <div style="font-weight:700;font-size:.95rem;margin-bottom:6px">🛂 申根签证材料清单</div>
+      <div style="font-weight:700;font-size:.95rem;margin-bottom:6px">🛂 德国申根签证材料清单（C类/短期）</div>
       <div style="font-size:.78rem;color:#1E293B;line-height:1.9">
-        行程首入境荷兰，荷兰2晚、德国4晚、奥地利4晚。德奥停留天数相同，以<b>首入境国（荷兰）</b>为主申国。<br>
-        需通过 <b>VFS Global 荷兰签证中心</b>递交申请（北京/上海/广州/成都均可）。<br>
+        停留分布：荷兰 <b>2晚</b>、德国 <b>4晚</b>、奥地利 <b>4晚</b>。德奥并列最多，取<b>最先入境的那个</b>→ 德国（9/27首入境）为主申国。<br>
+        ✅ 需向 <b>VFS Global 德国签证中心</b> 递交申请（北京/上海/广州/成都/重庆/武汉均有）。<br>
         ✅ 签证最早可提前<b>6个月</b>递交；建议<b>出发前6–8周</b>（即2026年8月上旬）递交，给足处理时间。
       </div>
     </div>
@@ -612,8 +683,8 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
         📅 <b>建议递交窗口</b>：2026年8月1日–8月15日（出发前6–8周，避开暑期旺季积压）<br>
         📅 <b>最晚递交日</b>：2026年9月10日（出发前15天，极限）<br>
         ⏳ 正常处理时长 <b>10–15个工作日</b>，旺季建议留足4周<br>
-        🔗 VFS预约：<a href="https://www.vfsglobal.com/Netherlands/China/" target="_blank" style="color:#4F46E5;font-weight:600">vfsglobal.com/Netherlands/China</a><br>
-        🔗 荷兰签证须知：<a href="https://www.netherlandsworldwide.nl/visa-the-netherlands/schengen-visa" target="_blank" style="color:#4F46E5">netherlandsworldwide.nl</a>
+        🔗 VFS德国预约：<a href="https://www.vfsglobal.com/Germany/China/" target="_blank" style="color:#4F46E5;font-weight:600">vfsglobal.com/Germany/China</a><br>
+        🔗 德国驻华大使馆签证须知：<a href="https://china.diplo.de/cn-zh/service/visa-einreise/schengenvisumkurzaufenthalt" target="_blank" style="color:#4F46E5">china.diplo.de</a>
       </div>
     </div>
 
@@ -718,6 +789,10 @@ const DAYS=[
       desc:'🕘 每日09:00–17:00。重点：《夜巡》《倒牛奶的女仆》，约2.5小时从容游览',
       book:{text:'选9月27日 12:30场次',cls:'book-btn warn',
         url:'https://www.rijksmuseum.nl/en/buy-tickets', price:'€21.50', mustBook:true}},
+    {n:'辛格运河花卉市场（顺路）', en:'Bloemenmarkt', time:'15:00–15:10',
+      lat:52.3641, lng:4.8910,
+      transport:'🚶 步行12min至海尼根', tcls:'tr-walk',
+      desc:'荷兰最著名水上花卉市场，从博物馆广场步行至海尼根途中自然经过，停留10分钟拍照留念即可。每日09:00–17:30，免费参观'},
     {n:'海尼根体验馆', en:'Heineken Experience', time:'15:15–16:45', key:true,
       lat:52.3578, lng:4.8913,
       transport:'🚶 步行10min', tcls:'tr-walk',
@@ -768,11 +843,15 @@ const DAYS=[
       lat:50.9334, lng:6.9617,
       transport:'🚶 步行15min沿莱茵河', tcls:'tr-walk',
       desc:'🕘 周一10:00–18:00。世界著名巧克力博物馆，有真实巧克力喷泉，非常值得。€15'},
-    {n:'霍亨索伦大桥爱情锁', en:'Hohenzollern Bridge', time:'15:45–16:30',
+    {n:'莱茵河港 Rheinauhafen 起重机大楼', en:'Rheinauhafen Kranhäuser', time:'15:30–16:00',
+      lat:50.9295, lng:6.9630,
+      transport:'🚶 沿莱茵河步行5min', tcls:'tr-walk',
+      desc:'三栋标志性「倒L形」起重机大楼，科隆最上镜的现代建筑。巧克力博物馆出来沿河往南步行5分钟即到，顺路不绕行，最佳拍照角度面朝莱茵河'},
+    {n:'霍亨索伦大桥爱情锁', en:'Hohenzollern Bridge', time:'16:00–16:45',
       lat:50.9419, lng:6.9659,
-      transport:'🚶 步行10min', tcls:'tr-walk',
+      transport:'🚶 步行15min沿河北行', tcls:'tr-walk',
       desc:'莱茵河铁路大桥，数百万把爱情锁，河景开阔'},
-    {n:'老城区 / Schildergasse', en:'Altstadt', time:'16:30–18:00',
+    {n:'老城区 / Schildergasse', en:'Altstadt', time:'16:45–18:00',
       lat:50.9386, lng:6.9575,
       transport:'🚶 步行10min', tcls:'tr-walk',
       desc:'步行商业街购物或咖啡馆小坐，轻松收尾'},
@@ -835,9 +914,14 @@ const DAYS=[
       lat:48.1374, lng:11.5755,
       transport:'🚇 U3/U6至Marienplatz 约10min', tcls:'tr-metro',
       desc:'17:00整点场（3–10月有此场次）。顺路步行2min可进⛪ 圣母教堂（Frauenkirche），免费，10–15min'},
-    {n:'晚饭 + 办理入住', time:'18:00',
+    {n:'⭐ 霍夫啤酒屋晚饭', en:'Hofbräuhaus München', time:'17:30', key:true,
+      lat:48.1376, lng:11.5799,
+      transport:'🚶 步行2min', tcls:'tr-walk',
+      desc:'慕尼黑最著名皇家啤酒屋（1589年，皇家御用酒厂），玛利亚广场步行2分钟。🍺 无需预约，周二晚直接进入，一楼大厅（Schwemme）找空位共坐即可。正值啤酒节期间稍忙，17:30前入座更容易；Masskrug 1L啤酒+烤猪肘必点'},
+    {n:'回中央站取行李 → 入住酒店', time:'19:30',
       lat:48.1075, lng:11.5180,
-      desc:'市中心晚饭后取行李入住Holiday Inn München Süd，明日07:00早起新天鹅堡'},
+      transport:'🚇 U3/U6 约20min', tcls:'tr-metro',
+      desc:'步行回中央站取寄存行李，乘U3/U6至Aidenbachstraße站，步行5min到Holiday Inn München Süd，明日07:00早起新天鹅堡'},
   ]
 },
 {
@@ -856,24 +940,24 @@ const DAYS=[
       lat:47.5710, lng:10.7013,
       transport:'🚌 73/78路 约10min', tcls:'tr-bus',
       desc:'约€3，或打车€15'},
-    {n:'新天鹅堡参观', en:'Neuschwanstein Castle', time:'09:30', key:true,
+    {n:'新天鹅堡参观', en:'Neuschwanstein Castle', time:'10:30', key:true,
       lat:47.5576, lng:10.7498,
-      desc:'🕘 每日09:00–18:00（最晚入场17:00），11月–3月10:00–16:00。步行上山约30–40min，凭码进场，预留2小时',
-      book:{text:'🔴 提前预订门票（9/30）',cls:'book-btn warn',
+      desc:'🕘 每日09:00–18:00（最晚入场17:00），11月–3月10:00–16:00。步行上山约30–40min，凭码进场，预留2小时。07:00出发09:10到菲森，乘公交09:20到Hohenschwangau，步行/马车上山，10:30入场时间缓冲充裕',
+      book:{text:'🔴 提前预订10:30场次门票（9/30）',cls:'book-btn warn',
         url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau', price:'€23.50', mustBook:true}},
-    {n:'玛丽安桥全景', en:'Marienbrücke', time:'11:30', key:true,
+    {n:'玛丽安桥全景', en:'Marienbrücke', time:'12:30', key:true,
       lat:47.5579, lng:10.7508,
       transport:'🚶 步行5min', tcls:'tr-walk',
       desc:'俯瞰城堡全景最佳观景点'},
-    {n:'菲森小镇午饭', en:'Füssen Altstadt', time:'13:00',
+    {n:'菲森小镇午饭', en:'Füssen Altstadt', time:'13:30',
       lat:47.5710, lng:10.7013,
       transport:'🚶 步行下山30min', tcls:'tr-walk',
       desc:'中世纪老城，顺道看高天鹅堡外观'},
-    {n:'返回慕尼黑', time:'15:30',
+    {n:'返回慕尼黑', time:'16:00',
       lat:48.1402, lng:11.5585,
       transport:'🚆 约2h', tcls:'tr-train',
-      desc:'普通来回票含返程，约17:30抵达慕尼黑，稍作休息换装'},
-    {n:'⭐ 啤酒节 Oktoberfest', en:'Oktoberfest – Theresienwiese', time:'19:00', key:true,
+      desc:'普通来回票含返程，约18:00抵达慕尼黑，稍作休息换装'},
+    {n:'⭐ 啤酒节 Oktoberfest', en:'Oktoberfest – Theresienwiese', time:'19:30', key:true,
       lat:48.1316, lng:11.5497,
       transport:'🚇 U4/U5至Theresienwiese 约10min', tcls:'tr-metro',
       desc:'🕘 帐篷22:30停止入场，23:30关闭。新天鹅堡归来后的晚场气氛最热烈，选Hofbräu / Augustiner帐篷，量力而行',
@@ -919,11 +1003,17 @@ const DAYS=[
       lat:47.8010, lng:13.0455,
       transport:'🚶 步行', tcls:'tr-walk',
       desc:'取行李办理入住，放好行李轻装出发'},
-    {n:'米拉贝尔宫花园', en:'Mirabell Gardens', time:'16:30',
+    {n:'米拉贝尔宫花园', en:'Mirabell Gardens', time:'16:30–17:00',
       lat:47.8054, lng:13.0438,
       transport:'🚶 步行约10min', tcls:'tr-walk',
       desc:'🕘 花园全天开放免费。从车站/酒店步行顺路，《音乐之声》do-re-mi台阶取景地，傍晚光线柔和，认路好选择'},
-    {n:'萨尔扎赫河畔 + 晚饭', en:'Salzach Riverside', time:'17:30',
+    {n:'莫扎特故居 Wohnhaus（成年居所）', en:"Mozart's Residence – Wohnhaus", time:'17:00–17:30', key:true,
+      lat:47.8063, lng:13.0435,
+      transport:'🚶 步行2min', tcls:'tr-walk',
+      desc:'🕘 每日09:00–17:30，最晚17:00入场。马卡特广场8号，与米拉贝尔宫紧邻。莫扎特17岁后居住于此，陈列比出生地更丰富。⚠️ 16:55前务必抵达；萨尔茨堡卡含此项，与出生地合并票€20更划算',
+      book:{text:'官网购票 / 萨尔茨堡卡含',cls:'book-btn opt',
+        url:'https://mozarteum.at/en/mozarts-residence', price:'€13', mustBook:false}},
+    {n:'萨尔扎赫河畔 + 晚饭', en:'Salzach Riverside', time:'18:00',
       lat:47.8000, lng:13.0455,
       transport:'🚶 步行约15min', tcls:'tr-walk',
       desc:'沿河散步看对岸老城轮廓，找一家河畔餐厅吃晚饭，明早08:30出发哈尔施塔特'},
@@ -983,7 +1073,11 @@ const DAYS=[
       lat:47.7975, lng:13.0460,
       transport:'🚶 步行1min', tcls:'tr-walk',
       desc:'要塞山脚修道院餐厅，全球现存最古老餐厅之一，建议提前查座位'},
-    {n:'莫扎特故居', en:"Mozart's Birthplace", time:'13:30', key:true,
+    {n:'彼得修道院墓地', en:'Petersfriedhof', time:'13:00–13:20',
+      lat:47.7974, lng:13.0464,
+      transport:'🚶 步行1min', tcls:'tr-walk',
+      desc:'欧洲保存最完整的中世纪修道院墓地，Stiftskeller出门右转即入口，免费。约15分钟，石龛小礼拜堂嵌于悬崖岩壁，《音乐之声》取景地，氛围静谧'},
+    {n:'莫扎特故居（出生地）', en:"Mozart's Birthplace", time:'13:30', key:true,
       lat:47.7994, lng:13.0444,
       transport:'🚶 步行5min', tcls:'tr-walk',
       desc:'🕘 每日09:00–17:30。格特雷德街9号，三层展示，预留1小时',
@@ -1024,6 +1118,12 @@ const DAYS=[
       lat:48.2101, lng:16.3651,
       transport:'🚶 步行10min', tcls:'tr-walk',
       desc:'🕘 周一–六08:00–22:00，周日10:00–22:00。维也纳百年咖啡馆，拱廊大厅经典体验，午市无需预订'},
+    {n:'⭐ 霍夫堡宫 茜茜公主博物馆', en:'Hofburg – Sisi Museum & Imperial Apartments', time:'13:30–14:30', key:true,
+      lat:48.2065, lng:16.3643,
+      transport:'🚶 步行3min', tcls:'tr-walk',
+      desc:'🕘 每日09:00–17:30（最晚入场17:00）。茜茜公主博物馆+皇家寝宫+皇家银器室三合一，哈布斯堡王朝核心宫殿。Café Central用餐后步行3分钟即达，预留1小时。与KHM相邻，无缝衔接',
+      book:{text:'官网购票',cls:'book-btn opt',
+        url:'https://www.hofburg-wien.at/en/visit/tickets-prices', price:'€18', mustBook:false}},
     {n:'艺术史博物馆', en:'Kunsthistorisches Museum (KHM)', time:'14:30', key:true,
       lat:48.2036, lng:16.3611,
       transport:'🚶 步行15min', tcls:'tr-walk',
@@ -1429,7 +1529,7 @@ updateProgress()
 // ═══════════════════════════════════
 const SCHENGEN_SECTIONS=[
   {cat:'📋 申请表格及护照', color:'#4338CA', bg:'#EEF2FF', border:'#C7D2FE', items:[
-    {id:'sz01', must:true,  name:'申根签证申请表（荷兰）', note:'全部字段手写或打印填写，本人亲笔签字。可在VFS官网下载最新版'},
+    {id:'sz01', must:true,  name:'申根签证申请表（德国）', note:'全部字段手写或打印填写，本人亲笔签字。可在VFS德国官网下载最新版，或递交时在VFS取表填写'},
     {id:'sz02', must:true,  name:'有效护照原件 + 首页复印件', note:'有效期须至2027年1月5日以上（航班后≥6个月），至少2页空白页；提供彩色复印件1份'},
     {id:'sz03', must:false, name:'旧护照（如有）', note:'提供全本彩色复印件，包含所有签证页和出入境记录页'},
     {id:'sz04', must:true,  name:'身份证正反面复印件', note:'A4纸打印，与护照姓名一致'},
@@ -1441,7 +1541,7 @@ const SCHENGEN_SECTIONS=[
     {id:'sz06', must:true,  name:'详细行程计划', note:'本攻略打印版或正式信函，含每日城市、住宿地址、主要景点。体现荷2晚→德4晚→奥4晚的停留分布'},
     {id:'sz07', must:true,  name:'往返机票订单（已确认）', note:'须为正式预订确认单PDF（含航班号、日期、乘客姓名），截图或查询页面通常不被接受'},
     {id:'sz08', must:true,  name:'全程酒店预订确认单（6处）', note:'阿姆斯特丹2晚、科隆1晚、曼海姆1晚、慕尼黑2晚、萨尔茨堡2晚、维也纳2晚。每份须含姓名+日期+地址'},
-    {id:'sz09', must:false, name:'停留天数说明附信', note:'简要说明：荷兰2晚（9/25–9/27）、德国4晚（9/27–10/1）、奥地利4晚（10/1–10/5），申请荷兰签证原因'},
+    {id:'sz09', must:false, name:'停留天数说明附信', note:'简要说明：荷兰2晚（9/25–9/27）、德国4晚（9/27–10/1）、奥地利4晚（10/1–10/5），德奥并列最多以德国为主申国，并说明首入境荷兰的原因（航班安排）'},
   ]},
   {cat:'🛡️ 旅行保险', color:'#4338CA', bg:'#EEF2FF', border:'#C7D2FE', items:[
     {id:'sz10', must:true, name:'申根旅行保险（必须）', note:'保额≥€30,000，覆盖9月25日–10月5日全程，涵盖所有申根国，须含医疗救援+遣返。推荐：众安/太平洋/平安旅游险（购前确认含「申根签证专用」条款，可开保单英文版）'},
@@ -1463,8 +1563,8 @@ const SCHENGEN_SECTIONS=[
     {id:'sz20', must:false, name:'结婚证/离婚证复印件（如适用）', note:'已婚随行则双方各自准备完整申请材料；单人申请无需提供'},
   ]},
   {cat:'📬 递交及费用', color:'#4338CA', bg:'#EEF2FF', border:'#C7D2FE', items:[
-    {id:'sz21', must:true,  name:'提前预约VFS Global递交窗口', note:'vfsglobal.com/Netherlands/China 预约就近城市（北京/上海/广州/成都/重庆等），旺季窗口紧张，尽早预约'},
-    {id:'sz22', must:true,  name:'签证申请费准备', note:'荷兰申根签证费€90（约¥730–760），VFS中心现场人民币支付；另收VFS服务费约¥200/人'},
+    {id:'sz21', must:true,  name:'提前预约VFS Global德国签证中心', note:'vfsglobal.com/Germany/China 预约就近城市（北京/上海/广州/成都/重庆/武汉等），旺季窗口紧张，尽早预约'},
+    {id:'sz22', must:true,  name:'签证申请费准备', note:'德国申根签证费€80（约¥640–680），VFS中心现场人民币支付；另收VFS服务费约¥200/人'},
     {id:'sz23', must:true,  name:'材料整理装订', note:'按VFS要求顺序排列，原件+复印件各一份。用回形针分类（勿钉书钉），装入透明文件袋'},
     {id:'sz24', must:false, name:'自留备份扫描件', note:'所有材料各自扫描或拍照备份，便于补件、面签或材料丢失时补救'},
   ]},
@@ -1534,6 +1634,147 @@ SCHENGEN_SECTIONS.forEach(section=>{
 })
 
 updateSZProgress()
+
+// ═══════════════════════════════════
+// BUDGET / COST OVERVIEW
+// ═══════════════════════════════════
+// type: 0=必买  1=建议  2=可选
+// cur: 'EUR' | 'CNY'
+const COST_ITEMS=[
+  // ── 城际铁路 ──
+  {id:'b01',cat:'🚆 城际铁路',name:'史基浦机场 → 阿姆斯特丹中央站',date:'9/25',price:5.50,cur:'EUR',type:0,note:'NS火车，刷卡上车'},
+  {id:'b02',cat:'🚆 城际铁路',name:'阿姆斯特丹 → 斯滕韦克来回（羊角村）',date:'9/26',price:20,cur:'EUR',type:0,note:'NS国铁，约€20往返/人'},
+  {id:'b03',cat:'🚆 城际铁路',name:'阿姆斯特丹 → 科隆 IC 60403',date:'9/27',price:151,cur:'CNY',type:0,note:'21:01直达，nsinternational.com'},
+  {id:'b04',cat:'🚆 城际铁路',name:'科隆 → 曼海姆 IC 2440',date:'9/28',price:44,cur:'CNY',type:0,note:'18:53出发，DB购票'},
+  {id:'b05',cat:'🚆 城际铁路',name:'曼海姆 → 慕尼黑 ICE 1091',date:'9/29',price:44,cur:'CNY',type:0,note:'07:11出发，DB购票'},
+  {id:'b06',cat:'🚆 城际铁路',name:'慕尼黑 ↔ 菲森来回（新天鹅堡）',date:'9/30',price:32,cur:'EUR',type:0,note:'⚠️ 须买普通来回票，非Bayern Ticket（07:00出发不适用）'},
+  {id:'b07',cat:'🚆 城际铁路',name:'慕尼黑 → 萨尔茨堡',date:'10/1',price:6.99,cur:'EUR',type:0,note:'DB/ÖBB，12:09出发'},
+  {id:'b08',cat:'🚆 城际铁路',name:'萨尔茨堡 ↔ 哈尔施塔特往返',date:'10/2',price:20,cur:'EUR',type:0,note:'ÖBB火车+渡船，约€20/人'},
+  {id:'b09',cat:'🚆 城际铁路',name:'萨尔茨堡 → 维也纳 Westbahn',date:'10/3',price:117,cur:'CNY',type:0,note:'18:52出发，westbahn.at，含座位'},
+  // ── 景点门票 ──
+  {id:'b10',cat:'🎫 景点门票',name:'安妮之家',date:'9/26',price:16.50,cur:'EUR',type:0,note:'须提前预约场次（选19:00），不可现场购'},
+  {id:'b11',cat:'🎫 景点门票',name:'梵高博物馆',date:'9/27',price:25,cur:'EUR',type:0,note:'必须网上购，无现场票'},
+  {id:'b12',cat:'🎫 景点门票',name:'国立博物馆 Rijksmuseum',date:'9/27',price:21.50,cur:'EUR',type:0,note:'选12:15时段票'},
+  {id:'b13',cat:'🎫 景点门票',name:'海尼根体验馆',date:'9/27',price:25,cur:'EUR',type:1,note:'建议提前选时段，周日10:30–19:30'},
+  {id:'b14',cat:'🎫 景点门票',name:'科隆 南塔登顶',date:'9/28',price:8,cur:'EUR',type:1,note:'533级台阶，莱茵河全景'},
+  {id:'b15',cat:'🎫 景点门票',name:'科隆 巧克力博物馆',date:'9/28',price:15,cur:'EUR',type:1,note:'周一10:00–18:00'},
+  {id:'b16',cat:'🎫 景点门票',name:'德意志博物馆',date:'9/29',price:16,cur:'EUR',type:1,note:'世界最大科技馆，现场可购'},
+  {id:'b17',cat:'🎫 景点门票',name:'慕尼黑皇宫',date:'9/29',price:9,cur:'EUR',type:1,note:'含宝库，现场可购'},
+  {id:'b18',cat:'🎫 景点门票',name:'新天鹅堡',date:'9/30',price:23.50,cur:'EUR',type:0,note:'⚠️ 旺季极易售罄，必须提前网购时段票'},
+  {id:'b19',cat:'🎫 景点门票',name:'茨威格中心',date:'10/1',price:5,cur:'EUR',type:2,note:'周四14:00–16:00'},
+  {id:'b20',cat:'🎫 景点门票',name:'霍亨萨尔茨堡要塞（含缆车）',date:'10/3',price:19.20,cur:'EUR',type:0,note:'萨尔茨堡卡包含此项，二选一'},
+  {id:'b21',cat:'🎫 景点门票',name:'莫扎特故居（出生地）',date:'10/3',price:15,cur:'EUR',type:1,note:'萨尔茨堡卡包含此项，二选一'},
+  {id:'b21b',cat:'🎫 景点门票',name:'莫扎特故居 Wohnhaus（成年居所）',date:'10/1',price:13,cur:'EUR',type:1,note:'Makartplatz 8，与出生地不同，萨尔茨堡卡含此项，与出生地合票€20'},
+  {id:'b22',cat:'🎫 景点门票',name:'美景宫上宫 Belvedere',date:'10/4',price:16,cur:'EUR',type:0,note:'克里姆特《吻》真迹'},
+  {id:'b23',cat:'🎫 景点门票',name:'艺术史博物馆 KHM',date:'10/4',price:21,cur:'EUR',type:0,note:'拉斐尔/伦勃朗/维米尔'},
+  {id:'b23b',cat:'🎫 景点门票',name:'霍夫堡宫 茜茜公主博物馆',date:'10/4',price:18,cur:'EUR',type:1,note:'Sisi Museum+皇家寝宫+银器室三合一，KHM旁边步行3min'},
+  {id:'b24',cat:'🎫 景点门票',name:'美泉宫 Schönbrunn',date:'10/5',price:28,cur:'EUR',type:0,note:'含国事厅，提前购'},
+  {id:'b25',cat:'🎫 景点门票',name:'哈尔施塔特 骨骸礼拜堂',date:'10/2',price:1.50,cur:'EUR',type:2,note:'Beinhaus，中世纪骷髅装饰，现场购'},
+  {id:'b26',cat:'🎫 景点门票',name:'哈尔施塔特 盐矿缆车',date:'10/2',price:18,cur:'EUR',type:2,note:'可选，俯瞰全湖，10月09:00–16:30'},
+  // ── 城市交通 ──
+  {id:'b27',cat:'🚇 城市交通',name:'慕尼黑 MVV 内区日票',date:'9/29',price:9.20,cur:'EUR',type:0,note:'单日城市公交，中央站购'},
+  {id:'b28',cat:'🚇 城市交通',name:'萨尔茨堡卡 24h',date:'10/3',price:35,cur:'EUR',type:0,note:'⭐ D8激活，含要塞+莫扎特故居+公交，比单买省钱'},
+  {id:'b29',cat:'🚇 城市交通',name:'维也纳 24h 无限公交票',date:'10/4',price:8,cur:'EUR',type:0,note:'D9全天U-Bahn畅行'},
+  {id:'b30',cat:'🚇 城市交通',name:'维也纳机场 S7 单程',date:'10/5',price:5,cur:'EUR',type:0,note:'U1→S7约€5；CAT快轨€12仅16min'},
+]
+
+const TYPE_CFG=[
+  {label:'必买',bg:'#FEE2E2',color:'#DC2626'},
+  {label:'建议',bg:'#DBEAFE',color:'#1D4ED8'},
+  {label:'可选',bg:'#F0FDF4',color:'#166534'},
+]
+
+const savedBudget=JSON.parse(localStorage.getItem('budget_2026')||'{}')
+
+function getPeople(){return parseInt(document.getElementById('bd-people').value)||2}
+function getRate(){return parseFloat(document.getElementById('bd-rate').value)||8.1}
+
+function toCNY(item,rate){
+  return item.cur==='EUR'?item.price*rate:item.price
+}
+
+function updateBudget(){
+  let totalCNY=0,mustCNY=0,optCNY=0
+  document.querySelectorAll('.bd-check').forEach(cb=>{
+    savedBudget[cb.dataset.id]=cb.checked
+  })
+  localStorage.setItem('budget_2026',JSON.stringify(savedBudget))
+
+  const n=getPeople(),rate=getRate()
+  const hd=document.getElementById('bd-total-hd')
+  if(hd) hd.textContent=n+'人合计(¥)'
+  let sumAll=0,sumMust=0,sumRec=0
+
+  COST_ITEMS.forEach(item=>{
+    const cb=document.querySelector(`.bd-check[data-id="${item.id}"]`)
+    const row=document.querySelector(`.bd-row[data-id="${item.id}"]`)
+    if(!cb||!row) return
+    const priceCNY=toCNY(item,rate)
+    const total=priceCNY*n
+    row.querySelector('.bd-total').textContent='¥'+(total).toFixed(0)
+    row.style.opacity=cb.checked?'1':'.4'
+    if(cb.checked) sumAll+=total
+    if(item.type===0) sumMust+=priceCNY
+    if(item.type<=1) sumRec+=priceCNY
+  })
+
+  document.getElementById('bd-sum-checked').textContent='¥'+(sumAll).toFixed(0)
+  document.getElementById('bd-sum-checked-pp').textContent='¥'+(sumAll/n).toFixed(0)
+  document.getElementById('bd-sum-must').textContent='¥'+(sumMust*n).toFixed(0)
+  document.getElementById('bd-sum-must-pp').textContent='¥'+(sumMust).toFixed(0)
+  document.getElementById('bd-sum-rec').textContent='¥'+(sumRec*n).toFixed(0)
+  document.getElementById('bd-sum-rec-pp').textContent='¥'+(sumRec).toFixed(0)
+}
+
+function bdSetAll(maxType){
+  document.querySelectorAll('.bd-check').forEach(cb=>{
+    const item=COST_ITEMS.find(i=>i.id===cb.dataset.id)
+    if(item) cb.checked=item.type<=maxType
+  })
+  updateBudget()
+}
+
+function buildBudgetTable(){
+  const tbody=document.getElementById('bd-tbody')
+  let lastCat=''
+  COST_ITEMS.forEach((item,i)=>{
+    if(item.cat!==lastCat){
+      lastCat=item.cat
+      const tr=document.createElement('tr')
+      tr.innerHTML=`<td colspan="6" style="background:#1E293B;color:#fff;padding:6px 12px;font-size:.75rem;font-weight:700">${item.cat}</td>`
+      tbody.appendChild(tr)
+    }
+    const isChecked = item.id in savedBudget ? savedBudget[item.id] : item.type<=1
+    const cfg=TYPE_CFG[item.type]
+    const priceStr=item.cur==='EUR'?`€${item.price}`:`¥${item.price}`
+    const tr=document.createElement('tr')
+    tr.className='bd-row'
+    tr.dataset.id=item.id
+    tr.style.cssText='transition:opacity .15s'
+    tr.innerHTML=`
+      <td style="padding:5px 8px;text-align:center;width:28px">
+        <input type="checkbox" class="bd-check" data-id="${item.id}"
+          style="width:15px;height:15px;cursor:pointer;accent-color:#3B82F6"
+          ${isChecked?'checked':''}>
+      </td>
+      <td style="padding:5px 8px">
+        <div style="font-weight:600;font-size:.8rem">${item.name}</div>
+        <div style="font-size:.68rem;color:#94A3B8;margin-top:1px">${item.note}</div>
+      </td>
+      <td style="padding:5px 8px;font-size:.75rem;color:#64748B;white-space:nowrap">${item.date}</td>
+      <td style="padding:5px 8px;text-align:center">
+        <span style="font-size:.68rem;padding:1px 7px;border-radius:4px;background:${cfg.bg};color:${cfg.color};font-weight:600">${cfg.label}</span>
+      </td>
+      <td style="padding:5px 8px;font-size:.8rem;font-weight:600;color:#1E293B;white-space:nowrap;text-align:right">${priceStr}/人</td>
+      <td class="bd-total" style="padding:5px 8px;font-size:.8rem;font-weight:700;color:#059669;white-space:nowrap;text-align:right">¥0</td>
+    `
+    tr.querySelector('.bd-check').addEventListener('change',updateBudget)
+    tbody.appendChild(tr)
+  })
+  updateBudget()
+}
+
+buildBudgetTable()
 </script>
 </body>
 </html>
