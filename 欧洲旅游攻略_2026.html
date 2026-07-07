@@ -411,12 +411,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       <div style="font-weight:700;font-size:.9rem;color:#166534;margin-bottom:10px">🟡 低风险 — 注意即可</div>
 
       <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
-        <div style="font-weight:600;font-size:.82rem">10. D2 双博物馆 + 当天赶科隆，时间偏紧</div>
-        <div style="font-size:.75rem;color:#14532D;margin-top:3px">梵高博物馆 + 国立博物馆各约 2–2.5 小时，若 10:00 开始，看完约 14:30–15:00，再打包行李坐 3 小时车到科隆。可控，但博物馆内不能磨蹭。</div>
-      </div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
-        <div style="font-weight:600;font-size:.82rem">11. D3/D4 曼海姆中转晚点风险</div>
+        <div style="font-weight:600;font-size:.82rem">10. D3/D4 曼海姆中转晚点风险</div>
         <div style="font-size:.75rem;color:#14532D;margin-top:3px">D3 IC 2440 科隆→曼海姆和 D4 ICE 1091 曼海姆→慕尼黑分开购票，两程独立，无换乘风险。ICE 晚点率约 20–30%，大多在 15 分钟内。D4 曼海姆 07:11 出发，若晚点仍可赶上 10:10 前后抵慕尼黑，对行程影响有限。</div>
       </div>
 
@@ -638,27 +633,49 @@ const DAYS=[
   ]
 },
 {
-  num:2, date:'9月27日 周日', title:'两大博物馆 → 出发科隆', color:'#F97316',
+  num:2, date:'9月27日 周日', title:'博物馆 + 海尼根 → 夜车科隆', color:'#F97316',
   hotel:'✅ Hilton Cologne（Marzellenstraße 13-17，大教堂旁100m）',
   hotelLat:50.9434, hotelLng:6.9590, hotelName:'Hilton Cologne（Marzellenstraße 13-17）',
-  center:[51.65, 5.92], zoom:7,
+  center:[52.36, 4.89], zoom:13,
   acts:[
+    {n:'退房 + 行李存中央站寄存柜', time:'08:30',
+      lat:52.3791, lng:4.9003,
+      transport:'🚋 电车/地铁 约20min', tcls:'tr-tram',
+      desc:'先至中央站存行李（€7–9/格），全天轻装游览，晚间取包直接上车'},
     {n:'梵高博物馆', en:'Van Gogh Museum', time:'09:15–11:45', key:true,
       lat:52.3584, lng:4.8811,
       transport:'🚶 步行15min 或 🚋 电车2/5号', tcls:'tr-walk',
       desc:'🕘 每日09:00–17:00，周五至21:00。预留2.5小时；向日葵、自画像、卧室。现场无票须提前购',
       book:{text:'预购门票（9月27日）',cls:'book-btn warn',
         url:'https://www.vangoghmuseum.nl/en/visit/tickets-and-opening-hours', price:'€25', mustBook:true}},
-    {n:'国立博物馆', en:'Rijksmuseum', time:'12:15–14:30', key:true,
+    {n:'国立博物馆', en:'Rijksmuseum', time:'12:15–15:00', key:true,
       lat:52.3600, lng:4.8852,
       transport:'🚶 步行30秒', tcls:'tr-walk',
-      desc:'🕘 每日09:00–17:00。重点：《夜巡》《倒牛奶的女仆》，约2小时',
+      desc:'🕘 每日09:00–17:00。重点：《夜巡》《倒牛奶的女仆》，约2.5小时从容游览',
       book:{text:'选9月27日 12:30场次',cls:'book-btn warn',
         url:'https://www.rijksmuseum.nl/en/buy-tickets', price:'€21.50', mustBook:true}},
-    {n:'退房取行李 → 中央站', time:'15:30',
+    {n:'海尼根体验馆', en:'Heineken Experience', time:'15:15–16:45', key:true,
+      lat:52.3578, lng:4.8913,
+      transport:'🚶 步行10min', tcls:'tr-walk',
+      desc:'🕘 周日10:30–19:30。品牌历史+沉浸式酿造体验+品尝，约1.5h。强烈推荐，提前购票选时段',
+      book:{text:'预购海尼根体验馆门票',cls:'book-btn',
+        url:'https://www.heinekenexperience.com/en/tickets/', price:'€25', mustBook:false}},
+    {n:'Jordaan区运河漫步', en:'Jordaan / De 9 Straatjes', time:'17:00–18:30',
+      lat:52.3737, lng:4.8796,
+      transport:'🚶 步行15min', tcls:'tr-walk',
+      desc:'精品小店、运河边咖啡馆，阿姆斯特丹最美运河街景'},
+    {n:'晚餐 Jordaan', time:'18:30–19:00',
+      lat:52.3740, lng:4.8830,
+      desc:'Jordaan区随意一家，步行5min即到安妮之家'},
+    {n:'安妮之家', en:'Anne Frank House', time:'19:00', key:true,
+      lat:52.3752, lng:4.8840,
+      desc:'🕘 每日09:00–22:00（最晚入场21:00）。晚间场次避开人流，氛围更佳',
+      book:{text:'立即预约（选9/27 19:00场）',cls:'book-btn warn',
+        url:'https://www.annefrank.org/en/museum/tickets/', price:'€16.50', mustBook:true}},
+    {n:'取行李 → 阿姆斯特丹中央站', time:'20:30',
       lat:52.3791, lng:4.9003,
-      transport:'🚶 步行20min', tcls:'tr-walk',
-      desc:'步行或打车至阿姆斯特丹中央站'},
+      transport:'🚶 步行15min', tcls:'tr-walk',
+      desc:'安妮之家步行至中央站，取寄存行李，预留30min候车'},
     {n:'IC 60403 → 科隆', en:'Amsterdam → Köln (IC 60403)', time:'21:01', key:true,
       lat:52.3791, lng:4.9003,
       transport:'🚆 IC 60403 直达 约2h44min', tcls:'tr-train',
@@ -668,13 +685,6 @@ const DAYS=[
     {n:'抵达科隆中央站', en:'Köln Hauptbahnhof', time:'23:45', key:true,
       lat:50.9429, lng:6.9579,
       desc:'步行2分钟入住酒店'},
-    {n:'科隆大教堂夜景', en:'Kölner Dom', time:'19:30',
-      lat:50.9413, lng:6.9583,
-      transport:'🚶 步行1min', tcls:'tr-walk',
-      desc:'灯光亮至约23:00，震撼'},
-    {n:'莱茵河畔晚饭', time:'20:30',
-      lat:50.9419, lng:6.9659,
-      desc:'尝科隆本地啤酒 Kölsch'},
   ]
 },
 {
