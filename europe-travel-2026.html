@@ -187,6 +187,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
   <button class="tab-btn" onclick="switchTab('booking',this)">📋 待预约 <span id="badge-todo" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
   <button class="tab-btn" onclick="switchTab('risk',this)">⚠️ 风险清单</button>
   <button class="tab-btn" onclick="switchTab('tickets',this)">🎫 交通票攻略</button>
+  <button class="tab-btn" onclick="switchTab('checklist',this)">✅ 购票清单 <span id="badge-cl" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
   <button class="tab-btn" onclick="switchTab('budget',this)">💰 费用总览</button>
   <button class="tab-btn" onclick="switchTab('hotel',this)">🏨 住宿推荐</button>
   <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
@@ -597,7 +598,165 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
   </div>
 </div>
 
-<!-- TAB 8: Budget -->
+<!-- TAB 8: Checklist -->
+<div class="tab-content" id="tab-checklist">
+  <div style="overflow-y:auto;flex:1;padding:14px 16px">
+
+    <!-- 顶部进度条 -->
+    <div id="cl-header" style="position:sticky;top:0;z-index:10;background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div>
+          <span style="font-weight:700;font-size:.9rem">🎫 购票 &amp; 预约清单</span>
+          <span id="cl-progress-text" style="font-size:.72rem;color:var(--muted);margin-left:8px"></span>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <span style="font-size:.68rem;display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#DC2626;display:inline-block"></span>必须提前购</span>
+          <span style="font-size:.68rem;display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#D97706;display:inline-block"></span>建议提前购</span>
+          <span style="font-size:.68rem;display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#64748B;display:inline-block"></span>现场可购</span>
+        </div>
+      </div>
+      <div style="margin-top:8px;background:#F1F5F9;border-radius:6px;height:6px;overflow:hidden">
+        <div id="cl-progress-bar" style="height:100%;background:linear-gradient(90deg,#10B981,#059669);border-radius:6px;transition:width .4s ease;width:0%"></div>
+      </div>
+    </div>
+
+    <div id="cl-list"></div>
+
+  </div>
+</div>
+
+<script>
+// ── 购票清单数据（按日期顺序）──
+const CL_ITEMS = [
+  // D0
+  {day:'D0', date:'9/25 周四', label:'出发日（北京→阿姆斯特丹）', items:[
+    {id:'cl_flight_out', name:'去程机票（已含）', type:'✈️ 交通', urgent:0, price:'—', note:'已含在行程中', url:'', done:false}
+  ]},
+  // D1
+  {day:'D1', date:'9/26 周六', label:'阿姆斯特丹 · 羊角村 + 安妮之家', items:[
+    {id:'cl_anne_frank', name:'安妮之家 19:00 场次', type:'🏛 景点', urgent:2, price:'€16.50/人', note:'旺季极易售罄，无法现场购票；必须在官网选 9/26 19:00 场', url:'https://www.annefrank.org/en/museum/tickets/', done:false},
+    {id:'cl_ic60403', name:'IC 60403 阿姆斯特丹→科隆（21:01）', type:'🚆 城际', urgent:1, price:'€19/人', note:'越早越便宜；nsinternational.com 购票', url:'https://www.nsinternational.com/en/train/amsterdam-cologne', done:false}
+  ]},
+  // D2
+  {day:'D2', date:'9/27 周日', label:'阿姆斯特丹 · 博物馆广场 + 海尼根', items:[
+    {id:'cl_vangogh', name:'梵高博物馆（09:15 场）', type:'🏛 景点', urgent:2, price:'€25/人', note:'不提前购票旺季现场几乎无票', url:'https://www.vangoghmuseum.nl/en/visit/tickets-and-opening-hours', done:false},
+    {id:'cl_rijks', name:'国立博物馆（12:30 场）', type:'🏛 景点', urgent:2, price:'€21.50/人', note:'选 9/27 12:30 场次', url:'https://www.rijksmuseum.nl/en/buy-tickets', done:false},
+    {id:'cl_heineken', name:'海尼根体验馆', type:'🍺 景点', urgent:0, price:'€25/人', note:'建议提前选时段，旺季周日较热门', url:'https://www.heinekenexperience.com/en/tickets/', done:false}
+  ]},
+  // D3
+  {day:'D3', date:'9/28 周一', label:'科隆 · 大教堂 + 晚程出发', items:[
+    {id:'cl_ic2440', name:'IC 2440 科隆→曼海姆（18:53）', type:'🚆 城际', urgent:2, price:'约€6/人', note:'提前购票价更低；int.bahn.de', url:'https://int.bahn.de/en', done:false},
+    {id:'cl_koeln_tower', name:'科隆大教堂南塔', type:'🏛 景点', urgent:0, price:'€8', note:'现场购票即可', url:'', done:false}
+  ]},
+  // D4
+  {day:'D4', date:'9/29 周二', label:'曼海姆→慕尼黑 · 城市初探', items:[
+    {id:'cl_ice1091', name:'ICE 1091 曼海姆→慕尼黑（07:11）', type:'🚆 城际', urgent:2, price:'约€6/人', note:'与 IC 2440 分开购，提前锁定早班车', url:'https://int.bahn.de/en', done:false},
+    {id:'cl_deutsches', name:'德意志博物馆', type:'🏛 景点', urgent:0, price:'€16', note:'可现场购，建议提前避免排队', url:'https://www.deutsches-museum.de/en/visit/tickets', done:false},
+    {id:'cl_residenz', name:'慕尼黑王宫', type:'🏛 景点', urgent:0, price:'€9', note:'可现场购', url:'https://www.residenz-muenchen.de/englisch/tourist/index.htm', done:false}
+  ]},
+  // D5
+  {day:'D5', date:'9/30 周三', label:'新天鹅堡 + 啤酒节', items:[
+    {id:'cl_fussen', name:'慕尼黑↔菲森 来回票', type:'🚆 城际', urgent:2, price:'约€32', note:'Bayern-Ticket 或单程，提前在 bahn.com 购', url:'https://www.bahn.com', done:false},
+    {id:'cl_neuschwanstein', name:'新天鹅堡 10:30 场次（9/30）', type:'🏔 景点', urgent:2, price:'€23.50/人', note:'旺季现场排 2–3h 甚至无票，必须提前官网选 10:30 场', url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau', done:false},
+    {id:'cl_oktoberfest', name:'啤酒节帐篷座位（可选）', type:'🍺 活动', urgent:0, price:'含消费约€50+', note:'walk-in 以站饮为主；若想落座需提前数月预约，可能已无余票', url:'https://www.oktoberfest.de/en/service/reservation', done:false}
+  ]},
+  // D6
+  {day:'D6', date:'10/1 周四', label:'慕尼黑→萨尔茨堡', items:[
+    {id:'cl_muc_szg', name:'慕尼黑→萨尔茨堡（ÖBB/DB）', type:'🚆 城际', urgent:2, price:'€6.99/人', note:'可在 int.bahn.de 提前锁定', url:'https://int.bahn.de/en', done:false}
+  ]},
+  // D7
+  {day:'D7', date:'10/2 周五', label:'萨尔茨堡 · 哈尔施塔特一日游', items:[
+    {id:'cl_hallstatt', name:'ÖBB 去哈尔施塔特往返', type:'🚆 城际', urgent:0, price:'约€20往返', note:'需在 Attnang-Puchheim 换乘；萨尔茨堡卡不含', url:'https://www.oebb.at/en/', done:false},
+    {id:'cl_hallstatt_ferry', name:'哈尔施塔特 渡船', type:'⛵ 交通', urgent:0, price:'约€4往返', note:'站在湖对岸，现场购摆渡船票', url:'', done:false}
+  ]},
+  // D8
+  {day:'D8', date:'10/3 周六', label:'萨尔茨堡 · 全天游 + 晚程出发', items:[
+    {id:'cl_fortress', name:'霍亨萨尔茨堡要塞', type:'🏰 景点', urgent:0, price:'€19.20', note:'萨尔茨堡卡含；单独购可官网或现场', url:'https://www.salzburg-burgen.at/en/hohensalzburg/', done:false},
+    {id:'cl_mozart_birth', name:'莫扎特出生地', type:'🏛 景点', urgent:0, price:'€15', note:'现场购票即可', url:'https://mozarteum.at/en/mozarts-birthplace', done:false},
+    {id:'cl_westbahn', name:'Westbahn 萨尔茨堡→Hütteldorf（18:52）', type:'🚆 城际', urgent:2, price:'€15/人', note:'行程最紧的一天，务必提前在 westbahn.at 锁定座位', url:'https://westbahn.at/en/', done:false}
+  ]},
+  // D9
+  {day:'D9', date:'10/4 周日', label:'维也纳 · 初日', items:[
+    {id:'cl_belvedere', name:'美景宫', type:'🏛 景点', urgent:0, price:'€16', note:'可提前在官网购，也可现场', url:'https://www.belvedere.at/en/buy-tickets', done:false},
+    {id:'cl_hofburg', name:'霍夫堡宫', type:'🏛 景点', urgent:0, price:'€18', note:'现场购票', url:'https://www.hofburg-wien.at/en/visit/tickets-prices', done:false},
+    {id:'cl_staatsoper', name:'维也纳国家歌剧院 站票（可选）', type:'🎭 演出', urgent:0, price:'€13–18', note:'当晚开场80min前在票房排站票', url:'https://www.wiener-staatsoper.at/spielplan-tickets/', done:false}
+  ]},
+  // D10
+  {day:'D10', date:'10/5 周一', label:'维也纳 · 深度游', items:[
+    {id:'cl_schoenbrunn', name:'美泉宫', type:'🏰 景点', urgent:1, price:'€28', note:'旺季热门，建议提前在 imperialtickets.com 购票选时段', url:'https://www.imperialtickets.com/en/schoenbrunn-palace', done:false},
+    {id:'cl_mozart_res', name:'莫扎特故居（萨尔茨堡版另计）', type:'🏛 景点', urgent:0, price:'€13', note:'维也纳的莫扎特故居，可现场购', url:'https://mozarteum.at/en/mozarts-residence', done:false}
+  ]}
+];
+
+function clKey(id){return 'cl_2026_'+id;}
+
+function clRenderBadge(){
+  const must = CL_ITEMS.flatMap(d=>d.items).filter(i=>i.urgent===2);
+  const done = must.filter(i=>localStorage.getItem(clKey(i.id))==='1');
+  const rem = must.length - done.length;
+  const el = document.getElementById('badge-cl');
+  if(el){ el.textContent = rem > 0 ? rem : ''; el.style.display = rem > 0 ? '' : 'none'; }
+  // progress bar (all items)
+  const all = CL_ITEMS.flatMap(d=>d.items);
+  const allDone = all.filter(i=>localStorage.getItem(clKey(i.id))==='1').length;
+  const pct = all.length ? Math.round(allDone/all.length*100) : 0;
+  const bar = document.getElementById('cl-progress-bar');
+  const txt = document.getElementById('cl-progress-text');
+  if(bar) bar.style.width = pct+'%';
+  if(txt) txt.textContent = allDone+'/'+all.length+' 已完成 ('+pct+'%)';
+}
+
+function clRender(){
+  const container = document.getElementById('cl-list');
+  if(!container) return;
+  let html = '';
+  CL_ITEMS.forEach(day=>{
+    html += `<div style="margin-bottom:18px">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;border-bottom:2px solid var(--border);padding-bottom:4px">
+        <span style="background:#1E3A5F;color:#fff;border-radius:6px;padding:2px 8px;font-size:.7rem;font-weight:700">${day.day}</span>
+        <span style="font-weight:700;font-size:.82rem">${day.date}</span>
+        <span style="font-size:.72rem;color:var(--muted)">${day.label}</span>
+      </div>`;
+    day.items.forEach(item=>{
+      const isDone = localStorage.getItem(clKey(item.id))==='1';
+      const urgColor = item.urgent===2?'#DC2626': item.urgent===1?'#D97706':'#64748B';
+      const urgLabel = item.urgent===2?'必须提前购': item.urgent===1?'建议提前购':'现场可购';
+      html += `<div onclick="clToggle('${item.id}',this)" style="cursor:pointer;display:flex;align-items:flex-start;gap:10px;background:${isDone?'#F0FDF4':'#fff'};border:1px solid ${isDone?'#BBF7D0':'var(--border)'};border-left:4px solid ${urgColor};border-radius:8px;padding:9px 11px;margin-bottom:7px;transition:background .2s">
+        <div style="margin-top:2px;flex-shrink:0;width:18px;height:18px;border-radius:4px;border:2px solid ${isDone?'#10B981':'#CBD5E1'};background:${isDone?'#10B981':'transparent'};display:flex;align-items:center;justify-content:center">
+          ${isDone?'<svg width="11" height="11" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;flex-wrap:wrap">
+            <span style="font-weight:600;font-size:.82rem;${isDone?'text-decoration:line-through;color:var(--muted)':''}">${item.name}</span>
+            <span style="font-size:.67rem;background:${urgColor}20;color:${urgColor};border-radius:4px;padding:2px 6px;white-space:nowrap;flex-shrink:0">${urgLabel}</span>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:3px;flex-wrap:wrap;align-items:center">
+            <span style="font-size:.69rem;color:#64748B">${item.type}</span>
+            <span style="font-size:.72rem;font-weight:600;color:#0F172A">${item.price}</span>
+            ${item.url?`<a href="${item.url}" target="_blank" onclick="event.stopPropagation()" style="font-size:.67rem;color:#4F46E5;text-decoration:none">🔗 购票链接</a>`:''}
+          </div>
+          ${item.note?`<div style="font-size:.68rem;color:var(--muted);margin-top:2px">💡 ${item.note}</div>`:''}
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+  clRenderBadge();
+}
+
+function clToggle(id, el){
+  const key = clKey(id);
+  const current = localStorage.getItem(key)==='1';
+  localStorage.setItem(key, current?'0':'1');
+  clRender();
+}
+
+// 在页面加载后初始化 badge
+document.addEventListener('DOMContentLoaded', clRenderBadge);
+</script>
+
+<!-- TAB 8a: Budget -->
 <div class="tab-content" id="tab-budget">
   <div style="overflow-y:auto;flex:1;padding:14px 16px">
 
@@ -767,6 +926,7 @@ function switchTab(name,btn){
   document.getElementById('tab-'+name).classList.add('active')
   btn.classList.add('active')
   if(name==='map') setTimeout(()=>map.invalidateSize(),50)
+  if(name==='checklist') clRender()
 }
 
 // ═══════════════════════════════════════
