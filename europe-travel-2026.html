@@ -143,6 +143,14 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
   .legend{display:none}
   .bi-section{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .bi-table{min-width:520px}
+  /* ── 手机 header 压缩 ── */
+  header{padding:7px 12px}
+  header p{display:none}
+  .dl-btn{padding:4px 9px;font-size:.68rem}
+  /* ── nav-tabs 单行横滚 ── */
+  .nav-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav-tabs::-webkit-scrollbar{display:none}
+  .tab-btn{padding:6px 11px;font-size:.73rem;flex-shrink:0}
 }
 @media(max-width:480px){
   .bi-table th:nth-child(4),
