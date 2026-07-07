@@ -169,12 +169,12 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
 <div class="nav-tabs">
   <button class="tab-btn active" onclick="switchTab('map',this)">🗺 地图动线</button>
   <button class="tab-btn" onclick="switchTab('booking',this)">📋 待预约 <span id="badge-todo" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
-  <button class="tab-btn" onclick="switchTab('bilingual',this)">🔤 中英对照</button>
-  <button class="tab-btn" onclick="switchTab('hotel',this)">🏨 住宿推荐</button>
   <button class="tab-btn" onclick="switchTab('risk',this)">⚠️ 风险清单</button>
   <button class="tab-btn" onclick="switchTab('tickets',this)">🎫 交通票攻略</button>
-  <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
   <button class="tab-btn" onclick="switchTab('budget',this)">💰 费用总览</button>
+  <button class="tab-btn" onclick="switchTab('hotel',this)">🏨 住宿推荐</button>
+  <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
+  <button class="tab-btn" onclick="switchTab('bilingual',this)">🔤 中英对照</button>
 </div>
 
 <!-- TAB 1: Map -->
@@ -186,7 +186,13 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
     </div>
   </div>
   <aside>
-    <div class="panel-hd">📅 每日动线 — 点击展开查看详情 + 地图路线</div>
+    <div class="panel-hd" style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span>📅 每日动线</span>
+      <span style="display:flex;gap:4px;flex-shrink:0">
+        <button onclick="setAllAcc(true)" style="padding:2px 7px;font-size:.65rem;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:var(--muted)">全展开</button>
+        <button onclick="setAllAcc(false)" style="padding:2px 7px;font-size:.65rem;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:var(--muted)">全折叠</button>
+      </span>
+    </div>
     <div id="acc"></div>
     <div class="summary">
       <div class="sum-row"><span>总行程</span><b>11天 / 5城市</b></div>
@@ -713,8 +719,24 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
 <script>
 // ── Download ──
 function downloadPage(){
-  const blob=new Blob(['<!DOCTYPE html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'})
+  // 把 localStorage 数据内联到 HTML，下载后离线打开仍能恢复勾选状态
+  const lsKeys=['bookings_2026','schengen_2026','budget_2026']
+  const lsData={}
+  lsKeys.forEach(k=>{const v=localStorage.getItem(k);if(v)lsData[k]=v})
+  const restoreScript=`<script>
+(function(){const d=${JSON.stringify(lsData)};Object.entries(d).forEach(([k,v])=>{try{localStorage.setItem(k,v)}catch(e){}})})();
+<\/script>`
+  const html=document.documentElement.outerHTML.replace('</head>',restoreScript+'</head>')
+  const blob=new Blob(['<!DOCTYPE html>\n'+html],{type:'text/html;charset=utf-8'})
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='欧洲旅游攻略_2026.html';a.click();URL.revokeObjectURL(a.href)
+}
+
+// ── Accordion expand/collapse all ──
+function setAllAcc(open){
+  document.querySelectorAll('.acc-hd').forEach(h=>{
+    if(open) h.classList.add('open')
+    else h.classList.remove('open')
+  })
 }
 
 // ── Tab switch ──
