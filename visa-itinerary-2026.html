@@ -149,8 +149,8 @@
   ];
   var map=L.map('route-map',{scrollWheelZoom:false}).setView([49.5,10.5],5);
   window._map=map;
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'&copy; OpenStreetMap contributors',maxZoom:18
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; OpenStreetMap contributors',maxZoom:18,crossOrigin:''
   }).addTo(map);
   var latlngs=cities.map(function(c){return[c.lat,c.lng]});
   L.polyline(latlngs,{color:'#000',weight:2,dashArray:'6,4'}).addTo(map);
