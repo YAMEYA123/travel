@@ -1220,8 +1220,8 @@ const DAYS=[
 // MAP
 // ═══════════════════════════════════
 const map=L.map('map',{zoomControl:true}).setView([49,10],5)
-L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
-  attribution:'© OpenStreetMap © CARTO',maxZoom:19,crossOrigin:''
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',maxZoom:19
 }).addTo(map)
 
 // City overview markers
