@@ -79,6 +79,15 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
 .tr-metro{background:#F3E8FF;color:#7E22CE}
 .tr-boat{background:#E0F2FE;color:#0369A1}
 
+/* ── Tile toggle button ── */
+.tile-toggle-btn{
+  padding:6px 10px;background:#fff;border:2px solid #94A3B8;border-radius:7px;
+  font-size:.72rem;font-weight:700;color:#1E293B;cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);white-space:nowrap;
+  transition:background .15s,border-color .15s;
+}
+.tile-toggle-btn:hover{background:#F1F5F9;border-color:#3B82F6}
+
 /* ── Booking button ── */
 .book-btn{
   display:inline-flex;align-items:center;gap:4px;margin-top:4px;
@@ -1220,15 +1229,31 @@ const DAYS=[
 // MAP
 // ═══════════════════════════════════
 const map=L.map('map',{zoomControl:true}).setView([49,10],5)
-// 高德地图（国内外均可访问，含欧洲覆盖）
 const amapLayer=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_en&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{attribution:'© 高德地图',maxZoom:18,subdomains:'1234'})
-// ESRI 作为备选（国际用户备用）
 const esriLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'© ESRI',maxZoom:19})
-let fallbacked=false
-amapLayer.on('tileerror',function(){
-  if(!fallbacked){fallbacked=true;map.removeLayer(amapLayer);esriLayer.addTo(map)}
-})
+let tileMode='cn'
 amapLayer.addTo(map)
+
+// 切换底图按钮
+const TileToggle=L.Control.extend({
+  onAdd:function(){
+    const btn=L.DomUtil.create('button','tile-toggle-btn')
+    btn.title='切换地图底图'
+    btn.innerHTML='🌏 国内网络'
+    btn.onclick=function(e){
+      L.DomEvent.stopPropagation(e)
+      if(tileMode==='cn'){
+        map.removeLayer(amapLayer);esriLayer.addTo(map)
+        tileMode='intl';btn.innerHTML='🌐 国际网络'
+      } else {
+        map.removeLayer(esriLayer);amapLayer.addTo(map)
+        tileMode='cn';btn.innerHTML='🌏 国内网络'
+      }
+    }
+    return btn
+  }
+})
+new TileToggle({position:'topright'}).addTo(map)
 
 // City overview markers
 const OVERVIEW=[
