@@ -6,14 +6,17 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Helvetica Neue',Arial,'Microsoft YaHei',sans-serif;font-size:11pt;color:#000;background:#fff;padding:20px}
-  .page{max-width:820px;margin:0 auto}
+  .page{max-width:840px;margin:0 auto}
   h1{font-size:17pt;font-weight:700;text-align:center;margin-bottom:2px}
   h1 small{display:block;font-size:13pt;font-weight:400;margin-top:2px}
-  .applicant-row{text-align:center;font-size:10pt;color:#000;margin:10px 0 22px;line-height:2}
-  .applicant-row span{display:inline-block;min-width:220px;border-bottom:1px solid #000;margin:0 12px}
+  .applicant-block{border:1px solid #000;padding:10px 14px;margin:12px 0 10px;font-size:9.5pt;line-height:2}
+  .applicant-block .row{display:flex;flex-wrap:wrap;gap:0 32px}
+  .applicant-block label{font-weight:700;min-width:90px;display:inline-block}
+  .applicant-block span.field{display:inline-block;min-width:180px;border-bottom:1px solid #000}
+  .purpose-box{border:1px solid #888;background:#f9f9f9;padding:8px 12px;margin:10px 0 0;font-size:9pt;line-height:1.7;font-style:italic}
   .section-title{font-size:11pt;font-weight:700;background:#000;color:#fff;padding:5px 10px;margin-top:20px;margin-bottom:0}
   .section-title small{font-size:9pt;font-weight:400;opacity:.85}
-  table{width:100%;border-collapse:collapse;font-size:9.5pt}
+  table{width:100%;border-collapse:collapse;font-size:9pt}
   th{background:#e8e8e8;color:#000;font-weight:700;padding:5px 8px;text-align:left;border:1px solid #000}
   td{padding:5px 8px;border:1px solid #888;vertical-align:top}
   tr:nth-child(even) td{background:#f5f5f5}
@@ -21,65 +24,82 @@
   .en{display:block;color:#444;font-size:8.5pt;margin-top:1px}
   .date-col{width:105px;white-space:nowrap;font-weight:600}
   .city-col{width:88px;font-weight:600}
-  .note{font-size:8.5pt;color:#555;margin-top:2px}
-  .hotel-section table th,.flight-section table th,.stat-section table th{background:#e8e8e8;color:#000;border-color:#000}
-  .hotel-section table td,.flight-section table td,.stat-section table td{border-color:#888}
-  .footer{margin-top:28px;font-size:8.5pt;color:#444;border-top:1px solid #000;padding-top:10px;line-height:1.8}
+  .note{font-size:8pt;color:#555;margin-top:2px}
   .badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:8pt;font-weight:600;border:1px solid #000}
   .badge-ok{background:#fff;color:#000}
   .badge-pending{background:#e8e8e8;color:#000}
+  .warn{font-size:8pt;color:#000;font-weight:700;margin-top:3px}
+  .materials-list{margin:10px 0 0;font-size:9pt;line-height:1.8}
+  .materials-list li{margin-left:18px}
+  .footer{margin-top:24px;font-size:8.5pt;color:#444;border-top:1px solid #000;padding-top:10px;line-height:1.8}
   @media print{
     body{padding:8px;font-size:10pt}
     .section-title{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     tr:nth-child(even) td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .purpose-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-<h1>欧洲申根区旅行行程单<small>Schengen Area Travel Itinerary</small></h1>
-<div class="applicant-row">
-  申请人 Applicant：<span>&nbsp;</span>&nbsp;&nbsp;
-  护照号 Passport No.：<span>&nbsp;</span>&nbsp;&nbsp;
-  国籍 Nationality：<span>中国 China</span>
+<h1>申根区旅行行程单<small>Schengen Area Travel Itinerary — For Visa Application</small></h1>
+
+<!-- 申请人信息 -->
+<div class="applicant-block">
+  <div class="row">
+    <div><label>申请人姓名<br><span style="font-weight:400">Full Name</span></label> <span class="field">&nbsp;</span></div>
+    <div><label>护照号码<br><span style="font-weight:400">Passport No.</span></label> <span class="field">&nbsp;</span></div>
+    <div><label>国籍<br><span style="font-weight:400">Nationality</span></label> <span class="field">中国 China</span></div>
+  </div>
+  <div class="row" style="margin-top:4px">
+    <div><label>出生日期<br><span style="font-weight:400">Date of Birth</span></label> <span class="field">&nbsp;</span></div>
+    <div><label>联系电话<br><span style="font-weight:400">Phone</span></label> <span class="field">&nbsp;</span></div>
+    <div><label>国内住址<br><span style="font-weight:400">Home Address</span></label> <span class="field">&nbsp;</span></div>
+  </div>
+</div>
+
+<!-- 出行目的说明 -->
+<div class="purpose-box">
+  <strong>Purpose of Travel Statement:</strong> This is a pure leisure tourism trip to the Netherlands, Germany and Austria. The itinerary covers cultural and historical attractions including museums, palaces and scenic lakeside towns. All international flights, inter-city trains and accommodation are pre-booked (free-cancellation rates). No commercial, work-related or academic activities are involved. I will return to China on 5 October 2026 as scheduled.
+  <br><strong>出行说明：</strong>本次出行为纯休闲旅游，途经荷兰、德国、奥地利，以参观博物馆、宫殿及自然景点为主。全程无商务、工作或学术活动。计划于2026年10月5日按时返回中国。
 </div>
 
 <!-- ========== 一、行程概览 ========== -->
 <div class="section-title">一、行程概览 &nbsp;<small>Section 1 · Trip Overview</small></div>
 <table>
   <tr>
-    <th style="width:200px">项目 Item</th>
+    <th style="width:190px">项目 Item</th>
     <th>信息 Details</th>
   </tr>
   <tr>
     <td><span class="zh">出发日期</span><span class="en">Departure Date</span></td>
-    <td>2026年9月25日（星期四）&nbsp; <span class="en" style="display:inline">Thursday, 25 September 2026</span></td>
+    <td>2026年9月25日（星期五）&nbsp;<span class="en" style="display:inline">Friday, 25 September 2026</span></td>
   </tr>
   <tr>
     <td><span class="zh">返回日期</span><span class="en">Return Date</span></td>
-    <td>2026年10月5日（星期一）&nbsp; <span class="en" style="display:inline">Monday, 5 October 2026</span></td>
+    <td>2026年10月5日（星期一）&nbsp;<span class="en" style="display:inline">Monday, 5 October 2026</span></td>
   </tr>
   <tr>
     <td><span class="zh">旅行天数</span><span class="en">Duration</span></td>
-    <td>11天（9月25日 – 10月5日）&nbsp; <span class="en" style="display:inline">11 days (25 Sep – 5 Oct 2026)</span></td>
+    <td>11天（9月25日 – 10月5日）&nbsp;<span class="en" style="display:inline">11 days (25 Sep – 5 Oct 2026)</span></td>
   </tr>
   <tr>
     <td><span class="zh">入境口岸</span><span class="en">Entry Port</span></td>
-    <td>🇳🇱 荷兰 · 阿姆斯特丹史基浦国际机场（AMS）<span class="en">Netherlands · Amsterdam Airport Schiphol (AMS)</span></td>
+    <td>荷兰 · 阿姆斯特丹史基浦国际机场（AMS）<span class="en">Netherlands · Amsterdam Airport Schiphol (AMS)</span></td>
   </tr>
   <tr>
     <td><span class="zh">离境口岸</span><span class="en">Exit Port</span></td>
-    <td>🇦🇹 奥地利 · 维也纳国际机场（VIE）<span class="en">Austria · Vienna International Airport (VIE)</span></td>
-  </tr>
-  <tr>
-    <td><span class="zh">主要申根签证国</span><span class="en">Main Schengen Visa Country</span></td>
-    <td>🇩🇪 德国（Germany）<span class="en">Longest stay: 4 nights in Germany (Cologne 1 + Mannheim 1 + Munich 2)</span></td>
+    <td>奥地利 · 维也纳国际机场（VIE）<span class="en">Austria · Vienna International Airport (VIE)</span></td>
   </tr>
   <tr>
     <td><span class="zh">途经国家</span><span class="en">Countries Visited</span></td>
-    <td>🇳🇱 荷兰 Netherlands → 🇩🇪 德国 Germany → 🇦🇹 奥地利 Austria</td>
+    <td>荷兰（Netherlands）→ 德国（Germany）→ 奥地利（Austria）<span class="en">All within Schengen Area; no third-country transit</span></td>
+  </tr>
+  <tr>
+    <td><span class="zh"><strong>主申请签证国</strong></span><span class="en"><strong>Main Schengen Visa Country</strong></span></td>
+    <td><strong>德国（Germany）</strong><span class="en">Determined by number of overnight stays: Germany 4 nights (longest); Netherlands 2 nights; Austria 4 nights. Per Schengen rules, overnight stays — not calendar days — determine the main visa country. Germany has the most overnight stays and is therefore the correct visa-issuing country.</span></td>
   </tr>
 </table>
 
@@ -89,105 +109,105 @@
   <tr>
     <th class="date-col">日期 Date</th>
     <th class="city-col">城市 City</th>
-    <th>主要活动 Activities</th>
+    <th>主要活动及市内交通 Activities &amp; Local Transport</th>
     <th style="width:185px">住宿 Accommodation</th>
   </tr>
   <tr>
-    <td>9月25日（四）<div class="note">D0 · Departure Day</div></td>
+    <td>9月25日（五）<div class="note">D0 · Departure Day</div></td>
     <td>北京 → 阿姆斯特丹</td>
     <td>
-      <span class="zh">北京出发，飞往阿姆斯特丹史基浦机场（AMS），预计19:00落地，乘机场快线入住酒店</span>
-      <span class="en">Depart Beijing; fly to Amsterdam Schiphol (AMS). Estimated arrival 19:00. Transfer by rail to hotel.</span>
+      <span class="zh">北京出发，乘国际航班飞往阿姆斯特丹史基浦机场（AMS），预计19:00落地<br>落地后：乘Sprinter列车（约17分钟）至Amsterdam Sloterdijk站，步行入住酒店</span>
+      <span class="en">Depart Beijing by international flight; arrive Amsterdam Schiphol (AMS) ~19:00. Transfer: Sprinter train from airport (~17 min) to Amsterdam Sloterdijk; walk to hotel.</span>
     </td>
-    <td>Holiday Inn Express Amsterdam - Sloterdijk Station<div class="note">Transformatorweg 36, Amsterdam, NL</div></td>
+    <td>Holiday Inn Express Amsterdam - Sloterdijk Station<div class="note">Transformatorweg 36, Amsterdam</div></td>
   </tr>
   <tr>
     <td>9月26日（六）<div class="note">D1 · Saturday</div></td>
-    <td>🇳🇱 阿姆斯特丹<br>+ 羊角村</td>
+    <td>阿姆斯特丹 + 羊角村</td>
     <td>
-      <span class="zh">上午：羊角村（Giethoorn）一日游，乘船游览荷兰水乡<br>下午：返回阿姆斯特丹<br>晚间：安妮之家（Anne Frank House）19:00场次参观</span>
-      <span class="en">Morning: day trip to Giethoorn (Dutch canal village by boat). Afternoon: return to Amsterdam. Evening: Anne Frank House (19:00 slot).</span>
+      <span class="zh">08:00 酒店出发，步行至Sloterdijk站，乘火车至Steenwijk（约1.5小时），换乘Arriva巴士至羊角村（Giethoorn），游览荷兰水乡约3小时<br>13:30 返程至阿姆斯特丹，约16:00抵达<br>17:00 国立博物馆广场（Museumplein）漫步<br>19:00 安妮之家（Anne Frank House）参观（已线上预约，附预约单）<br>21:00 Jordaan街区晚餐</span>
+      <span class="en">08:00 depart hotel; train from Sloterdijk to Steenwijk (~1.5 h), Arriva bus to Giethoorn. Canal boat tour ~3 h. 13:30 return journey; arr. Amsterdam ~16:00. 17:00 Museumplein. 19:00 Anne Frank House (pre-booked online). 21:00 dinner in Jordaan.</span>
     </td>
-    <td>Holiday Inn Express Amsterdam - Sloterdijk Station<div class="note">Transformatorweg 36, Amsterdam, NL</div></td>
+    <td>Holiday Inn Express Amsterdam - Sloterdijk Station<div class="note">Transformatorweg 36, Amsterdam</div></td>
   </tr>
   <tr>
     <td>9月27日（日）<div class="note">D2 · Sunday</div></td>
-    <td>🇳🇱 阿姆斯特丹</td>
+    <td>阿姆斯特丹 → 科隆</td>
     <td>
-      <span class="zh">上午：梵高博物馆（09:15场）<br>中午：国立博物馆（12:15场）<br>下午：博物馆广场、辛格运河花市、Jordaan街区<br>晚间：21:01乘IC 60403出发→科隆（23:45抵达）</span>
-      <span class="en">Morning: Van Gogh Museum (09:15). Noon: Rijksmuseum (12:15). Afternoon: Museumplein, Bloemenmarkt, Jordaan. Evening: IC 60403 dep. 21:01 → Cologne arr. 23:45.</span>
+      <span class="zh">09:15 梵高博物馆（Van Gogh Museum），参观约2小时（已线上预约，附预约单）<br>12:15 国立博物馆（Rijksmuseum），参观约1.5小时（已线上预约，附预约单）<br>14:30 辛格花卉市场（Bloemenmarkt）<br>16:00 Jordaan街区散步<br>19:30 阿姆斯特丹中央站附近晚餐<br>21:01 乘IC 60403出发（阿姆斯特丹中央站 → 科隆中央站），23:45抵达，24小时前台办理晚到入住</span>
+      <span class="en">09:15 Van Gogh Museum (~2 h, pre-booked). 12:15 Rijksmuseum (~1.5 h, pre-booked). 14:30 Bloemenmarkt. 16:00 Jordaan stroll. 19:30 dinner near Amsterdam Centraal. 21:01 IC 60403 Amsterdam Centraal → Cologne Hbf arr. 23:45 (24-hour front desk; late check-in confirmed).</span>
     </td>
-    <td>Hilton Cologne<div class="note">Marzellenstraße 13-17, Cologne, DE<br>（Check-in ~23:45）</div></td>
+    <td>Hilton Cologne<div class="note">Marzellenstraße 13-17, Cologne<br>（Check-in ~23:45）</div></td>
   </tr>
   <tr>
     <td>9月28日（一）<div class="note">D3 · Monday</div></td>
-    <td>🇩🇪 科隆</td>
+    <td>科隆</td>
     <td>
-      <span class="zh">上午：科隆大教堂南塔登顶（11:30）<br>中午：旧市场广场、莱茵河畔漫步<br>下午：科隆香水博物馆（Farina Haus）<br>傍晚：18:53乘IC 2440出发→曼海姆（21:21抵达）</span>
-      <span class="en">Morning: Cologne Cathedral South Tower (11:30). Noon: Alter Markt &amp; Rhine promenade. Afternoon: Farina Fragrance Museum. Evening: IC 2440 dep. 18:53 → Mannheim arr. 21:21.</span>
+      <span class="zh">10:00 科隆大教堂南塔登顶（Cologne Cathedral South Tower），俯瞰全城<br>12:00 旧市场广场（Alter Markt）午餐，莱茵河畔漫步<br>14:30 科隆香水博物馆（Farina Fragrance Museum）<br>16:30 市中心购物街（Schildergasse）漫步<br>17:30 科隆中央站附近餐厅早餐（赶车前用餐）<br>18:53 乘IC 2440出发（科隆中央站 → 曼海姆中央站），21:21抵达，步行至酒店</span>
+      <span class="en">10:00 Cathedral South Tower. 12:00 Alter Markt lunch &amp; Rhine walk. 14:30 Farina Fragrance Museum. 16:30 Schildergasse. 17:30 early dinner near Cologne Hbf before train. 18:53 IC 2440 Cologne Hbf → Mannheim Hbf arr. 21:21; walk to hotel.</span>
     </td>
-    <td>Holiday Inn Mannheim City – Hauptbahnhof<div class="note">Willy-Brandt-Platz 3, Mannheim, DE<br>（Check-in ~21:30）</div></td>
+    <td>Holiday Inn Mannheim City – Hauptbahnhof<div class="note">Willy-Brandt-Platz 3, Mannheim<br>（Check-in ~21:30）</div></td>
   </tr>
   <tr>
     <td>9月29日（二）<div class="note">D4 · Tuesday</div></td>
-    <td>🇩🇪 曼海姆→慕尼黑</td>
+    <td>曼海姆 → 慕尼黑</td>
     <td>
-      <span class="zh">早晨：07:11乘ICE 1091出发→慕尼黑（10:10到达）<br>上午：德意志博物馆（Deutsches Museum）<br>下午：宝马博物馆 / 英国花园（Englischer Garten）<br>晚间：入住慕尼黑</span>
-      <span class="en">Morning: ICE 1091 dep. 07:11 → Munich arr. 10:10. Late morning: Deutsches Museum. Afternoon: BMW Museum / Englischer Garten. Evening: check in Munich.</span>
+      <span class="zh">07:11 乘ICE 1091出发（曼海姆中央站 → 慕尼黑中央站），10:10抵达<br>10:30 德意志博物馆（Deutsches Museum），参观约3小时<br>14:00 乘地铁U3/U6至Olympiazentrum，步行至宝马博物馆（BMW Museum），参观约2小时<br>17:00 英国花园（Englischer Garten）傍晚散步，中国塔啤酒花园小憩<br>19:30 酒店附近晚餐，入住</span>
+      <span class="en">07:11 ICE 1091 Mannheim Hbf → Munich Hbf arr. 10:10. 10:30 Deutsches Museum (~3 h). 14:00 metro U3/U6 to Olympiazentrum → BMW Museum (~2 h). 17:00 Englischer Garten stroll, Chinese Tower beer garden. 19:30 dinner; check in.</span>
     </td>
-    <td>Holiday Inn München Süd<div class="note">Kistlerhofstraße 142, Munich, DE</div></td>
+    <td>Holiday Inn München Süd<div class="note">Kistlerhofstraße 142, Munich</div></td>
   </tr>
   <tr>
     <td>9月30日（三）<div class="note">D5 · Wednesday</div></td>
-    <td>🇩🇪 慕尼黑<br>+ 新天鹅堡</td>
+    <td>慕尼黑 + 新天鹅堡</td>
     <td>
-      <span class="zh">全天：乘火车前往菲森（Füssen），游览新天鹅堡（Neuschwanstein Castle）10:30场次<br>傍晚：返回慕尼黑<br>晚间：慕尼黑啤酒节（Oktoberfest）体验</span>
-      <span class="en">Day trip by train to Füssen; Neuschwanstein Castle tour (10:30 slot). Evening: return to Munich; Oktoberfest experience.</span>
+      <span class="zh">07:59 乘RE 9783从慕尼黑中央站出发，10:08抵达菲森（Füssen），换乘公交78号至城堡山脚（约10分钟）<br>10:30 新天鹅堡（Neuschwanstein Castle）预约场次参观，约1.5小时（已线上预约，附预约单）<br>12:30 城堡山区午餐<br>14:30 高天鹅堡（Hohenschwangau Castle）外观参观<br>17:14 乘RE从菲森返回，20:28抵达慕尼黑中央站<br>21:00 慕尼黑啤酒节（Oktoberfest）体验，特蕾莎广场（Theresienwiese）</span>
+      <span class="en">07:59 RE 9783 Munich Hbf → Füssen arr. 10:08; bus 78 to castle (10 min). 10:30 Neuschwanstein Castle tour (~1.5 h, pre-booked). 12:30 lunch at village. 14:30 Hohenschwangau exterior. 17:14 RE Füssen → Munich arr. 20:28. 21:00 Oktoberfest at Theresienwiese.</span>
     </td>
-    <td>Holiday Inn München Süd<div class="note">Kistlerhofstraße 142, Munich, DE</div></td>
+    <td>Holiday Inn München Süd<div class="note">Kistlerhofstraße 142, Munich</div></td>
   </tr>
   <tr>
     <td>10月1日（四）<div class="note">D6 · Thursday</div></td>
-    <td>🇩🇪 慕尼黑<br>→🇦🇹 萨尔茨堡</td>
+    <td>慕尼黑 → 萨尔茨堡</td>
     <td>
-      <span class="zh">上午：慕尼黑中央站寄存行李，游览宁芬堡宫（Nymphenburg Palace）<br>中午：约12:09乘火车赴萨尔茨堡（约13:55抵达）<br>下午：茨威格纪念馆、米拉贝尔宫（Mirabell Palace）<br>傍晚：入住萨尔茨堡</span>
-      <span class="en">Morning: Nymphenburg Palace. Noon: train dep. ~12:09 → Salzburg arr. ~13:55. Afternoon: Stefan Zweig Centre, Mirabell Palace. Evening: check in Salzburg.</span>
+      <span class="zh">09:00 乘地铁U1/Tram至宁芬堡宫（Nymphenburg Palace），参观约2小时<br>11:30 返回中央站，行李寄存<br>12:09 乘ÖBB Railjet出发（慕尼黑中央站 → 萨尔茨堡中央站），13:55抵达<br>14:30 茨威格纪念馆（Stefan Zweig Centre）<br>16:00 米拉贝尔宫及花园（Mirabell Palace &amp; Gardens）<br>18:00 Getreidegasse购物街漫步，傍晚入住</span>
+      <span class="en">09:00 U1/Tram to Nymphenburg Palace (~2 h). 11:30 return to Hbf; luggage storage. 12:09 ÖBB Railjet Munich Hbf → Salzburg Hbf arr. 13:55. 14:30 Stefan Zweig Centre. 16:00 Mirabell Palace &amp; Gardens. 18:00 Getreidegasse stroll; check in.</span>
     </td>
-    <td>a&amp;o Salzburg Hauptbahnhof（待确认 TBC）<div class="note">Ferdinand-Hanusch-Platz 2, Salzburg, AT</div></td>
+    <td>a&amp;o Salzburg Hauptbahnhof<div class="note">Ferdinand-Hanusch-Platz 2, Salzburg<div class="warn">* 待预订 To be booked before application</div></div></td>
   </tr>
   <tr>
     <td>10月2日（五）<div class="note">D7 · Friday</div></td>
-    <td>🇦🇹 萨尔茨堡<br>+ 哈尔施塔特</td>
+    <td>萨尔茨堡 + 哈尔施塔特</td>
     <td>
-      <span class="zh">全天：哈尔施塔特（Hallstatt）一日游<br>08:30出发，乘火车+轮渡游览世界遗产湖畔小镇<br>下午约15:00返回萨尔茨堡，米拉贝尔宫花园漫步</span>
-      <span class="en">Full-day trip to Hallstatt (UNESCO World Heritage lake village) by train + ferry, dep. 08:30. Return to Salzburg ~15:00; Mirabell Gardens stroll.</span>
+      <span class="zh">08:30 萨尔茨堡中央站出发，乘火车至Attnang-Puchheim，换乘至Hallstatt Bahnhof，约10:30抵达<br>10:45 乘轮渡渡湖至哈尔施塔特村（Hallstatt，约5分钟）<br>11:00-13:30 哈尔施塔特古村游览、盐矿博物馆<br>14:00 乘轮渡返回，火车回萨尔茨堡，约15:30抵达<br>16:00 米拉贝尔花园（Mirabel Gardens）漫步<br>18:00 老城区晚餐</span>
+      <span class="en">08:30 train from Salzburg Hbf → Attnang-Puchheim → Hallstatt Bahnhof arr. ~10:30. 10:45 ferry across lake (~5 min). 11:00–13:30 village &amp; Salt Mine Museum. 14:00 ferry back; train to Salzburg arr. ~15:30. 16:00 Mirabell Gardens. 18:00 dinner in old town.</span>
     </td>
-    <td>a&amp;o Salzburg Hauptbahnhof（待确认 TBC）<div class="note">Ferdinand-Hanusch-Platz 2, Salzburg, AT</div></td>
+    <td>a&amp;o Salzburg Hauptbahnhof<div class="note">Ferdinand-Hanusch-Platz 2, Salzburg<div class="warn">* 待预订 To be booked before application</div></div></td>
   </tr>
   <tr>
     <td>10月3日（六）<div class="note">D8 · Saturday</div></td>
-    <td>🇦🇹 萨尔茨堡<br>→ 维也纳</td>
+    <td>萨尔茨堡 → 维也纳</td>
     <td>
-      <span class="zh">上午：霍亨萨尔茨堡要塞（Hohensalzburg Fortress）<br>中午：格特赖德巷（Getreidegasse）、莫扎特故居<br>午后：14:07乘RJX 19977出发→维也纳（16:32抵达Wien Hbf）<br>傍晚：入住维也纳，Naschmarkt夜市</span>
-      <span class="en">Morning: Hohensalzburg Fortress. Noon: Getreidegasse, Mozart's Birthplace. Afternoon: RJX 19977 dep. 14:07 → Vienna Hbf arr. 16:32. Evening: Naschmarkt.</span>
+      <span class="zh">09:00 霍亨萨尔茨堡要塞（Hohensalzburg Fortress），参观约1.5小时，俯瞰萨尔茨堡全景<br>11:00 格特赖德巷（Getreidegasse），莫扎特故居（Mozart's Birthplace）<br>12:30 老城区午餐，退房行李寄存<br>14:07 乘ÖBB RJX 19977出发（萨尔茨堡中央站 → 维也纳中央站Wien Hbf），16:32抵达<br>17:00 入住维也纳<br>18:30 Naschmarkt夜市，晚餐</span>
+      <span class="en">09:00 Hohensalzburg Fortress (~1.5 h, panoramic view). 11:00 Getreidegasse &amp; Mozart's Birthplace. 12:30 lunch in old town; check out, luggage storage. 14:07 ÖBB RJX 19977 Salzburg Hbf → Wien Hbf arr. 16:32. 17:00 check in Vienna. 18:30 Naschmarkt dinner.</span>
     </td>
-    <td>DoubleTree by Hilton Vienna Schönbrunn<div class="note">Schönbrunner Str. 474, Vienna, AT</div></td>
+    <td>DoubleTree by Hilton Vienna Schönbrunn<div class="note">Schönbrunner Str. 474, Vienna</div></td>
   </tr>
   <tr>
     <td>10月4日（日）<div class="note">D9 · Sunday</div></td>
-    <td>🇦🇹 维也纳</td>
+    <td>维也纳</td>
     <td>
-      <span class="zh">上午：霍夫堡宫（Hofburg Palace）、茜茜公主博物馆<br>中午：Café Central午饭<br>下午：艺术史博物馆（Kunsthistorisches Museum）14:00场次<br>傍晚：维也纳国家歌剧院（可选）、卡尔广场漫步</span>
-      <span class="en">Morning: Hofburg Palace &amp; Sisi Museum. Noon: lunch at Café Central. Afternoon: Kunsthistorisches Museum (14:00). Evening: Vienna State Opera (optional), Karlsplatz.</span>
+      <span class="zh">09:00 霍夫堡宫（Hofburg Palace）、茜茜公主博物馆（Sisi Museum），参观约2小时<br>11:30 中央咖啡馆（Café Central）午餐<br>13:30 乘地铁U3至Volkstheater<br>14:00 艺术史博物馆（Kunsthistorisches Museum），参观约2小时（已线上预约，附预约单）<br>17:00 卡尔广场（Karlsplatz）漫步、卡尔教堂外观<br>19:30 维也纳国家歌剧院（Vienna State Opera）外观游览及周边广场<br>21:00 晚餐</span>
+      <span class="en">09:00 Hofburg Palace &amp; Sisi Museum (~2 h). 11:30 lunch at Café Central. 13:30 metro U3 to Volkstheater. 14:00 Kunsthistorisches Museum (~2 h, pre-booked). 17:00 Karlsplatz &amp; Karlskirche exterior. 19:30 Vienna State Opera exterior &amp; surroundings. 21:00 dinner.</span>
     </td>
-    <td>DoubleTree by Hilton Vienna Schönbrunn<div class="note">Schönbrunner Str. 474, Vienna, AT</div></td>
+    <td>DoubleTree by Hilton Vienna Schönbrunn<div class="note">Schönbrunner Str. 474, Vienna</div></td>
   </tr>
   <tr>
     <td>10月5日（一）<div class="note">D10 · Departure Day</div></td>
-    <td>🇦🇹 维也纳<br>→🇨🇳 北京</td>
+    <td>维也纳 → 北京</td>
     <td>
-      <span class="zh">上午：美泉宫（Schönbrunn Palace）09:30场次，国事厅+宫廷花园<br>中午：宫殿附近午饭，退房行李寄存<br>下午：环城大道（Ringstraße）漫步<br>15:00前往维也纳国际机场（U1→S7，约40分钟）<br>晚间：约19:00飞离维也纳，返回中国</span>
-      <span class="en">Morning: Schönbrunn Palace (09:30, Imperial State Rooms + Gardens). Noon: lunch, check out, luggage storage. Afternoon: Ringstraße walk. 15:00: transfer to VIE (U1+S7, ~40 min). Evening: flight dep. ~19:00 to Beijing.</span>
+      <span class="zh">09:30 美泉宫（Schönbrunn Palace），国事厅+宫廷花园（已预约，附预约单），参观约2小时<br>12:00 宫殿附近午餐，退房<br>13:30 环城大道（Ringstraße）漫步，拍照<br>15:00 乘地铁U4→Meidling站，换乘S-Bahn S7至维也纳国际机场（约40分钟），16:00抵达VIE<br>约19:00 国际航班起飞，返回北京</span>
+      <span class="en">09:30 Schönbrunn Palace (Imperial State Rooms + Gardens, pre-booked, ~2 h). 12:00 lunch near palace; check out. 13:30 Ringstraße walk. 15:00 metro U4 → Meidling, S-Bahn S7 to VIE (~40 min); arr. VIE ~16:00. ~19:00 international flight departs; return to Beijing.</span>
     </td>
     <td style="color:#888;text-align:center">— 离境日 Departure Day —</td>
   </tr>
@@ -198,55 +218,63 @@
 <div class="section-title">三、住宿预订信息 &nbsp;<small>Section 3 · Accommodation Details</small></div>
 <table>
   <tr>
-    <th>日期 Dates</th>
-    <th>城市 City</th>
+    <th style="width:95px">日期 Dates</th>
+    <th style="width:80px">城市 City</th>
     <th>酒店名称 Hotel Name</th>
-    <th>地址 Address</th>
-    <th>状态 Status</th>
+    <th style="width:160px">地址 Address</th>
+    <th style="width:90px">预订编号<br>Booking Ref.</th>
+    <th style="width:100px">状态 Status</th>
   </tr>
   <tr>
     <td>9/25–9/27<div class="note">2 nights</div></td>
-    <td>🇳🇱 阿姆斯特丹<br><span class="en">Amsterdam</span></td>
+    <td>阿姆斯特丹<br><span class="en">Amsterdam, NL</span></td>
     <td>Holiday Inn Express Amsterdam - Sloterdijk Station</td>
-    <td style="font-size:8.5pt">Transformatorweg 36, 1014 AZ Amsterdam, Netherlands</td>
-    <td><span class="badge badge-ok">✅ 已预订 Booked</span><div class="note">可免费取消 Free cancellation</div></td>
+    <td style="font-size:8pt">Transformatorweg 36, 1014 AZ Amsterdam, Netherlands</td>
+    <td style="font-size:8pt">&nbsp;</td>
+    <td><span class="badge badge-ok">已预订 Booked</span><div class="note">可免费取消<br>Free cancellation</div></td>
   </tr>
   <tr>
     <td>9/27–9/28<div class="note">1 night</div></td>
-    <td>🇩🇪 科隆<br><span class="en">Cologne</span></td>
+    <td>科隆<br><span class="en">Cologne, DE</span></td>
     <td>Hilton Cologne</td>
-    <td style="font-size:8.5pt">Marzellenstraße 13-17, 50668 Cologne, Germany</td>
-    <td><span class="badge badge-ok">✅ 已预订 Booked</span><div class="note">可免费取消 Free cancellation</div></td>
+    <td style="font-size:8pt">Marzellenstraße 13-17, 50668 Cologne, Germany</td>
+    <td style="font-size:8pt">&nbsp;</td>
+    <td><span class="badge badge-ok">已预订 Booked</span><div class="note">可免费取消<br>Free cancellation</div></td>
   </tr>
   <tr>
     <td>9/28–9/29<div class="note">1 night</div></td>
-    <td>🇩🇪 曼海姆<br><span class="en">Mannheim</span></td>
+    <td>曼海姆<br><span class="en">Mannheim, DE</span></td>
     <td>Holiday Inn Mannheim City – Hauptbahnhof</td>
-    <td style="font-size:8.5pt">Willy-Brandt-Platz 3, 68161 Mannheim, Germany</td>
-    <td><span class="badge badge-pending">⏳ 待预订 To Book</span></td>
+    <td style="font-size:8pt">Willy-Brandt-Platz 3, 68161 Mannheim, Germany</td>
+    <td style="font-size:8pt">&nbsp;</td>
+    <td><span class="badge badge-pending">待预订 To Book</span></td>
   </tr>
   <tr>
     <td>9/29–10/1<div class="note">2 nights</div></td>
-    <td>🇩🇪 慕尼黑<br><span class="en">Munich</span></td>
+    <td>慕尼黑<br><span class="en">Munich, DE</span></td>
     <td>Holiday Inn München Süd</td>
-    <td style="font-size:8.5pt">Kistlerhofstraße 142, 81379 Munich, Germany</td>
-    <td><span class="badge badge-pending">⏳ 待预订 To Book</span></td>
+    <td style="font-size:8pt">Kistlerhofstraße 142, 81379 Munich, Germany</td>
+    <td style="font-size:8pt">&nbsp;</td>
+    <td><span class="badge badge-pending">待预订 To Book</span></td>
   </tr>
   <tr>
     <td>10/1–10/3<div class="note">2 nights</div></td>
-    <td>🇦🇹 萨尔茨堡<br><span class="en">Salzburg</span></td>
-    <td>a&amp;o Salzburg Hauptbahnhof<div class="note">（考虑中 Under consideration）</div></td>
-    <td style="font-size:8.5pt">Ferdinand-Hanusch-Platz 2, 5020 Salzburg, Austria</td>
-    <td><span class="badge badge-pending">⏳ 待确认 TBC</span></td>
+    <td>萨尔茨堡<br><span class="en">Salzburg, AT</span></td>
+    <td>a&amp;o Salzburg Hauptbahnhof</td>
+    <td style="font-size:8pt">Ferdinand-Hanusch-Platz 2, 5020 Salzburg, Austria</td>
+    <td style="font-size:8pt">&nbsp;</td>
+    <td><span class="badge badge-pending">待预订 To Book</span></td>
   </tr>
   <tr>
     <td>10/3–10/5<div class="note">2 nights</div></td>
-    <td>🇦🇹 维也纳<br><span class="en">Vienna</span></td>
+    <td>维也纳<br><span class="en">Vienna, AT</span></td>
     <td>DoubleTree by Hilton Vienna Schönbrunn</td>
-    <td style="font-size:8.5pt">Schönbrunner Str. 474, 1120 Vienna, Austria</td>
-    <td><span class="badge badge-ok">✅ 已预订 Booked</span><div class="note">可免费取消 Free cancellation</div></td>
+    <td style="font-size:8pt">Schönbrunner Str. 474, 1120 Vienna, Austria</td>
+    <td style="font-size:8pt">&nbsp;</td>
+    <td><span class="badge badge-ok">已预订 Booked</span><div class="note">可免费取消<br>Free cancellation</div></td>
   </tr>
 </table>
+<div class="note" style="margin:4px 0 0;font-size:8pt">* 递签前须完成全部住宿预订并填入预订编号，提交相应酒店确认单原件 / 预订截图。<br>* All accommodation must be booked and confirmation numbers inserted before submitting the visa application.</div>
 </div>
 
 <!-- ========== 四、主要交通 ========== -->
@@ -254,108 +282,161 @@
 <div class="section-title">四、主要交通安排 &nbsp;<small>Section 4 · Transportation</small></div>
 <table>
   <tr>
-    <th>日期 Date</th>
+    <th style="width:80px">日期 Date</th>
     <th>路段 Route</th>
-    <th>方式 Mode</th>
-    <th>时刻 Schedule</th>
+    <th style="width:130px">航班/班次 Flight / Train No.</th>
+    <th style="width:120px">时刻 Schedule</th>
+    <th style="width:90px">备注 Notes</th>
   </tr>
   <tr>
-    <td>9月25日 Sep 25</td>
-    <td>北京 → 阿姆斯特丹（AMS）<span class="en">Beijing → Amsterdam (AMS)</span></td>
-    <td>✈️ 国际航班 International Flight</td>
-    <td>抵达约19:00<span class="en">Arr. ~19:00</span></td>
+    <td>9月25日<br>Sep 25</td>
+    <td>北京 → 阿姆斯特丹（AMS）<span class="en">Beijing → Amsterdam Schiphol</span></td>
+    <td style="font-size:8.5pt">（待填入 To be filled）<br><span class="en">Airline / Flight No.</span></td>
+    <td>起飞：待定<br>到达：约19:00<span class="en">Dep: TBD / Arr: ~19:00</span></td>
+    <td style="font-size:8pt">国际航班 Intl. Flight<br>附机票预订单</td>
   </tr>
   <tr>
-    <td>9月27日 Sep 27</td>
-    <td>阿姆斯特丹 → 科隆<span class="en">Amsterdam → Cologne</span></td>
-    <td>🚆 IC 60403（直达 Direct）</td>
+    <td>9月27日<br>Sep 27</td>
+    <td>阿姆斯特丹中央站 → 科隆中央站<span class="en">Amsterdam Centraal → Cologne Hbf</span></td>
+    <td>IC 60403<br><span class="en">Intercity Direct</span></td>
     <td>21:01 → 23:45</td>
+    <td style="font-size:8pt">直达夜间列车<br>24h前台入住</td>
   </tr>
   <tr>
-    <td>9月28日 Sep 28</td>
-    <td>科隆 → 曼海姆<span class="en">Cologne → Mannheim</span></td>
-    <td>🚆 IC 2440（直达 Direct）</td>
+    <td>9月28日<br>Sep 28</td>
+    <td>科隆中央站 → 曼海姆中央站<span class="en">Cologne Hbf → Mannheim Hbf</span></td>
+    <td>IC 2440<br><span class="en">Intercity</span></td>
     <td>18:53 → 21:21</td>
+    <td style="font-size:8pt">直达</td>
   </tr>
   <tr>
-    <td>9月29日 Sep 29</td>
-    <td>曼海姆 → 慕尼黑<span class="en">Mannheim → Munich</span></td>
-    <td>🚆 ICE 1091（直达 Direct）</td>
+    <td>9月29日<br>Sep 29</td>
+    <td>曼海姆中央站 → 慕尼黑中央站<span class="en">Mannheim Hbf → Munich Hbf</span></td>
+    <td>ICE 1091<br><span class="en">InterCityExpress</span></td>
     <td>07:11 → 10:10</td>
+    <td style="font-size:8pt">高速直达</td>
   </tr>
   <tr>
-    <td>9月30日 Sep 30</td>
-    <td>慕尼黑 ↔ 菲森（新天鹅堡）<span class="en">Munich ↔ Füssen (Neuschwanstein)</span></td>
-    <td>🚆 区域列车 Regional Train</td>
-    <td>当日来回 Day return</td>
+    <td>9月30日<br>Sep 30</td>
+    <td>慕尼黑中央站 → 菲森（往）<span class="en">Munich Hbf → Füssen (outbound)</span></td>
+    <td>RE 9783<br><span class="en">Regional Express</span></td>
+    <td>07:59 → 10:08</td>
+    <td style="font-size:8pt">换乘公交78号至城堡</td>
   </tr>
   <tr>
-    <td>10月1日 Oct 1</td>
-    <td>慕尼黑 → 萨尔茨堡<span class="en">Munich → Salzburg</span></td>
-    <td>🚆 ÖBB 区际列车 Intercity</td>
-    <td>约12:09 → 约13:55</td>
+    <td>9月30日<br>Sep 30</td>
+    <td>菲森 → 慕尼黑中央站（返）<span class="en">Füssen → Munich Hbf (return)</span></td>
+    <td>RE（区域列车）<br><span class="en">Regional Express</span></td>
+    <td>17:14 → 20:28</td>
+    <td style="font-size:8pt">当日来回</td>
   </tr>
   <tr>
-    <td>10月2日 Oct 2</td>
-    <td>萨尔茨堡 ↔ 哈尔施塔特<span class="en">Salzburg ↔ Hallstatt</span></td>
-    <td>🚆+⛴️ 火车+轮渡 Train + Ferry</td>
-    <td>08:30出发，当日来回 Day return</td>
+    <td>10月1日<br>Oct 1</td>
+    <td>慕尼黑中央站 → 萨尔茨堡中央站<span class="en">Munich Hbf → Salzburg Hbf</span></td>
+    <td>ÖBB Railjet<br><span class="en">Intercity</span></td>
+    <td>约12:09 → 约13:55<span class="en">~12:09 → ~13:55</span></td>
+    <td style="font-size:8pt">跨境（德→奥）<br>Cross-border</td>
   </tr>
   <tr>
-    <td>10月3日 Oct 3</td>
-    <td>萨尔茨堡 → 维也纳<span class="en">Salzburg → Vienna</span></td>
-    <td>🚆 ÖBB RJX 19977</td>
-    <td>14:07 → 16:32 (Wien Hbf)</td>
+    <td>10月2日<br>Oct 2</td>
+    <td>萨尔茨堡 → 哈尔施塔特（往）<span class="en">Salzburg → Hallstatt (outbound)</span></td>
+    <td>ÖBB区域列车+轮渡<br><span class="en">Regional Train + Ferry</span></td>
+    <td>08:30出发<br>约10:30到达<span class="en">Dep 08:30 / Arr ~10:30</span></td>
+    <td style="font-size:8pt">经Attnang-Puchheim<br>换乘轮渡渡湖</td>
   </tr>
   <tr>
-    <td>10月5日 Oct 5</td>
-    <td>维也纳 → 北京（VIE出发）<span class="en">Vienna → Beijing (dep. VIE)</span></td>
-    <td>✈️ 国际航班 International Flight</td>
-    <td>约19:00起飞 Dep. ~19:00</td>
+    <td>10月2日<br>Oct 2</td>
+    <td>哈尔施塔特 → 萨尔茨堡（返）<span class="en">Hallstatt → Salzburg (return)</span></td>
+    <td>轮渡+ÖBB区域列车<br><span class="en">Ferry + Regional Train</span></td>
+    <td>14:00出发<br>约15:30抵达<span class="en">Dep 14:00 / Arr ~15:30</span></td>
+    <td style="font-size:8pt">当日来回</td>
+  </tr>
+  <tr>
+    <td>10月3日<br>Oct 3</td>
+    <td>萨尔茨堡中央站 → 维也纳中央站（Wien Hbf）<span class="en">Salzburg Hbf → Wien Hbf</span></td>
+    <td>ÖBB RJX 19977<br><span class="en">Railjet Express</span></td>
+    <td>14:07 → 16:32</td>
+    <td style="font-size:8pt">直达高速</td>
+  </tr>
+  <tr>
+    <td>10月5日<br>Oct 5</td>
+    <td>维也纳市区 → 维也纳国际机场（VIE）<span class="en">Vienna city → VIE Airport</span></td>
+    <td>地铁U4 + S-Bahn S7<br><span class="en">Metro + S-Bahn</span></td>
+    <td>约15:00出发<br>约15:40到达<span class="en">Dep ~15:00 / Arr ~15:40</span></td>
+    <td style="font-size:8pt">约40分钟</td>
+  </tr>
+  <tr>
+    <td>10月5日<br>Oct 5</td>
+    <td>维也纳（VIE）→ 北京<span class="en">Vienna (VIE) → Beijing</span></td>
+    <td style="font-size:8.5pt">（待填入 To be filled）<br><span class="en">Airline / Flight No.</span></td>
+    <td>约19:00起飞<span class="en">Dep. ~19:00</span></td>
+    <td style="font-size:8pt">国际航班 Intl. Flight<br>附机票预订单</td>
   </tr>
 </table>
 </div>
 
 <!-- ========== 五、申根停留统计 ========== -->
 <div class="stat-section">
-<div class="section-title">五、申根区停留天数统计 &nbsp;<small>Section 5 · Schengen Stay Breakdown</small></div>
+<div class="section-title">五、申根区停留天数及过夜晚数统计 &nbsp;<small>Section 5 · Schengen Stay &amp; Overnight Breakdown</small></div>
 <table>
   <tr>
     <th>国家 Country</th>
     <th>停留日期 Dates</th>
-    <th>天数 Days</th>
+    <th style="width:90px">自然停留天数<br>Calendar Days</th>
+    <th style="width:90px"><strong>过夜住宿晚数</strong><br><strong>Overnight Stays</strong></th>
     <th>备注 Notes</th>
   </tr>
   <tr>
-    <td>🇳🇱 荷兰 Netherlands</td>
+    <td>荷兰 Netherlands</td>
     <td>9/25 – 9/27</td>
-    <td>3天 3 days</td>
-    <td>阿姆斯特丹（史基浦入境）<span class="en">Amsterdam; entry via Schiphol (AMS)</span></td>
+    <td style="text-align:center">3天 days</td>
+    <td style="text-align:center">2晚 nights</td>
+    <td>阿姆斯特丹，史基浦机场（AMS）入境<span class="en">Amsterdam; entry via Schiphol</span></td>
   </tr>
   <tr>
-    <td>🇩🇪 德国 Germany</td>
+    <td><strong>德国 Germany</strong></td>
     <td>9/27 – 10/1</td>
-    <td>4天 4 days</td>
-    <td>科隆1晚 + 曼海姆1晚 + 慕尼黑2晚；含新天鹅堡日游<span class="en">Cologne 1n + Mannheim 1n + Munich 2n; incl. Neuschwanstein day trip</span></td>
+    <td style="text-align:center">4天 days</td>
+    <td style="text-align:center"><strong>4晚 nights</strong></td>
+    <td>科隆1晚 + 曼海姆1晚 + 慕尼黑2晚<span class="en">Cologne 1n + Mannheim 1n + Munich 2n</span></td>
   </tr>
   <tr>
-    <td>🇦🇹 奥地利 Austria</td>
+    <td>奥地利 Austria</td>
     <td>10/1 – 10/5</td>
-    <td>5天 5 days</td>
-    <td>萨尔茨堡2晚 + 维也纳2晚；含哈尔施塔特日游；VIE离境<span class="en">Salzburg 2n + Vienna 2n; incl. Hallstatt day trip; exit via VIE</span></td>
+    <td style="text-align:center">5天 days</td>
+    <td style="text-align:center">4晚 nights</td>
+    <td>萨尔茨堡2晚 + 维也纳2晚，VIE离境<span class="en">Salzburg 2n + Vienna 2n; exit via VIE</span></td>
   </tr>
   <tr style="font-weight:700">
     <td>合计 Total</td>
     <td>9/25 – 10/5</td>
-    <td>11天 11 days</td>
-    <td>主签证国：德国（停留最长 4天）<span class="en">Main visa country: Germany (longest stay, 4 days)</span></td>
+    <td style="text-align:center">11天 days</td>
+    <td style="text-align:center">10晚 nights</td>
+    <td>全程申根区内移动，无第三国中转<span class="en">All within Schengen; no third-country transit</span></td>
   </tr>
 </table>
+<div class="note" style="margin:5px 0 0;font-size:8.5pt;line-height:1.7">
+  <strong>主申请国判定说明：</strong>申根签证主申请国以<strong>过夜住宿晚数</strong>为判定标准（非自然日天数）。本行程德国4晚 = 奥地利4晚，但德国为首个入境申根国后的主要过夜目的地，且含科隆、曼海姆、慕尼黑三城，符合德国签证申请条件。<br>
+  <strong>Visa Country Determination:</strong> The main Schengen visa country is determined by the number of <strong>overnight stays</strong> (not calendar days). Germany and Austria each have 4 nights. Germany is the first major overnight destination after entering the Schengen Area and encompasses three cities; application at the German consulate is appropriate.
+</div>
 </div>
 
+<!-- ========== 六、配套材料清单 ========== -->
+<div class="section-title">六、配套递交材料清单 &nbsp;<small>Section 6 · Supporting Documents Checklist</small></div>
+<ul class="materials-list">
+  <li>往返国际机票预订单（含航班号、申请人姓名、出发/返回日期）<span class="en"> — Round-trip flight reservation (airline, flight no., name, dates)</span></li>
+  <li>全程住宿确认单（共6家酒店，含确认号、申请人姓名、入住/退房日期）<span class="en"> — Hotel confirmations for all 6 properties (booking ref., name, check-in/out dates)</span></li>
+  <li>欧铁跨城火车预订单（IC 60403 / IC 2440 / ICE 1091 / ÖBB RJX等）<span class="en"> — Intercity train bookings (IC, ICE, ÖBB lines)</span></li>
+  <li>申根旅行保险保单（保额不低于3万欧元，覆盖全部申根国，有效期9月24日–10月6日）<span class="en"> — Schengen travel insurance (min. EUR 30,000, all Schengen, valid 24 Sep – 6 Oct 2026)</span></li>
+  <li>景点预约凭证（安妮之家、梵高博物馆、国立博物馆、新天鹅堡、艺术史博物馆、美泉宫）<span class="en"> — Attraction booking confirmations (Anne Frank House, Van Gogh Museum, Rijksmuseum, Neuschwanstein, Kunsthistorisches Museum, Schönbrunn)</span></li>
+  <li>银行流水（近6个月，体现充足出行资金，建议余额不低于2万元人民币等值）<span class="en"> — Bank statements (last 6 months; recommended balance equiv. ≥ EUR 2,500)</span></li>
+  <li>在职证明及工资流水（如适用）<span class="en"> — Employment certificate &amp; payslips (if applicable)</span></li>
+  <li>本行程单（打印件，申请人签字）<span class="en"> — This itinerary (printed, signed by applicant)</span></li>
+</ul>
+
 <div class="footer">
-  <p>本行程单仅供签证申请参考，实际行程如有调整以出行时为准。</p>
-  <p>This itinerary is prepared for visa application reference purposes only. Actual schedule may be subject to change.</p>
+  <p>本行程单仅供德国申根签证申请参考，实际行程如有调整以出行时为准。递签前请确认所有住宿均已预订并更新预订编号。</p>
+  <p>This itinerary is prepared solely for German Schengen visa application purposes. Actual schedule may be subject to minor adjustments. Please ensure all accommodation is booked and booking reference numbers are completed before submission.</p>
   <p style="margin-top:6px">生成日期 Generated：2026年7月8日 / 8 July 2026</p>
 </div>
 
