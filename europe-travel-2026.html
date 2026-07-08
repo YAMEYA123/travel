@@ -143,22 +143,6 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
   .legend{display:none}
   .bi-section{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .bi-table{min-width:520px}
-  /* ── 手机 header 压缩 ── */
-  header{padding:7px 12px}
-  header p{display:none}
-  .dl-btn{padding:4px 9px;font-size:.68rem}
-  /* ── nav-tabs 单行横滚 ── */
-  .nav-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-  .nav-tabs::-webkit-scrollbar{display:none}
-  .tab-btn{padding:6px 11px;font-size:.73rem;flex-shrink:0}
-  /* ── 侧边栏字体缩小 ── */
-  .acc-title strong{font-size:.78rem}
-  .acc-title span{font-size:.64rem}
-  .act-name{font-size:.75rem}
-  .act-desc{font-size:.66rem}
-  .act-time{font-size:.62rem}
-  .act-en{font-size:.61rem}
-  .hotel-pill{font-size:.67rem}
 }
 @media(max-width:480px){
   .bi-table th:nth-child(4),
@@ -187,7 +171,6 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
   <button class="tab-btn" onclick="switchTab('booking',this)">📋 待预约 <span id="badge-todo" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
   <button class="tab-btn" onclick="switchTab('risk',this)">⚠️ 风险清单</button>
   <button class="tab-btn" onclick="switchTab('tickets',this)">🎫 交通票攻略</button>
-  <button class="tab-btn" onclick="switchTab('checklist',this)">✅ 购票清单 <span id="badge-cl" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
   <button class="tab-btn" onclick="switchTab('budget',this)">💰 费用总览</button>
   <button class="tab-btn" onclick="switchTab('hotel',this)">🏨 住宿推荐</button>
   <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
@@ -330,49 +313,49 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
     <p style="font-size:.8rem;color:var(--muted);margin-bottom:18px">价格为旺季参考均价/晚，建议提前2–3个月预订。</p>
 
     <div class="bi-section">
-      <div class="city-hd" style="background:#FFF7ED;border-left:4px solid var(--nl)">🇳🇱 阿姆斯特丹 — 9/25、9/26（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已预订（可免费取消）：Sloterdijk 智选假日</small></div>
+      <div class="city-hd" style="background:#FFF7ED;border-left:4px solid var(--nl)">🇳🇱 阿姆斯特丹 — 9/25、9/26（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：Sloterdijk 智选假日</small></div>
       <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已预订</span></td><td><b>Holiday Inn Express Amsterdam - Sloterdijk Station</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">阿姆斯特丹 Sloterdijk 智选假日</div></td><td style="font-size:.72rem">Transformatorweg 36</td><td style="font-size:.72rem">紧贴Sloterdijk站·5min火车到中央站·史基浦直达约10min·免费早餐·❄️ 有空调·IHG积分</td><td class="price-g">🏅 IHG 39k(9/25)+44k(9/26)</td></tr>
+      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn Express Amsterdam - Sloterdijk Station</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">阿姆斯特丹 Sloterdijk 智选假日</div></td><td style="font-size:.72rem">Transformatorweg 36</td><td style="font-size:.72rem">紧贴Sloterdijk站·5min火车到中央站·史基浦直达约10min·免费早餐·IHG积分</td><td class="price-g">🏅 IHG 39k(9/25)+45k(9/26)</td></tr>
       </table>
       <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 距博物馆广场约3km，9/27去梵高/国立博物馆乘2/5路电车约15分钟</p>
     </div>
 
     <div class="bi-section">
-      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 科隆 — 9/27（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已预订（可免费取消）：科隆希尔顿酒店</small></div>
+      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 科隆 — 9/27（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：科隆希尔顿酒店</small></div>
       <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已预订</span></td><td><b>Hilton Cologne</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">科隆希尔顿酒店</div></td><td style="font-size:.72rem">Marzellenstraße 13-17</td><td style="font-size:.72rem">大教堂旁100m·中央站步行2min·位置绝佳·❄️ 有空调·1晚短住首选</td><td class="price-g">🏅 Hilton 53k/晚</td></tr>
+      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Hilton Cologne</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">科隆希尔顿酒店</div></td><td style="font-size:.72rem">Marzellenstraße 13-17</td><td style="font-size:.72rem">大教堂旁100m·中央站步行2min·位置绝佳·1晚短住首选</td><td class="price-g">🏅 Hilton 53k/晚</td></tr>
       </table>
     </div>
 
     <div class="bi-section">
-      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 曼海姆 — 9/28（共1晚）<br><small style="font-weight:400;color:var(--muted)">⏳ 已选定·待预订：Holiday Inn Mannheim City</small></div>
+      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 曼海姆 — 9/28（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：Holiday Inn Mannheim City</small></div>
       <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#FEF9C3;color:#854D0E">⏳ 待预订</span></td><td><b>Holiday Inn Mannheim City – Hauptbahnhof</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">曼海姆城市假日酒店</div></td><td style="font-size:.72rem">Willy-Brandt-Platz 3</td><td style="font-size:.72rem">中央站旁步行3min·D5晨班ICE 07:11出发极便利·❄️ 有空调·IHG积分</td><td class="price-g">🏅 IHG 24k/晚</td></tr>
+      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn Mannheim City – Hauptbahnhof</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">曼海姆城市假日酒店</div></td><td style="font-size:.72rem">Willy-Brandt-Platz 3</td><td style="font-size:.72rem">中央站旁步行3min·D5晨班ICE 07:11出发极便利·IHG积分</td><td class="price-g">🏅 IHG 24k/晚</td></tr>
       </table>
     </div>
 
     <div class="bi-section">
-      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 慕尼黑 — 9/29–10/1（共2晚）<br><small style="font-weight:400;color:var(--muted)">⏳ 已选定·待预订：Holiday Inn München Süd</small></div>
+      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 慕尼黑 — 9/29–10/1（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定</small></div>
       <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#FEF9C3;color:#854D0E">⏳ 待预订</span></td><td><b>Holiday Inn München Süd</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">慕尼黑南部假日酒店</div></td><td style="font-size:.72rem">Kistlerhofstraße 142</td><td style="font-size:.72rem">慕尼黑南部·U3 Aidenbachstraße约15min市区·❄️ 有空调·性价比高</td><td class="price-g">🏅 IHG 92k/2晚（47k+45k）</td></tr>
+      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn München Süd</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">慕尼黑南部假日酒店</div></td><td style="font-size:.72rem">Kistlerhofstraße 142</td><td style="font-size:.72rem">慕尼黑南部·U3 Aidenbachstraße约15min市区·性价比高</td><td class="price-g">🏅 IHG 92k/2晚（47k+45k）</td></tr>
       </table>
       <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 D5新天鹅堡需先坐U3到Hbf换区域列车；D6博物馆建议早上在Hbf寄存行李后出发萨尔茨堡</p>
     </div>
 
     <div class="bi-section">
-      <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 萨尔茨堡 — 10/1–10/3（共2晚）<br><small style="font-weight:400;color:var(--muted)">⏳ 待确认·待预订（考虑中：a&amp;o Salzburg Hauptbahnhof）</small></div>
-      <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#FEF9C3;color:#854D0E">⏳ 考虑中</span></td><td><b>a&amp;o Salzburg Hauptbahnhof</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">萨尔茨堡中央站青旅</div></td><td style="font-size:.72rem">Ferdinand-Hanusch-Platz 2</td><td style="font-size:.72rem">紧邻中央站步行3min·价格实惠·D6抵达/D7早出发均便利</td><td class="price-g">€60–90/间</td></tr>
-      <tr><td><span class="htag htag-eco">备选</span></td><td><b>Motel One Salzburg-Süd</b></td><td style="font-size:.72rem">Söllheimer Str. 2</td><td style="font-size:.72rem">设计风格·性价比高·巴士5min老城</td><td class="price-g">€90–130</td></tr>
-      <tr><td><span class="htag htag-mid">备选</span></td><td><b>Boutique Hotel am Dom</b></td><td style="font-size:.72rem">Goldgasse 17</td><td style="font-size:.72rem">老城核心·大教堂旁·复古精品</td><td class="price-g">€160–230</td></tr>
+      <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 萨尔茨堡 — 10/1–10/3（共2晚）<br><small style="font-weight:400;color:var(--muted)">⏳ 待预订 — 推荐老城附近</small></div>
+      <table class="hotel-tbl"><tr><th>档次</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+      <tr><td><span class="htag htag-eco">经济</span></td><td><b>Motel One Salzburg-Süd</b></td><td style="font-size:.72rem">Söllheimer Str. 2</td><td style="font-size:.72rem">设计风格·性价比高·巴士5min老城</td><td class="price-g">€90–130</td></tr>
+      <tr><td><span class="htag htag-mid">舒适</span></td><td><b>Boutique Hotel am Dom</b></td><td style="font-size:.72rem">Goldgasse 17</td><td style="font-size:.72rem">老城核心·大教堂旁·复古精品</td><td class="price-g">€160–230</td></tr>
+      <tr><td><span class="htag htag-lux">豪华</span></td><td><b>Hotel Sacher Salzburg</b></td><td style="font-size:.72rem">Schwarzstraße 5-7</td><td style="font-size:.72rem">萨尔扎赫河畔·要塞对岸绝景·5星</td><td class="price-g">€350–550</td></tr>
       </table>
       <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 推荐住老城河对岸（Linzer Gasse一带），步行可达所有景点；D7早08:30出发哈尔施塔特，住近中央站更方便</p>
     </div>
 
     <div class="bi-section">
-      <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 维也纳 — 10/3–10/5（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已预订（可免费取消）：DoubleTree by Hilton Vienna Schönbrunn</small></div>
+      <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 维也纳 — 10/3–10/5（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定</small></div>
       <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已预订</span></td><td><b>DoubleTree by Hilton Vienna Schönbrunn</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">维也纳美泉宫逸林酒店</div></td><td style="font-size:.72rem">Schönbrunner Str. 474</td><td style="font-size:.72rem">美泉宫步行5min·U4直连市区·D10步行入宫·❄️ 有空调·机场U4→U1→S7约50min</td><td class="price-g">🏅 Hilton 35k/晚</td></tr>
+      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>DoubleTree by Hilton Vienna Schönbrunn</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">维也纳美泉宫逸林酒店</div></td><td style="font-size:.72rem">Schönbrunner Str. 474</td><td style="font-size:.72rem">美泉宫步行5min·U4直连市区·D10步行入宫·机场U4→U1→S7约50min</td><td class="price-g">🏅 Hilton 35k/晚</td></tr>
       </table>
     </div>
 
@@ -410,8 +393,8 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       </div>
 
       <div>
-        <div style="font-weight:600;font-size:.82rem">4. D8 萨尔茨堡上午需赶 RJX19977 14:07，13:45前须到站</div>
-        <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">要塞09:00→大教堂/彼得墓地11:30→午饭12:10→取行李13:15→14:07 RJX19977出发。午饭后无缓冲，Stiftskeller用餐须控制在1小时内，建议提前在 ÖBB 购票。</div>
+        <div style="font-weight:600;font-size:.82rem">4. D8 萨尔茨堡行程极满 + 当晚需赶 Westbahn 18:52</div>
+        <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">要塞→午饭→莫扎特故居→米拉贝尔宫→格特雷德街→晚饭→18:52 Westbahn，全程无缓冲。任一环节超时将产生连锁压力。建议提前在 westbahn.at 购票锁定座位，避免现场抢票。</div>
       </div>
     </div>
 
@@ -434,8 +417,8 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
       </div>
 
       <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
-        <div style="font-weight:600;font-size:.82rem">8. 萨尔茨堡酒店待确认（考虑中：a&amp;o Salzburg Hauptbahnhof）</div>
-        <div style="font-size:.75rem;color:#78350F;margin-top:3px">D6 下午 13:55 抵达，D7 早 08:30 即需出发哈尔施塔特。a&amp;o 紧邻中央站（步行3min），价格实惠，待最终确认后预订。</div>
+        <div style="font-weight:600;font-size:.82rem">8. 萨尔茨堡酒店尚未预订</div>
+        <div style="font-size:.75rem;color:#78350F;margin-top:3px">D6 下午 13:55 抵达，D7 早 08:30 即需出发哈尔施塔特。若临时选酒店，可能无法保证靠近中央站的位置，影响早起接驳效率。建议尽快选定并预订。</div>
       </div>
 
       <div>
@@ -475,7 +458,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
         🔴 <b>立刻</b>：新天鹅堡门票预订（选定 9/30 <b>10:30</b> 场次）<br>
         🔴 <b>确认</b>：D5（9/30 周三）购买普通来回票，非 Bayern Ticket<br>
         🟠 <b>尽快</b>：萨尔茨堡酒店选定并预订（靠近中央站或老城）<br>
-        🟠 <b>尽快</b>：ÖBB RJX19977 萨尔茨堡→维也纳火车总站 10/3 14:07 在 ÖBB 购票<br>
+        🟠 <b>尽快</b>：Westbahn 萨尔茨堡→Hütteldorf 10/3 18:52 在 westbahn.at 购票<br>
         🟡 <b>行前</b>：D6 退房后先到慕尼黑 Hbf 寄存行李，12:09 前取回上车
       </div>
     </div>
@@ -572,11 +555,11 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 ↔ 菲森（新天鹅堡）来回</td><td style="padding:5px 8px;text-align:right">约€32</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 → 萨尔茨堡（ICE 1215，10/1 12:09）</td><td style="padding:5px 8px;text-align:right">€6.99</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">萨尔茨堡 → 哈尔施塔特往返<br><span style="font-size:.65rem;color:#94A3B8">经Attnang-Puchheim换乘；站在湖对岸，另需渡船约€4来回</span></td><td style="padding:5px 8px;text-align:right">约€24</td></tr>
-        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">萨尔茨堡 → 维也纳（RJX19977，10/3 14:07）</td><td style="padding:5px 8px;text-align:right">¥150起/人</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">萨尔茨堡 → 维也纳 Hütteldorf（Westbahn，10/3 18:52）</td><td style="padding:5px 8px;text-align:right">€15/人（约¥117）</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px;font-weight:600">单独买票合计/人</td><td style="padding:5px 8px;text-align:right;font-weight:600;color:#166534">约 €105–115</td></tr>
         <tr><td style="padding:5px 8px;color:#B45309">Eurail/Interrail 3国通票</td><td style="padding:5px 8px;text-align:right;color:#B45309">约 €280–350 ❌</td></tr>
       </table>
-      <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 越早购票越便宜；萨尔茨堡→维也纳选 ÖBB RJX19977 14:07→16:32 Wien Hbf（维也纳火车总站），在 ÖBB 官网购票</div>
+      <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 越早购票越便宜；萨尔茨堡→维也纳选 Westbahn 18:52→Hütteldorf（21:14），直乘U4到酒店无需换乘，在 westbahn.at 购票，含座位预订</div>
     </div>
 
     <!-- 汇总 -->
@@ -598,164 +581,7 @@ aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-le
   </div>
 </div>
 
-<!-- TAB 8: Checklist -->
-<div class="tab-content" id="tab-checklist">
-  <div style="overflow-y:auto;flex:1;padding:14px 16px">
-
-    <!-- 顶部进度条 -->
-    <div id="cl-header" style="position:sticky;top:0;z-index:10;background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-        <div>
-          <span style="font-weight:700;font-size:.9rem">🎫 购票 &amp; 预约清单</span>
-          <span id="cl-progress-text" style="font-size:.72rem;color:var(--muted);margin-left:8px"></span>
-        </div>
-        <div style="display:flex;gap:6px;align-items:center">
-          <span style="font-size:.68rem;display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#DC2626;display:inline-block"></span>必须提前购</span>
-          <span style="font-size:.68rem;display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#D97706;display:inline-block"></span>建议提前购</span>
-          <span style="font-size:.68rem;display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#64748B;display:inline-block"></span>现场可购</span>
-        </div>
-      </div>
-      <div style="margin-top:8px;background:#F1F5F9;border-radius:6px;height:6px;overflow:hidden">
-        <div id="cl-progress-bar" style="height:100%;background:linear-gradient(90deg,#10B981,#059669);border-radius:6px;transition:width .4s ease;width:0%"></div>
-      </div>
-    </div>
-
-    <div id="cl-list"></div>
-
-  </div>
-</div>
-
-<script>
-// ── 购票清单数据（按日期顺序）──
-const CL_ITEMS = [
-  // D0
-  {day:'D0', date:'9/25 周四', label:'出发日（北京→阿姆斯特丹）', items:[
-    {id:'cl_flight_out', name:'去程机票（已含）', type:'✈️ 交通', urgent:0, price:'—', note:'已含在行程中', url:'', done:false}
-  ]},
-  // D1
-  {day:'D1', date:'9/26 周六', label:'阿姆斯特丹 · 羊角村 + 安妮之家', items:[
-    {id:'cl_anne_frank', name:'安妮之家 19:00 场次', type:'🏛 景点', urgent:2, price:'€16.50/人', note:'旺季极易售罄，无法现场购票；必须在官网选 9/26 19:00 场', url:'https://www.annefrank.org/en/museum/tickets/', done:false}
-  ]},
-  // D2
-  {day:'D2', date:'9/27 周日', label:'阿姆斯特丹 · 博物馆广场', items:[
-    {id:'cl_vangogh', name:'梵高博物馆（09:15 场）', type:'🏛 景点', urgent:2, price:'€25/人', note:'不提前购票旺季现场几乎无票', url:'https://www.vangoghmuseum.nl/en/visit/tickets-and-opening-hours', done:false},
-    {id:'cl_rijks', name:'国立博物馆（12:30 场）', type:'🏛 景点', urgent:2, price:'€21.50/人', note:'选 9/27 12:30 场次', url:'https://www.rijksmuseum.nl/en/buy-tickets', done:false},
-    {id:'cl_ic60403', name:'IC 60403 阿姆斯特丹→科隆（21:01→23:45）', type:'🚆 城际', urgent:1, price:'€19/人', note:'越早越便宜；nsinternational.com 购票', url:'https://www.nsinternational.com/en/train/amsterdam-cologne', done:false}
-  ]},
-  // D3
-  {day:'D3', date:'9/28 周一', label:'科隆 · 大教堂 + 晚程出发', items:[
-    {id:'cl_koeln_tower', name:'科隆大教堂南塔（11:30 登顶）', type:'🏛 景点', urgent:0, price:'€8', note:'现场购票即可，533级台阶', url:'', done:false},
-    {id:'cl_ic2440', name:'IC 2440 科隆→曼海姆（18:53→21:21）', type:'🚆 城际', urgent:2, price:'约€6/人', note:'提前购票价更低；int.bahn.de', url:'https://int.bahn.de/en', done:false}
-  ]},
-  // D4
-  {day:'D4', date:'9/29 周二', label:'曼海姆→慕尼黑 · 城市初探', items:[
-    {id:'cl_ice1091', name:'ICE 1091 曼海姆→慕尼黑（07:11→10:10）', type:'🚆 城际', urgent:2, price:'约€6/人', note:'与 IC 2440 分开购，提前锁定早班车', url:'https://int.bahn.de/en', done:false},
-    {id:'cl_deutsches', name:'德意志博物馆', type:'🏛 景点', urgent:0, price:'€16', note:'可现场购，建议提前避免排队', url:'https://www.deutsches-museum.de/en/visit/tickets', done:false},
-    {id:'cl_residenz', name:'慕尼黑王宫', type:'🏛 景点', urgent:0, price:'€9', note:'可现场购', url:'https://www.residenz-muenchen.de/englisch/tourist/index.htm', done:false}
-  ]},
-  // D5
-  {day:'D5', date:'9/30 周三', label:'新天鹅堡 + 啤酒节', items:[
-    {id:'cl_fussen', name:'慕尼黑↔菲森 来回票', type:'🚆 城际', urgent:2, price:'约€32', note:'Bayern-Ticket 或单程，提前在 bahn.com 购', url:'https://www.bahn.com', done:false},
-    {id:'cl_neuschwanstein', name:'新天鹅堡 10:30 场次（9/30）', type:'🏔 景点', urgent:2, price:'€23.50/人', note:'旺季现场排 2–3h 甚至无票，必须提前官网选 10:30 场', url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau', done:false},
-    {id:'cl_oktoberfest', name:'啤酒节帐篷座位（可选）', type:'🍺 活动', urgent:0, price:'含消费约€50+', note:'walk-in 以站饮为主；若想落座需提前数月预约，可能已无余票', url:'https://www.oktoberfest.de/en/service/reservation', done:false}
-  ]},
-  // D6
-  {day:'D6', date:'10/1 周四', label:'慕尼黑→萨尔茨堡', items:[
-    {id:'cl_muc_szg', name:'慕尼黑→萨尔茨堡（ÖBB/DB）', type:'🚆 城际', urgent:2, price:'€6.99/人', note:'可在 int.bahn.de 提前锁定', url:'https://int.bahn.de/en', done:false}
-  ]},
-  // D7
-  {day:'D7', date:'10/2 周五', label:'萨尔茨堡 · 哈尔施塔特一日游', items:[
-    {id:'cl_hallstatt', name:'ÖBB 去哈尔施塔特往返', type:'🚆 城际', urgent:0, price:'约€20往返', note:'需在 Attnang-Puchheim 换乘；萨尔茨堡卡不含', url:'https://www.oebb.at/en/', done:false},
-    {id:'cl_hallstatt_ferry', name:'哈尔施塔特 渡船', type:'⛵ 交通', urgent:0, price:'约€4往返', note:'站在湖对岸，现场购摆渡船票', url:'', done:false}
-  ]},
-  // D8
-  {day:'D8', date:'10/3 周六', label:'萨尔茨堡 · 全天游 + 晚程出发', items:[
-    {id:'cl_fortress', name:'霍亨萨尔茨堡要塞', type:'🏰 景点', urgent:0, price:'€19.20', note:'萨尔茨堡卡含；单独购可官网或现场', url:'https://www.salzburg-burgen.at/en/hohensalzburg/', done:false},
-    {id:'cl_mozart_birth', name:'莫扎特出生地', type:'🏛 景点', urgent:0, price:'€15', note:'现场购票即可', url:'https://mozarteum.at/en/mozarts-birthplace', done:false},
-    {id:'cl_westbahn', name:'ÖBB RJX19977 萨尔茨堡→维也纳（14:07→16:32）', type:'🚆 城际', urgent:2, price:'¥150起/人', note:'10/3 14:07发，16:32抵Wien Hbf，在 ÖBB 官网购票', url:'https://tickets.oebb.at/en/ticket', done:false}
-  ]},
-  // D9
-  {day:'D9', date:'10/4 周日', label:'维也纳 · 初日', items:[
-    {id:'cl_belvedere', name:'美景宫', type:'🏛 景点', urgent:0, price:'€16', note:'可提前在官网购，也可现场', url:'https://www.belvedere.at/en/buy-tickets', done:false},
-    {id:'cl_hofburg', name:'霍夫堡宫', type:'🏛 景点', urgent:0, price:'€18', note:'现场购票', url:'https://www.hofburg-wien.at/en/visit/tickets-prices', done:false},
-    {id:'cl_staatsoper', name:'维也纳国家歌剧院 站票（可选）', type:'🎭 演出', urgent:0, price:'€13–18', note:'当晚开场80min前在票房排站票', url:'https://www.wiener-staatsoper.at/spielplan-tickets/', done:false}
-  ]},
-  // D10
-  {day:'D10', date:'10/5 周一', label:'维也纳 · 深度游', items:[
-    {id:'cl_schoenbrunn', name:'美泉宫', type:'🏰 景点', urgent:1, price:'€28', note:'旺季热门，建议提前在 imperialtickets.com 购票选时段', url:'https://www.imperialtickets.com/en/schoenbrunn-palace', done:false},
-    {id:'cl_mozart_res', name:'莫扎特故居（萨尔茨堡版另计）', type:'🏛 景点', urgent:0, price:'€13', note:'维也纳的莫扎特故居，可现场购', url:'https://mozarteum.at/en/mozarts-residence', done:false}
-  ]}
-];
-
-function clKey(id){return 'cl_2026_'+id;}
-
-function clRenderBadge(){
-  const must = CL_ITEMS.flatMap(d=>d.items).filter(i=>i.urgent===2);
-  const done = must.filter(i=>localStorage.getItem(clKey(i.id))==='1');
-  const rem = must.length - done.length;
-  const el = document.getElementById('badge-cl');
-  if(el){ el.textContent = rem > 0 ? rem : ''; el.style.display = rem > 0 ? '' : 'none'; }
-  // progress bar (all items)
-  const all = CL_ITEMS.flatMap(d=>d.items);
-  const allDone = all.filter(i=>localStorage.getItem(clKey(i.id))==='1').length;
-  const pct = all.length ? Math.round(allDone/all.length*100) : 0;
-  const bar = document.getElementById('cl-progress-bar');
-  const txt = document.getElementById('cl-progress-text');
-  if(bar) bar.style.width = pct+'%';
-  if(txt) txt.textContent = allDone+'/'+all.length+' 已完成 ('+pct+'%)';
-}
-
-function clRender(){
-  const container = document.getElementById('cl-list');
-  if(!container) return;
-  let html = '';
-  CL_ITEMS.forEach(day=>{
-    html += `<div style="margin-bottom:18px">
-      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;border-bottom:2px solid var(--border);padding-bottom:4px">
-        <span style="background:#1E3A5F;color:#fff;border-radius:6px;padding:2px 8px;font-size:.7rem;font-weight:700">${day.day}</span>
-        <span style="font-weight:700;font-size:.82rem">${day.date}</span>
-        <span style="font-size:.72rem;color:var(--muted)">${day.label}</span>
-      </div>`;
-    day.items.forEach(item=>{
-      const isDone = localStorage.getItem(clKey(item.id))==='1';
-      const urgColor = item.urgent===2?'#DC2626': item.urgent===1?'#D97706':'#64748B';
-      const urgLabel = item.urgent===2?'必须提前购': item.urgent===1?'建议提前购':'现场可购';
-      html += `<div onclick="clToggle('${item.id}',this)" style="cursor:pointer;display:flex;align-items:flex-start;gap:10px;background:${isDone?'#F0FDF4':'#fff'};border:1px solid ${isDone?'#BBF7D0':'var(--border)'};border-left:4px solid ${urgColor};border-radius:8px;padding:9px 11px;margin-bottom:7px;transition:background .2s">
-        <div style="margin-top:2px;flex-shrink:0;width:18px;height:18px;border-radius:4px;border:2px solid ${isDone?'#10B981':'#CBD5E1'};background:${isDone?'#10B981':'transparent'};display:flex;align-items:center;justify-content:center">
-          ${isDone?'<svg width="11" height="11" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
-        </div>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;flex-wrap:wrap">
-            <span style="font-weight:600;font-size:.82rem;${isDone?'text-decoration:line-through;color:var(--muted)':''}">${item.name}</span>
-            <span style="font-size:.67rem;background:${urgColor}20;color:${urgColor};border-radius:4px;padding:2px 6px;white-space:nowrap;flex-shrink:0">${urgLabel}</span>
-          </div>
-          <div style="display:flex;gap:8px;margin-top:3px;flex-wrap:wrap;align-items:center">
-            <span style="font-size:.69rem;color:#64748B">${item.type}</span>
-            <span style="font-size:.72rem;font-weight:600;color:#0F172A">${item.price}</span>
-            ${item.url?`<a href="${item.url}" target="_blank" onclick="event.stopPropagation()" style="font-size:.67rem;color:#4F46E5;text-decoration:none">🔗 购票链接</a>`:''}
-          </div>
-          ${item.note?`<div style="font-size:.68rem;color:var(--muted);margin-top:2px">💡 ${item.note}</div>`:''}
-        </div>
-      </div>`;
-    });
-    html += '</div>';
-  });
-  container.innerHTML = html;
-  clRenderBadge();
-}
-
-function clToggle(id, el){
-  const key = clKey(id);
-  const current = localStorage.getItem(key)==='1';
-  localStorage.setItem(key, current?'0':'1');
-  clRender();
-}
-
-// 在页面加载后初始化 badge
-document.addEventListener('DOMContentLoaded', clRenderBadge);
-</script>
-
-<!-- TAB 8a: Budget -->
+<!-- TAB 8: Budget -->
 <div class="tab-content" id="tab-budget">
   <div style="overflow-y:auto;flex:1;padding:14px 16px">
 
@@ -911,11 +737,6 @@ function setAllAcc(open){
     if(open) h.classList.add('open')
     else h.classList.remove('open')
   })
-  // 清掉 click handler 写入的内联 display 样式，让 CSS 类规则生效
-  document.querySelectorAll('.acc-body').forEach(b=>{
-    b.style.display = open ? 'block' : 'none'
-  })
-  if(!open) openIdx=-1
 }
 
 // ── Tab switch ──
@@ -924,8 +745,7 @@ function switchTab(name,btn){
   document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'))
   document.getElementById('tab-'+name).classList.add('active')
   btn.classList.add('active')
-  if(name==='map' && map) setTimeout(()=>map.invalidateSize(),50)
-  if(name==='checklist') clRender()
+  if(name==='map') setTimeout(()=>map.invalidateSize(),50)
 }
 
 // ═══════════════════════════════════════
@@ -989,7 +809,7 @@ const DAYS=[
   ]
 },
 {
-  num:2, date:'9月27日 周日', title:'博物馆 + 海尼根 → 夜车科隆', color:'#F97316',
+  num:2, date:'9月27日 周日', title:'博物馆日 → 夜车科隆', color:'#F97316',
   hotel:'✅ Hilton Cologne（Marzellenstraße 13-17，大教堂旁100m）',
   hotelLat:50.9434, hotelLng:6.9590, hotelName:'Hilton Cologne（Marzellenstraße 13-17）',
   center:[52.36, 4.89], zoom:13,
@@ -1013,8 +833,8 @@ const DAYS=[
     {n:'辛格运河花卉市场（顺路）', en:'Bloemenmarkt', time:'15:00–15:15',
       lat:52.3641, lng:4.8910,
       transport:'🚶 步行12min', tcls:'tr-walk',
-      desc:'荷兰最著名水上花卉市场，从博物馆广场步行至Jordaan途中自然经过，停留15分钟拍照留念即可。每日09:00–17:30，免费参观'},
-    {n:'Jordaan区运河漫步', en:'Jordaan / De 9 Straatjes', time:'15:30–17:30',
+      desc:'荷兰最著名水上花卉市场，停留15分钟拍照留念即可。每日09:00–17:30，免费参观'},
+    {n:'Jordaan区运河漫步', en:'Jordaan / De 9 Straatjes', time:'15:30–18:00',
       lat:52.3737, lng:4.8796,
       transport:'🚶 步行15min', tcls:'tr-walk',
       desc:'精品小店、运河边咖啡馆，阿姆斯特丹最美运河街景'},
@@ -1211,7 +1031,7 @@ const DAYS=[
     {n:'茨威格中心', en:'Stefan Zweig Centre (Edmundsburg)', time:'14:00',
       lat:47.7987, lng:13.0445,
       transport:'🚶 步行约15min', tcls:'tr-walk',
-      desc:'🕘 周一/三/四/五 14:00–16:00，门票€5。展示茨威格手稿与生平，《人类群星闪耀时》《昨日的世界》作者故地。⚠️ 火车仅余1小时缓冲，若晚点则直接跳过，备选：直接前往米拉贝尔宫',
+      desc:'🕘 周一/三/四/五 14:00–16:00，门票€5。展示茨威格手稿与生平，《人类群星闪耀时》《昨日的世界》作者故地',
       book:{text:'Stefan Zweig Centre官网',cls:'book-btn opt',
         url:'https://stefan-zweig-zentrum.at', price:'€5', mustBook:false}},
     {n:'办理入住', time:'16:00',
@@ -1270,7 +1090,7 @@ const DAYS=[
   ]
 },
 {
-  num:8, date:'10月3日 周六', title:'萨尔茨堡上午游 + 下午抵维也纳', color:'#10B981',
+  num:8, date:'10月3日 周六', title:'萨尔茨堡精华游', color:'#10B981',
   hotel:'今晚前往维也纳 → DoubleTree by Hilton Vienna Schönbrunn',
   hotelLat:48.1822, hotelLng:16.3283, hotelName:'DoubleTree by Hilton Vienna Schönbrunn',
   center:[47.800, 13.047], zoom:15,
@@ -1280,36 +1100,41 @@ const DAYS=[
       desc:'🕘 每日09:00–17:00（10月）。缆车上山（含票€19.20），王子厅+魔法剧场+城墙全景，预留2–2.5小时',
       book:{text:'购票（建议提前）',cls:'book-btn opt',
         url:'https://www.salzburg-burgen.at/en/hohensalzburg/', price:'€19.20', mustBook:false}},
-    {n:'萨尔茨堡大教堂 + 彼得墓地', en:'Salzburg Cathedral + Petersfriedhof', time:'11:30',
+    {n:'萨尔茨堡大教堂', en:'Salzburg Cathedral', time:'11:30',
       lat:47.7983, lng:13.0472,
       transport:'🚠 缆车下山→步行2min', tcls:'tr-walk',
-      desc:'大教堂免费快看20min，出门右转即彼得修道院墓地（免费，《音乐之声》取景地），合计约30–40min'},
-    {n:'Stiftskeller St. Peter 午饭', en:'Stiftskeller St. Peter', time:'12:10',
+      desc:'🕘 每日08:00–19:00，免费。从要塞下山步行2分钟即达，巴洛克穹顶壮观，快看约20–30min'},
+    {n:'Stiftskeller St. Peter 午饭', en:'Stiftskeller St. Peter', time:'12:00',
       lat:47.7975, lng:13.0460,
       transport:'🚶 步行1min', tcls:'tr-walk',
-      desc:'要塞山脚修道院餐厅，全球现存最古老餐厅之一，约1小时用餐'},
-    {n:'取行李 → 前往中央站', time:'13:15',
+      desc:'要塞山脚修道院餐厅，全球现存最古老餐厅之一，建议提前查座位'},
+    {n:'彼得修道院墓地', en:'Petersfriedhof', time:'13:00–13:20',
+      lat:47.7974, lng:13.0464,
+      transport:'🚶 步行1min', tcls:'tr-walk',
+      desc:'欧洲保存最完整的中世纪修道院墓地，Stiftskeller出门右转即入口，免费。约15分钟，石龛小礼拜堂嵌于悬崖岩壁，《音乐之声》取景地，氛围静谧'},
+    {n:'莫扎特故居（出生地）', en:"Mozart's Birthplace", time:'13:30', key:true,
+      lat:47.7994, lng:13.0444,
+      transport:'🚶 步行5min', tcls:'tr-walk',
+      desc:'🕘 每日09:00–17:30。格特雷德街9号，三层展示，预留1小时',
+      book:{text:'购票（Getreidegasse 9）',cls:'book-btn opt',
+        url:'https://mozarteum.at/en/mozarts-birthplace', price:'€15', mustBook:false}},
+    {n:'格特雷德街 + 大学广场', en:'Getreidegasse + Universitätsplatz', time:'14:30',
+      lat:47.7990, lng:13.0435,
+      transport:'🚶 步行即达', tcls:'tr-walk',
+      desc:'老城购物街漫步、纪念品、咖啡，大学广场周六有露天市集'},
+    {n:'轻食晚饭 + 前往中央站', time:'17:00',
       lat:47.8127, lng:13.0451,
       transport:'🚶 步行约15min', tcls:'tr-walk',
-      desc:'酒店取寄存行李，步行或打车至萨尔茨堡中央站，13:45前到站充裕'},
-    {n:'RJX19977 → 维也纳火车总站', en:'Salzburg Hbf → Wien Hbf (RJX19977)', time:'14:07', key:true,
+      desc:'附近随意吃，17:30前到中央站取行李，18:52出发留足时间'},
+    {n:'Westbahn → 维也纳Hütteldorf', en:'Salzburg → Wien Hütteldorf (Westbahn)', time:'18:52', key:true,
       lat:47.8127, lng:13.0451,
-      transport:'🚆 RJX 约2h25min', tcls:'tr-train',
-      desc:'14:07出发，16:32抵达Wien Hbf（维也纳火车总站）。ÖBB Railjet，直达无换乘',
-      book:{text:'购买10/3 ÖBB RJX票',cls:'book-btn warn',
-        url:'https://tickets.oebb.at/en/ticket', price:'¥150起/人', mustBook:true}},
-    {n:'抵达Wien Hbf → 入住酒店', en:'Wien Hbf → Hotel via U4', time:'16:32', key:true,
-      lat:48.1822, lng:16.3283,
-      transport:'🚇 U1→Karlsplatz→U4→Schönbrunn 约25min', tcls:'tr-metro',
-      desc:'Wien Hbf乘U1至Karlsplatz换U4，到Schönbrunn站步行750m到酒店，办理入住'},
-    {n:'美泉宫花园傍晚漫步', en:'Schönbrunn Palace Gardens', time:'18:00',
-      lat:48.1845, lng:16.3122,
-      transport:'🚶 酒店步行5min', tcls:'tr-walk',
-      desc:'🕘 花园全年免费开放至日落。凯旋门、海神喷泉、宫殿外立面金色夕阳光，约1小时轻松漫步，为明早宫殿参观做预热'},
-    {n:'Schönbrunn区晚饭', time:'19:30',
-      lat:48.1845, lng:16.3140,
-      transport:'🚶 步行5min', tcls:'tr-walk',
-      desc:'推荐宫殿附近的 Café Residenz im Schloss Schönbrunn 或 Meixner\'s Gastwirtschaft，传统维也纳菜'},
+      transport:'🚆 Westbahn 约2h22min', tcls:'tr-train',
+      desc:'18:52出发，21:14抵达Wien Hütteldorf（U4西端终点站）。比西站班次早8min，含座位预订，准点率约88%，¥117≈€15/人，在westbahn.at购票',
+      book:{text:'购买10/3 Westbahn票',cls:'book-btn warn',
+        url:'https://westbahn.at/en/', price:'¥117≈€15/人', mustBook:true}},
+    {n:'抵达Hütteldorf → U4 → 入住', en:'Wien Hütteldorf → U4 → Hotel', time:'21:14', key:true,
+      lat:48.1933, lng:16.2683,
+      desc:'下车即U4东向，2站到Schönbrunn站，步行约750m到酒店，全程约20min无需换乘'},
   ]
 },
 {
@@ -1324,20 +1149,20 @@ const DAYS=[
       desc:'🕘 每日10:00–18:00，周三至21:00。克里姆特《吻》真迹所在地，预留2小时',
       book:{text:'提前购票',cls:'book-btn opt',
         url:'https://www.belvedere.at/en/buy-tickets', price:'€16', mustBook:false}},
-    {n:'Café Central 午饭', en:'Café Central', time:'12:00',
+    {n:'Café Central 午饭', en:'Café Central', time:'12:30',
       lat:48.2101, lng:16.3651,
       transport:'🚶 步行10min', tcls:'tr-walk',
       desc:'🕘 周一–六08:00–22:00，周日10:00–22:00。维也纳百年咖啡馆，拱廊大厅经典体验，午市无需预订'},
-    {n:'⭐ 霍夫堡宫 茜茜公主博物馆', en:'Hofburg – Sisi Museum & Imperial Apartments', time:'12:45–13:45', key:true,
+    {n:'⭐ 霍夫堡宫 茜茜公主博物馆', en:'Hofburg – Sisi Museum & Imperial Apartments', time:'13:30–14:30', key:true,
       lat:48.2065, lng:16.3643,
       transport:'🚶 步行3min', tcls:'tr-walk',
-      desc:'🕘 每日09:00–17:30（最晚入场17:00）。茜茜公主博物馆+皇家寝宫+皇家银器室三合一，哈布斯堡王朝核心宫殿。预留1小时，步行3分钟到艺术史博物馆',
+      desc:'🕘 每日09:00–17:30（最晚入场17:00）。茜茜公主博物馆+皇家寝宫+皇家银器室三合一，哈布斯堡王朝核心宫殿。Café Central用餐后步行3分钟即达，预留1小时。与KHM相邻，无缝衔接',
       book:{text:'官网购票',cls:'book-btn opt',
         url:'https://www.hofburg-wien.at/en/visit/tickets-prices', price:'€18', mustBook:false}},
-    {n:'艺术史博物馆', en:'Kunsthistorisches Museum (KHM)', time:'14:00', key:true,
+    {n:'艺术史博物馆', en:'Kunsthistorisches Museum (KHM)', time:'14:30', key:true,
       lat:48.2036, lng:16.3611,
-      transport:'🚶 步行3min', tcls:'tr-walk',
-      desc:'🕘 周二–日10:00–18:00，周四至21:00，周一闭馆。预留3–3.5小时，今日周日必去！拉斐尔、伦勃朗、维米尔真迹，馆内咖啡厅可在参观中途休息'},
+      transport:'🚶 步行15min', tcls:'tr-walk',
+      desc:'🕘 周二–日10:00–18:00，周四至21:00，周一闭馆。预留2–3小时；拉斐尔、伦勃朗、维米尔真迹。今日周日必去！'},
     {n:'格拉本步行街', en:'Graben', time:'18:00',
       lat:48.2087, lng:16.3695,
       transport:'🚶 步行10min', tcls:'tr-walk',
@@ -1394,9 +1219,7 @@ const DAYS=[
 // ═══════════════════════════════════
 // MAP
 // ═══════════════════════════════════
-let map=null, overviewLayer=null, dayLayer=null, openIdx=-1
-try {
-map=L.map('map',{zoomControl:true}).setView([49,10],5)
+const map=L.map('map',{zoomControl:true}).setView([49,10],5)
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
   attribution:'© OpenStreetMap © CARTO',maxZoom:19
 }).addTo(map)
@@ -1407,7 +1230,7 @@ const OVERVIEW=[
   {lat:48.140,lng:11.559,c:'#3B82F6',l:'MUC'},{lat:47.809,lng:13.055,c:'#10B981',l:'SZG'},
   {lat:48.208,lng:16.374,c:'#10B981',l:'VIE'},
 ]
-overviewLayer=L.layerGroup()
+const overviewLayer=L.layerGroup()
 OVERVIEW.forEach(v=>{
   L.marker([v.lat,v.lng],{icon:L.divIcon({className:'',html:`<div class="cm" style="background:${v.c}">${v.l}</div>`,iconSize:[28,28],iconAnchor:[14,14]})})
     .addTo(overviewLayer)
@@ -1418,17 +1241,15 @@ L.polyline([[52.374,4.900],[50.942,6.958],[48.140,11.559],[47.809,13.055],[48.20
   {color:'#94A3B8',weight:2,dashArray:'6,4',opacity:.5}).addTo(map)
 
 // Day route layer
-dayLayer=L.layerGroup().addTo(map)
-} catch(e) { console.warn('Leaflet init failed:',e) }
+const dayLayer=L.layerGroup().addTo(map)
+let openIdx=-1
 
 function clearDayRoute(){
-  if(!map) return
   dayLayer.clearLayers()
   document.getElementById('mapInfo').classList.remove('show')
 }
 
 function drawDayRoute(idx){
-  if(!map) return
   const day=DAYS[idx]
   const pts=day.acts.filter(a=>a.lat)
   if(!pts.length) return
@@ -1585,10 +1406,10 @@ const BOOKINGS=[
     price:'€6.99/人', url:'https://int.bahn.de/en',
     urlText:'ÖBB购票（10/1）'},
   {id:'szg-vie', pri:1, cat:'城际火车',
-    date:'10月3日（周六）14:07出发', name:'萨尔茨堡 → 维也纳（RJX19977）',
-    note:'ÖBB RJX19977，14:07出发→16:32抵达Wien Hbf（维也纳火车总站），乘U1→U4约25min到酒店',
-    price:'¥150起/人', url:'https://tickets.oebb.at/en/ticket',
-    urlText:'ÖBB购票（10/3）'},
+    date:'10月3日（周六）18:52出发', name:'萨尔茨堡 → 维也纳 Hütteldorf（Westbahn）',
+    note:'Westbahn，18:52出发→21:14抵达Wien Hütteldorf（U4终点），直乘U4 2站到Schönbrunn，约20min到酒店',
+    price:'¥117≈€15/人', url:'https://westbahn.at/en/',
+    urlText:'Westbahn购票（10/3）'},
   {id:'anne-frank', pri:2, cat:'景点门票',
     date:'9月26日（周六）19:00场次', name:'安妮之家',
     note:'每周二10:00开放6周后的票，选19:00或20:00晚间场次',
@@ -1610,30 +1431,30 @@ const BOOKINGS=[
     price:'€28/人', url:'https://www.imperialtickets.com/en/schoenbrunn-palace',
     urlText:'官网购票'},
   {id:'hotel-ams', pri:2, cat:'酒店',
-    date:'9月25日–27日（2晚）', name:'✅ 阿姆斯特丹 Sloterdijk 智选假日（已预订·可免费取消）',
-    note:'Holiday Inn Express Amsterdam - Sloterdijk Station · 🏅 IHG 39k(9/25晚)+44k(9/26晚)',
-    price:'🏅 IHG 39k+44k积分', url:'https://www.ihg.com/holidayinnexpress/hotels/us/en/amsterdam/amsop/hoteldetail',
-    urlText:'IHG官网（已预订）'},
+    date:'9月25日–27日（2晚）', name:'阿姆斯特丹 Sloterdijk 智选假日',
+    note:'Holiday Inn Express Amsterdam - Sloterdijk Station，已选定 · 🏅 IHG 39k(9/25晚)+45k(9/26晚)',
+    price:'🏅 IHG 39k+45k积分', url:'https://www.ihg.com/holidayinnexpress/hotels/us/en/amsterdam/amsop/hoteldetail',
+    urlText:'IHG官网预订'},
   {id:'hotel-cgn', pri:2, cat:'酒店',
-    date:'9月27日（共1晚）', name:'✅ 科隆希尔顿酒店（已预订·可免费取消）',
-    note:'Hilton Cologne，大教堂旁100m · 🏅 Hilton 53k积分/晚',
+    date:'9月27日（共1晚）', name:'科隆希尔顿酒店',
+    note:'Hilton Cologne，已选定，大教堂旁100m · 🏅 Hilton 53k积分/晚',
     price:'🏅 Hilton 53k积分/晚', url:'https://www.hilton.com/en/hotels/cgndthi-hilton-cologne/',
-    urlText:'Hilton官网（已预订）'},
+    urlText:'Hilton官网预订'},
   {id:'hotel-muc', pri:2, cat:'酒店',
     date:'9月29日–10月1日（共2晚）', name:'Holiday Inn München Süd',
     note:'慕尼黑南部，U3 Aidenbachstraße附近 · 🏅 IHG 92k积分/2晚（47k+45k，9/28改住曼海姆）',
     price:'🏅 IHG 92k积分/2晚（47k+45k）', url:'https://www.ihg.com/holidayinn/hotels/us/en/munich/mucsu/hoteldetail',
     urlText:'IHG官网'},
   {id:'hotel-szg', pri:2, cat:'酒店',
-    date:'10月1日–3日（共2晚）', name:'⏳ 萨尔茨堡酒店（待确认·待预订）',
-    note:'考虑中：a&o Salzburg Hauptbahnhof（Ferdinand-Hanusch-Platz 2，紧邻中央站）',
-    price:'€60–90/间', url:'https://www.aohostels.com/en/salzburg/salzburg-hauptbahnhof/',
-    urlText:'a&o官网预订'},
+    date:'10月1日–3日（共2晚）', name:'萨尔茨堡酒店',
+    note:'推荐老城区附近，步行可达所有景点',
+    price:'€90–350/晚', url:'https://www.booking.com/city/at/salzburg.html',
+    urlText:'搜索预订'},
   {id:'hotel-vie', pri:2, cat:'酒店',
-    date:'10月3日–5日（共2晚）', name:'✅ DoubleTree by Hilton Vienna Schönbrunn（已预订·可免费取消）',
+    date:'10月3日–5日（共2晚）', name:'✅ DoubleTree by Hilton Vienna Schönbrunn',
     note:'美泉宫旁，D10步行入宫，U4直连市区 · 🏅 Hilton 35k积分/晚',
     price:'🏅 Hilton 35k积分/晚', url:'https://www.hilton.com/en/hotels/viessdi-doubletree-vienna-schoenbrunn/',
-    urlText:'希尔顿官网（已预订）'},
+    urlText:'希尔顿官网'},
   {id:'deutsches', pri:3, cat:'景点门票',
     date:'9月29日（周二）09:00', name:'德意志博物馆',
     note:'现场也可购票，建议提前以免排队',
@@ -1864,12 +1685,11 @@ const COST_ITEMS=[
   {id:'b06',cat:'🚆 城际铁路',name:'慕尼黑 ↔ 菲森来回（新天鹅堡）',date:'9/30',price:32,cur:'EUR',type:0,note:'⚠️ 须买普通来回票，非Bayern Ticket（07:00出发不适用）'},
   {id:'b07',cat:'🚆 城际铁路',name:'慕尼黑 → 萨尔茨堡',date:'10/1',price:6.99,cur:'EUR',type:0,note:'DB/ÖBB，12:09出发'},
   {id:'b08',cat:'🚆 城际铁路',name:'萨尔茨堡 ↔ 哈尔施塔特往返',date:'10/2',price:20,cur:'EUR',type:0,note:'ÖBB火车+渡船，约€20/人'},
-  {id:'b09',cat:'🚆 城际铁路',name:'萨尔茨堡 → 维也纳 RJX19977',date:'10/3',price:150,cur:'CNY',type:0,note:'14:07出发，ÖBB官网购票'},
+  {id:'b09',cat:'🚆 城际铁路',name:'萨尔茨堡 → 维也纳 Westbahn',date:'10/3',price:117,cur:'CNY',type:0,note:'18:52出发，westbahn.at，含座位'},
   // ── 景点门票 ──
   {id:'b10',cat:'🎫 景点门票',name:'安妮之家',date:'9/26',price:16.50,cur:'EUR',type:0,note:'须提前预约场次（选19:00），不可现场购'},
   {id:'b11',cat:'🎫 景点门票',name:'梵高博物馆',date:'9/27',price:25,cur:'EUR',type:0,note:'必须网上购，无现场票'},
   {id:'b12',cat:'🎫 景点门票',name:'国立博物馆 Rijksmuseum',date:'9/27',price:21.50,cur:'EUR',type:0,note:'选12:15时段票'},
-  {id:'b13',cat:'🎫 景点门票',name:'海尼根体验馆',date:'9/27',price:25,cur:'EUR',type:1,note:'建议提前选时段，周日10:30–19:30'},
   {id:'b14',cat:'🎫 景点门票',name:'科隆 南塔登顶',date:'9/28',price:8,cur:'EUR',type:1,note:'533级台阶，莱茵河全景'},
   {id:'b15',cat:'🎫 景点门票',name:'科隆 巧克力博物馆',date:'9/28',price:15,cur:'EUR',type:1,note:'周一10:00–18:00'},
   {id:'b16',cat:'🎫 景点门票',name:'德意志博物馆',date:'9/29',price:16,cur:'EUR',type:1,note:'世界最大科技馆，现场可购'},
