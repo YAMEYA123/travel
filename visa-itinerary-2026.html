@@ -32,17 +32,40 @@
   .materials-list{margin:10px 0 0;font-size:9pt;line-height:1.8}
   .materials-list li{margin-left:18px}
   .footer{margin-top:24px;font-size:8.5pt;color:#444;border-top:1px solid #000;padding-top:10px;line-height:1.8}
+  /* ── 地图区块 ── */
+  .map-wrap{margin-top:0;border:1px solid #888;position:relative}
+  .map-toolbar{display:flex;align-items:center;gap:10px;padding:5px 10px;background:#f0f0f0;border-bottom:1px solid #ccc;font-size:8.5pt}
+  .map-toolbar label{font-weight:600;white-space:nowrap}
+  .map-toolbar input[type=range]{flex:1;max-width:220px;cursor:pointer}
+  .map-toolbar span#map-h-val{min-width:36px;text-align:right;font-variant-numeric:tabular-nums}
+  #route-map{width:100%;height:340px;display:block}
+  /* ── 打印按钮 ── */
+  .print-btn{display:block;margin:0 0 14px auto;padding:5px 16px;font-size:9pt;font-weight:700;background:#000;color:#fff;border:none;cursor:pointer;letter-spacing:.03em}
+  .print-btn:hover{background:#333}
+  /* ── 章节折叠 ── */
+  .section-title{cursor:pointer;user-select:none}
+  .section-title::after{content:' ▲';font-size:8pt;opacity:.7;float:right;margin-top:2px}
+  .section-title.collapsed::after{content:' ▼'}
+  .section-body{overflow:hidden;transition:max-height .25s ease}
+  .section-body.collapsed{max-height:0!important}
   @media print{
     body{padding:8px;font-size:10pt}
+    .section-title{cursor:default}
+    .section-title::after{display:none}
+    .section-body.collapsed{max-height:none!important}
     .section-title{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     tr:nth-child(even) td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .purpose-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .map-wrap,.map-toolbar,.print-btn{display:none!important}
   }
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 <div class="page">
+<button class="print-btn" onclick="window.print()">打印 / Print</button>
 
 <h1>申根区旅行行程单<small>Schengen Area Travel Itinerary — For Visa Application</small></h1>
 
@@ -104,6 +127,45 @@
 </table>
 
 <!-- ========== 二、逐日行程 ========== -->
+<!-- ========== 路线地图 ========== -->
+<div class="map-wrap">
+  <div class="map-toolbar">
+    <label>地图高度 Map height：</label>
+    <input type="range" id="map-h-slider" min="180" max="600" value="340" step="10"
+           oninput="document.getElementById('route-map').style.height=this.value+'px';document.getElementById('map-h-val').textContent=this.value+'px';window._map&&window._map.invalidateSize()">
+    <span id="map-h-val">340px</span>
+  </div>
+  <div id="route-map"></div>
+</div>
+<script>
+(function(){
+  var cities=[
+    {name:'阿姆斯特丹\nAmsterdam',lat:52.379,lng:4.900},
+    {name:'科隆\nCologne',lat:50.938,lng:6.960},
+    {name:'曼海姆\nMannheim',lat:49.487,lng:8.466},
+    {name:'慕尼黑\nMunich',lat:48.137,lng:11.576},
+    {name:'萨尔茨堡\nSalzburg',lat:47.800,lng:13.045},
+    {name:'维也纳\nVienna',lat:48.208,lng:16.373}
+  ];
+  var map=L.map('route-map',{scrollWheelZoom:false}).setView([49.5,10.5],5);
+  window._map=map;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; OpenStreetMap contributors',maxZoom:18
+  }).addTo(map);
+  var latlngs=cities.map(function(c){return[c.lat,c.lng]});
+  L.polyline(latlngs,{color:'#000',weight:2,dashArray:'6,4'}).addTo(map);
+  cities.forEach(function(c,i){
+    var icon=L.divIcon({
+      className:'',
+      html:'<div style="background:#000;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:sans-serif">'+(i+1)+'</div>',
+      iconSize:[22,22],iconAnchor:[11,11]
+    });
+    L.marker([c.lat,c.lng],{icon:icon}).addTo(map)
+      .bindTooltip(c.name.replace('\n',' / '),{permanent:false,direction:'top'});
+  });
+})();
+</script>
+
 <div class="section-title">二、逐日行程 &nbsp;<small>Section 2 · Daily Itinerary</small></div>
 <table>
   <tr>
@@ -433,6 +495,20 @@
   <li>在职证明及工资流水（如适用）<span class="en"> — Employment certificate &amp; payslips (if applicable)</span></li>
   <li>本行程单（打印件，申请人签字）<span class="en"> — This itinerary (printed, signed by applicant)</span></li>
 </ul>
+
+<script>
+// 章节折叠：点击黑色标题栏展开/收起其后内容
+document.querySelectorAll('.section-title').forEach(function(title){
+  var body=title.nextElementSibling;
+  if(!body)return;
+  body.style.maxHeight=body.scrollHeight+'px';
+  title.addEventListener('click',function(){
+    var collapsed=title.classList.toggle('collapsed');
+    body.classList.toggle('collapsed',collapsed);
+    if(!collapsed) body.style.maxHeight=body.scrollHeight+'px';
+  });
+});
+</script>
 
 <div class="footer">
   <p>本行程单仅供德国申根签证申请参考，实际行程如有调整以出行时为准。递签前请确认所有住宿均已预订并更新预订编号。</p>
