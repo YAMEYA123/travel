@@ -1751,9 +1751,8 @@ const ROUTE_SEGS=[
   {pts:[[48.140,11.559],[47.856,12.126],[47.809,13.055],[48.306,14.286],[48.200,15.619],[48.208,16.374]],color:'#10B981'},
 ]
 ROUTE_SEGS.forEach(s=>{
-  L.polyline(s.pts,{color:s.color,weight:4,dashArray:'10,6',opacity:.75}).addTo(map)
-  // Glow/shadow underneath
-  L.polyline(s.pts,{color:s.color,weight:8,opacity:.15,dashArray:null}).addTo(map)
+  L.polyline(s.pts,{color:s.color,weight:4,dashArray:'10,6',opacity:.75}).addTo(overviewLayer)
+  L.polyline(s.pts,{color:s.color,weight:8,opacity:.15,dashArray:null}).addTo(overviewLayer)
 })
 
 // Transport style per tcls
