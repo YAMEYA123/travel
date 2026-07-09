@@ -1832,18 +1832,6 @@ async function drawDayRoute(idx){
 
     L.polyline(coords,style).addTo(dayLayer)
 
-    // Midpoint transport badge
-    const emoji=T_EMOJI[to.tcls]
-    if(emoji){
-      const mid=coords[Math.floor(coords.length/2)]
-      const text=to.transport||''
-      const dur=text.match(/(\d+[^\s]*(?:min|h))/i)?.[1]||''
-      L.marker(mid,{icon:L.divIcon({
-        className:'',
-        html:`<div style="background:#fff;border:1.5px solid #CBD5E1;border-radius:20px;padding:2px 7px;font-size:11px;white-space:nowrap;box-shadow:0 1px 5px rgba(0,0,0,.15);color:#334155;display:flex;align-items:center;gap:3px">${emoji}${dur?' <span style="color:#64748B;font-size:10px">'+dur+'</span>':''}</div>`,
-        iconAnchor:[24,12]
-      }),interactive:false}).addTo(dayLayer)
-    }
   }
 
   // Numbered markers
