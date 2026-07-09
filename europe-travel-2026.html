@@ -175,6 +175,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <div class="leg"><div class="leg-dot" style="background:var(--at)"></div>奥地利</div>
   </div>
   <button class="dl-btn" onclick="downloadPage()">⬇ 下载</button>
+  <button class="dl-btn" id="netToggle" onclick="toggleNet()" title="切换网络模式影响地图路线精度">🌐 境外</button>
 </header>
 
 <div class="nav-tabs">
@@ -1710,6 +1711,20 @@ const T_STYLE={
 }
 const T_EMOJI={'tr-train':'🚆','tr-metro':'🚇','tr-tram':'🚋','tr-bus':'🚌','tr-walk':'🚶'}
 
+// Network mode: 'abroad'=use OSRM real routing; 'china'=OSRM blocked, use straight lines
+let netMode = localStorage.getItem('netMode') || 'abroad'
+function toggleNet(){
+  netMode = netMode==='abroad' ? 'china' : 'abroad'
+  localStorage.setItem('netMode', netMode)
+  document.getElementById('netToggle').textContent = netMode==='abroad' ? '🌐 境外' : '🇨🇳 国内'
+  // Redraw current day if open
+  if(openIdx>=0){ clearDayRoute(); drawDayRoute(openIdx) }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const btn=document.getElementById('netToggle')
+  if(btn) btn.textContent = netMode==='abroad' ? '🌐 境外' : '🇨🇳 国内'
+})
+
 async function fetchOsrm(profile,from,to){
   try{
     const r=await fetch(`https://router.project-osrm.org/route/v1/${profile}/${from[1]},${from[0]};${to[1]},${to[0]}?overview=full&geometries=geojson`,{signal:AbortSignal.timeout(6000)})
@@ -1718,8 +1733,18 @@ async function fetchOsrm(profile,from,to){
   }catch(e){}
   return null
 }
-function fetchOsrmWalk(from,to){return fetchOsrm('foot',from,to)}
-function fetchOsrmDrive(from,to){return fetchOsrm('driving',from,to)}
+function fetchOsrmWalk(from,to){ return netMode==='china' ? null : fetchOsrm('foot',from,to) }
+function fetchOsrmDrive(from,to){ return netMode==='china' ? null : fetchOsrm('driving',from,to) }
+
+// Fallback for china mode: snap train/bus route through nearest MAIN_ROUTE waypoints
+function snapThroughMainRoute(from, to){
+  const pts = MAIN_ROUTE
+  function nearest(p){ let bi=0,bd=Infinity; pts.forEach((q,i)=>{ const d=(q[0]-p[0])**2+(q[1]-p[1])**2; if(d<bd){bd=d;bi=i} }); return bi }
+  const ai=nearest(from), bi=nearest(to)
+  if(ai===bi) return [from, to]
+  const seg = ai<bi ? pts.slice(ai,bi+1) : pts.slice(bi,ai+1).reverse()
+  return [from, ...seg, to]
+}
 
 // Day route layer
 const dayLayer=L.layerGroup().addTo(map)
@@ -1742,13 +1767,18 @@ async function drawDayRoute(idx){
     const style=T_STYLE[to.tcls]||{color:day.color,weight:3,dashArray:null,opacity:.85}
     let coords=[[from.lat,from.lng],[to.lat,to.lng]]
 
-    // Real routing: walk=foot profile, train/bus/tram=driving profile (roads follow rail corridors)
+    // Real routing: abroad=OSRM API; china=OSRM blocked, use snapped waypoints for train/bus
     if(to.tcls==='tr-walk'){
       const walked=await fetchOsrmWalk([from.lat,from.lng],[to.lat,to.lng])
       if(walked) coords=walked
     } else if(to.tcls==='tr-train'||to.tcls==='tr-bus'||to.tcls==='tr-tram'){
-      const driven=await fetchOsrmDrive([from.lat,from.lng],[to.lat,to.lng])
-      if(driven) coords=driven
+      if(netMode==='abroad'){
+        const driven=await fetchOsrmDrive([from.lat,from.lng],[to.lat,to.lng])
+        if(driven) coords=driven
+      } else {
+        // China mode: snap through MAIN_ROUTE waypoints as fallback
+        coords=snapThroughMainRoute([from.lat,from.lng],[to.lat,to.lng])
+      }
     }
 
     L.polyline(coords,style).addTo(dayLayer)
