@@ -1710,14 +1710,16 @@ const T_STYLE={
 }
 const T_EMOJI={'tr-train':'🚆','tr-metro':'🚇','tr-tram':'🚋','tr-bus':'🚌','tr-walk':'🚶'}
 
-async function fetchOsrmWalk(from,to){
+async function fetchOsrm(profile,from,to){
   try{
-    const r=await fetch(`https://router.project-osrm.org/route/v1/foot/${from[1]},${from[0]};${to[1]},${to[0]}?overview=full&geometries=geojson`,{signal:AbortSignal.timeout(4000)})
+    const r=await fetch(`https://router.project-osrm.org/route/v1/${profile}/${from[1]},${from[0]};${to[1]},${to[0]}?overview=full&geometries=geojson`,{signal:AbortSignal.timeout(6000)})
     const d=await r.json()
     if(d.routes&&d.routes[0]) return d.routes[0].geometry.coordinates.map(c=>[c[1],c[0]])
   }catch(e){}
   return null
 }
+function fetchOsrmWalk(from,to){return fetchOsrm('foot',from,to)}
+function fetchOsrmDrive(from,to){return fetchOsrm('driving',from,to)}
 
 // Day route layer
 const dayLayer=L.layerGroup().addTo(map)
@@ -1740,10 +1742,13 @@ async function drawDayRoute(idx){
     const style=T_STYLE[to.tcls]||{color:day.color,weight:3,dashArray:null,opacity:.85}
     let coords=[[from.lat,from.lng],[to.lat,to.lng]]
 
-    // Walking: try real street routing
+    // Real routing: walk=foot profile, train/bus/tram=driving profile (roads follow rail corridors)
     if(to.tcls==='tr-walk'){
       const walked=await fetchOsrmWalk([from.lat,from.lng],[to.lat,to.lng])
       if(walked) coords=walked
+    } else if(to.tcls==='tr-train'||to.tcls==='tr-bus'||to.tcls==='tr-tram'){
+      const driven=await fetchOsrmDrive([from.lat,from.lng],[to.lat,to.lng])
+      if(driven) coords=driven
     }
 
     L.polyline(coords,style).addTo(dayLayer)
