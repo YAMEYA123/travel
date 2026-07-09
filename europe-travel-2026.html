@@ -1826,6 +1826,12 @@ async function drawDayRoute(idx){
   }
 
   // ── 第一遍：同步绘制所有已预计算的路线（零延迟）──
+  // 抽稀：保留首尾 + 均匀采样，减少 SVG 节点数
+  const thin=(pts,max)=>{
+    if(pts.length<=max) return pts
+    const step=(pts.length-1)/(max-1)
+    return Array.from({length:max},(_,i)=>pts[Math.round(i*step)])
+  }
   const fallbacks=[]
   for(let i=1;i<pts.length;i++){
     const from=pts[i-1],to=pts[i]
@@ -1833,7 +1839,7 @@ async function drawDayRoute(idx){
     const routeKey=`${from.lat},${from.lng}->${to.lat},${to.lng}`
     const pre=PRECOMP_ROUTES[routeKey]
     if(pre){
-      L.polyline(pre,style).addTo(dayLayer)
+      L.polyline(thin(pre,30),style).addTo(dayLayer)
     } else if(to.tcls==='tr-walk'||to.tcls==='tr-train'||to.tcls==='tr-bus'||to.tcls==='tr-tram'){
       // 直线占位，稍后 async 替换
       const pl=L.polyline([[from.lat,from.lng],[to.lat,to.lng]],{...style,opacity:.3,dashArray:'4,4'}).addTo(dayLayer)
@@ -1858,7 +1864,7 @@ async function drawDayRoute(idx){
       }
       if(coords){
         dayLayer.removeLayer(pl)
-        L.polyline(coords,style).addTo(dayLayer)
+        L.polyline(thin(coords,30),style).addTo(dayLayer)
       }
     }))
   }
@@ -1950,7 +1956,7 @@ DAYS.forEach((day,i)=>{
       const aside=document.querySelector('aside')
       if(aside) aside.scrollTop=0
       map.invalidateSize()
-      setTimeout(()=>drawDayRoute(i),50)
+      setTimeout(()=>drawDayRoute(i),10)
     }
   })
 
