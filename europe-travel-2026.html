@@ -1939,6 +1939,10 @@ DAYS.forEach((day,i)=>{
       hdBtn.classList.add('open')
       body.style.display='block'
       openIdx=i
+      // On mobile, scroll aside to top so map is visible, then invalidate size before drawing
+      const aside=document.querySelector('aside')
+      if(aside) aside.scrollTop=0
+      map.invalidateSize()
       drawDayRoute(i)
     }
   })
