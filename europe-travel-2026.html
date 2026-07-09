@@ -10,26 +10,27 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --nl:#F97316;--de:#3B82F6;--at:#10B981;--day:#94A3B8;
-  --bg:#F1F5F9;--card:#fff;--border:#E2E8F0;
-  --text:#1E293B;--muted:#64748B;--r:10px;
+  --bg:#F0F4F8;--card:#fff;--border:#DDE3EC;
+  --text:#1A2332;--muted:#60748A;--r:10px;
+  --accent:#3B82F6;--accent-soft:#EFF6FF;
 }
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
 
 /* ── Header ── */
-header{background:linear-gradient(135deg,#0F172A,#1E3A5F);color:#fff;padding:11px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.3);z-index:1000}
-header h1{font-size:1rem;font-weight:700}
-header p{font-size:.72rem;opacity:.6;margin-top:1px}
-.legend{margin-left:auto;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.leg{display:flex;align-items:center;gap:4px;font-size:.7rem;opacity:.8}
-.leg-dot{width:8px;height:8px;border-radius:50%}
-.dl-btn{margin-left:8px;padding:5px 12px;background:#F97316;color:#fff;border:none;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;white-space:nowrap}
-.dl-btn:hover{opacity:.85}
+header{background:linear-gradient(135deg,#0D1B2E 0%,#1A3A5C 100%);color:#fff;padding:10px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:0 1px 0 rgba(255,255,255,.07),0 4px 16px rgba(0,0,0,.35);z-index:1000}
+header h1{font-size:.97rem;font-weight:700;letter-spacing:-.01em}
+header p{font-size:.71rem;opacity:.55;margin-top:1px;letter-spacing:.01em}
+.legend{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.leg{display:flex;align-items:center;gap:4px;font-size:.68rem;opacity:.75}
+.leg-dot{width:7px;height:7px;border-radius:50%}
+.dl-btn{margin-left:8px;padding:5px 12px;background:rgba(249,115,22,.9);color:#fff;border:none;border-radius:6px;font-size:.74rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s}
+.dl-btn:hover{background:#ea6c0a}
 
 /* ── Nav tabs ── */
-.nav-tabs{display:flex;flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;z-index:999}
-.tab-btn{padding:7px 13px;border:none;background:none;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s}
-.tab-btn.active{color:#1E293B;border-bottom-color:#3B82F6}
-.tab-btn:hover:not(.active){background:#F8FAFC}
+.nav-tabs{display:flex;flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;z-index:999;gap:0}
+.tab-btn{padding:8px 14px;border:none;background:none;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,background .15s;position:relative}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-btn:hover:not(.active){background:#F5F8FF;color:#334155}
 
 /* ── Layout ── */
 .tab-content{display:none;flex:1;overflow:hidden}
@@ -37,113 +38,114 @@ header p{font-size:.72rem;opacity:.6;margin-top:1px}
 #map{flex:1;min-width:0;position:relative}
 
 /* ── Sidebar ── */
-aside{width:390px;flex-shrink:0;overflow-y:auto;background:var(--card);border-left:1px solid var(--border);display:flex;flex-direction:column}
-.panel-hd{padding:12px 14px 8px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10}
+aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1px solid var(--border);display:flex;flex-direction:column}
+.panel-hd{padding:11px 15px 8px;font-size:.67rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#8096AE;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10}
 
 /* ── Accordion day items ── */
 .acc-item{border-bottom:1px solid var(--border)}
 .acc-hd{
-  display:flex;align-items:center;gap:9px;padding:11px 14px;cursor:pointer;
-  transition:background .12s;user-select:none;
+  display:flex;align-items:center;gap:10px;padding:11px 15px;cursor:pointer;
+  transition:background .15s;user-select:none;
 }
-.acc-hd:hover{background:#F8FAFC}
-.acc-hd.open{background:#EFF6FF;border-left:3px solid #3B82F6}
-.day-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.7rem;flex-shrink:0}
+.acc-hd:hover{background:#F3F7FF}
+.acc-hd.open{background:var(--accent-soft);border-left:3px solid var(--accent)}
+.day-badge{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.69rem;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.18)}
 .acc-title{flex:1}
-.acc-title strong{font-size:.85rem;display:block}
-.acc-title span{font-size:.7rem;color:var(--muted)}
-.acc-arrow{font-size:.7rem;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.acc-title strong{font-size:.84rem;display:block;letter-spacing:-.01em}
+.acc-title span{font-size:.69rem;color:var(--muted);margin-top:1px;display:block}
+.acc-arrow{font-size:.68rem;color:#A0B0C4;transition:transform .2s;flex-shrink:0}
 .acc-hd.open .acc-arrow{transform:rotate(180deg)}
-.acc-body{display:none;padding:0 14px 12px;border-top:1px solid var(--border)}
+.acc-body{display:none;padding:4px 15px 14px;border-top:1px solid var(--border);background:#FAFCFF}
 .acc-hd.open + .acc-body{display:block}
 
 /* ── Hotel pill ── */
-.hotel-pill{display:flex;align-items:center;gap:6px;margin:8px 0 4px;padding:6px 10px;background:#F0FDF4;border-radius:7px;font-size:.73rem;color:#166534;font-weight:600}
+.hotel-pill{display:flex;align-items:center;gap:6px;margin:10px 0 5px;padding:6px 10px;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:7px;font-size:.72rem;color:#166534;font-weight:600}
 
 /* ── Activity list ── */
-.act-list{list-style:none;margin-top:6px}
-.act-item{display:flex;gap:8px;padding:5px 0;position:relative}
-.act-item:not(:last-child)::after{content:'';position:absolute;left:14px;top:28px;bottom:0;width:1px;background:#E2E8F0}
-.act-num{width:20px;height:20px;border-radius:50%;background:#CBD5E1;color:#fff;font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;z-index:1}
-.act-num.key{background:#3B82F6}
+.act-list{list-style:none;margin-top:4px}
+.act-item{display:flex;gap:9px;padding:6px 0;position:relative}
+.act-item:not(:last-child)::after{content:'';position:absolute;left:13px;top:26px;bottom:0;width:1px;background:#DDE3EC}
+.act-num{width:22px;height:22px;border-radius:50%;background:#CBD5E1;color:#fff;font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;z-index:1}
+.act-num.key{background:var(--accent)}
 .act-num.transport{background:#94A3B8}
-.act-body{flex:1;padding-bottom:4px}
-.act-time{font-size:.68rem;color:var(--muted)}
-.act-name{font-size:.82rem;font-weight:600;line-height:1.3;margin-top:1px}
-.act-en{font-size:.67rem;color:#94A3B8;font-style:italic}
-.act-desc{font-size:.72rem;color:var(--muted);margin-top:2px;line-height:1.45}
-.act-transport{display:inline-flex;align-items:center;gap:3px;padding:1px 8px;border-radius:4px;font-size:.68rem;font-weight:600;margin-top:3px}
+.act-body{flex:1;padding-bottom:3px}
+.act-time{font-size:.67rem;color:#8096AE;letter-spacing:.01em}
+.act-name{font-size:.82rem;font-weight:600;line-height:1.35;margin-top:1px;color:var(--text)}
+.act-en{font-size:.67rem;color:#A0B4CC;font-style:italic;margin-top:1px}
+.act-desc{font-size:.73rem;color:var(--muted);margin-top:3px;line-height:1.5}
+.act-transport{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:4px;font-size:.68rem;font-weight:600;margin-top:4px}
 .tr-train{background:#DBEAFE;color:#1D4ED8}
-.tr-walk{background:#F0FDF4;color:#166534}
+.tr-walk{background:#DCFCE7;color:#166534}
 .tr-bus{background:#FEF3C7;color:#92400E}
 .tr-metro{background:#F3E8FF;color:#7E22CE}
 .tr-boat{background:#E0F2FE;color:#0369A1}
 
 /* ── Tile toggle button ── */
 .tile-toggle-btn{
-  padding:6px 10px;background:#fff;border:2px solid #94A3B8;border-radius:7px;
-  font-size:.72rem;font-weight:700;color:#1E293B;cursor:pointer;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);white-space:nowrap;
-  transition:background .15s,border-color .15s;
+  padding:6px 11px;background:rgba(255,255,255,.97);border:1.5px solid #C4D0E0;border-radius:8px;
+  font-size:.71rem;font-weight:700;color:#1E293B;cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap;
+  transition:background .15s,border-color .15s,box-shadow .15s;
 }
-.tile-toggle-btn:hover{background:#F1F5F9;border-color:#3B82F6}
+.tile-toggle-btn:hover{background:#F0F6FF;border-color:var(--accent);box-shadow:0 2px 10px rgba(59,130,246,.18)}
 
 /* ── Booking button ── */
 .book-btn{
-  display:inline-flex;align-items:center;gap:4px;margin-top:4px;
-  padding:3px 10px;background:#1D4ED8;color:#fff;border-radius:5px;
+  display:inline-flex;align-items:center;gap:4px;margin-top:5px;
+  padding:3px 10px;background:#2563EB;color:#fff;border-radius:5px;
   font-size:.7rem;font-weight:600;text-decoration:none;cursor:pointer;
-  transition:opacity .15s;
+  transition:background .15s,opacity .15s;
 }
-.book-btn:hover{opacity:.85}
+.book-btn:hover{background:#1D4ED8}
 .book-btn.warn{background:#DC2626}
+.book-btn.warn:hover{background:#B91C1C}
 .book-btn.opt{background:#64748B}
-.price-tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;font-weight:600;background:#FEF9C3;color:#854D0E;margin-left:5px}
+.price-tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;font-weight:600;background:#FEF3C7;color:#92400E;margin-left:5px}
 .free-tag{background:#DCFCE7;color:#166534}
 
 /* ── Full page tabs ── */
 .full-page{flex:1;overflow-y:auto;padding:20px}
 .bi-section{margin-bottom:24px}
-.bi-section h2{font-size:.95rem;font-weight:700;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid var(--border)}
-.bi-table{width:100%;border-collapse:collapse;font-size:.8rem;border-radius:var(--r);overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-.bi-table th{background:#1E293B;color:#fff;padding:8px 12px;text-align:left;font-size:.72rem;font-weight:600}
+.bi-section h2{font-size:.93rem;font-weight:700;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--border);color:var(--text)}
+.bi-table{width:100%;border-collapse:collapse;font-size:.79rem;border-radius:var(--r);overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.bi-table th{background:#1E293B;color:#E2E8F0;padding:8px 12px;text-align:left;font-size:.71rem;font-weight:600;letter-spacing:.02em}
 .bi-table td{padding:7px 12px;border-bottom:1px solid var(--border);background:#fff;vertical-align:top}
 .bi-table tr:last-child td{border-bottom:none}
-.bi-table tr:hover td{background:#F8FAFC}
+.bi-table tr:hover td{background:#F5F8FF}
 .bi-zh{font-weight:600}
 .bi-en{color:var(--muted);font-style:italic}
 .bi-tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:.65rem;font-weight:600;background:#EFF6FF;color:#2563EB}
 
 /* ── Hotel section ── */
-.city-hd{padding:8px 12px;border-radius:7px;margin-bottom:8px;font-weight:700;font-size:.85rem}
-.hotel-tbl{width:100%;border-collapse:collapse;font-size:.78rem;border-radius:var(--r);overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:6px}
-.hotel-tbl th{background:#334155;color:#fff;padding:7px 11px;text-align:left;font-size:.7rem;font-weight:600}
-.hotel-tbl td{padding:7px 11px;border-bottom:1px solid var(--border);background:#fff;vertical-align:top}
+.city-hd{padding:8px 13px;border-radius:8px;margin-bottom:9px;font-weight:700;font-size:.84rem}
+.hotel-tbl{width:100%;border-collapse:collapse;font-size:.77rem;border-radius:var(--r);overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.08);margin-bottom:6px}
+.hotel-tbl th{background:#293547;color:#CBD5E1;padding:7px 11px;text-align:left;font-size:.69rem;font-weight:600;letter-spacing:.02em}
+.hotel-tbl td{padding:8px 11px;border-bottom:1px solid var(--border);background:#fff;vertical-align:top}
 .hotel-tbl tr:last-child td{border-bottom:none}
-.hotel-tbl tr:hover td{background:#F8FAFC}
-.htag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:.65rem;font-weight:600}
+.hotel-tbl tr:hover td{background:#F5F8FF}
+.htag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.64rem;font-weight:600}
 .htag-eco{background:#DCFCE7;color:#166534}
 .htag-mid{background:#DBEAFE;color:#1D4ED8}
 .htag-lux{background:#F3E8FF;color:#7E22CE}
 .price-g{color:#059669;font-weight:700;white-space:nowrap}
 
 /* ── Summary footer ── */
-.summary{padding:10px 14px;background:var(--bg);border-top:1px solid var(--border);font-size:.7rem;color:var(--muted);flex-shrink:0}
-.sum-row{display:flex;justify-content:space-between;margin-bottom:2px}
+.summary{padding:10px 15px;background:var(--bg);border-top:1px solid var(--border);font-size:.7rem;color:var(--muted);flex-shrink:0}
+.sum-row{display:flex;justify-content:space-between;margin-bottom:3px}
 .sum-row b{color:var(--text)}
 
 /* ── Map overlay info ── */
 .map-day-info{
-  position:absolute;bottom:10px;left:10px;z-index:999;background:rgba(255,255,255,.95);
-  padding:8px 12px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.15);
-  font-size:.75rem;max-width:220px;display:none;
+  position:absolute;bottom:12px;left:12px;z-index:999;background:rgba(255,255,255,.97);
+  padding:9px 13px;border-radius:9px;box-shadow:0 2px 12px rgba(0,0,0,.14);
+  font-size:.75rem;max-width:230px;display:none;border:1px solid rgba(0,0,0,.07);
 }
 .map-day-info.show{display:block}
-.map-day-info strong{display:block;margin-bottom:3px;font-size:.8rem}
+.map-day-info strong{display:block;margin-bottom:4px;font-size:.8rem;color:var(--text)}
 
 /* ── Leaflet custom ── */
-.cm{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.72rem;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-.cn{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.65rem;border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.cm{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.72rem;border:2.5px solid rgba(255,255,255,.95);box-shadow:0 2px 8px rgba(0,0,0,.28)}
+.cn{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.65rem;border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 5px rgba(0,0,0,.22)}
 
 @media(max-width:768px){
   .tab-content.active{flex-direction:column}
@@ -1229,25 +1231,38 @@ const DAYS=[
 // MAP
 // ═══════════════════════════════════
 const map=L.map('map',{zoomControl:true}).setView([49,10],5)
-const amapLayer=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_en&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{attribution:'© 高德地图',maxZoom:18,subdomains:'1234'})
-const esriLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'© ESRI',maxZoom:19})
-let tileMode='cn'
-amapLayer.addTo(map)
+// CartoDB Voyager — 干净米白配色，国际优先
+const cartoLayer=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+  attribution:'© <a href="https://carto.com/">CARTO</a>',maxZoom:19,subdomains:'abcd'})
+// 高德 — 国内网络备用（style=7 更淡雅）
+const amapLayer=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_en&size=1&scale=1&style=7&x={x}&y={y}&z={z}',{
+  attribution:'© 高德地图',maxZoom:18,subdomains:'1234'})
+let tileMode='intl'
+cartoLayer.addTo(map)
+// 若 CartoDB 瓦片加载失败则自动切到高德
+cartoLayer.on('tileerror',function(){
+  if(tileMode==='intl'){
+    map.removeLayer(cartoLayer);amapLayer.addTo(map)
+    tileMode='cn'
+    const btn=document.querySelector('.tile-toggle-btn')
+    if(btn)btn.innerHTML='🌏 国内网络'
+  }
+})
 
 // 切换底图按钮
 const TileToggle=L.Control.extend({
   onAdd:function(){
     const btn=L.DomUtil.create('button','tile-toggle-btn')
     btn.title='切换地图底图'
-    btn.innerHTML='🌏 国内网络'
+    btn.innerHTML='🌐 国际网络'
     btn.onclick=function(e){
       L.DomEvent.stopPropagation(e)
-      if(tileMode==='cn'){
-        map.removeLayer(amapLayer);esriLayer.addTo(map)
-        tileMode='intl';btn.innerHTML='🌐 国际网络'
-      } else {
-        map.removeLayer(esriLayer);amapLayer.addTo(map)
+      if(tileMode==='intl'){
+        map.removeLayer(cartoLayer);amapLayer.addTo(map)
         tileMode='cn';btn.innerHTML='🌏 国内网络'
+      } else {
+        map.removeLayer(amapLayer);cartoLayer.addTo(map)
+        tileMode='intl';btn.innerHTML='🌐 国际网络'
       }
     }
     return btn
