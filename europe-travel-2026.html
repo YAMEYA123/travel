@@ -186,6 +186,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   <button class="tab-btn" onclick="switchTab('hotel',this)">🏨 住宿推荐</button>
   <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
   <button class="tab-btn" onclick="switchTab('bilingual',this)">🔤 中英对照</button>
+  <button class="tab-btn" onclick="switchTab('essentials',this)">🌤 实用速查</button>
 </div>
 
 <!-- TAB 1: Map -->
@@ -725,6 +726,378 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     </div>
 
   </div>
+</div>
+
+<!-- TAB 9: Essentials -->
+<div class="tab-content" id="tab-essentials" style="overflow-y:auto;flex-direction:column;background:#F0F4F8">
+<div style="max-width:860px;margin:0 auto;padding:20px 16px 40px;width:100%">
+
+  <!-- 天气穿衣 -->
+  <div style="margin-bottom:20px">
+    <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">🌤 天气 & 穿衣指南（10月初）</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">
+
+      <!-- Amsterdam -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:1.4rem">🇳🇱</span>
+          <div><div style="font-size:.85rem;font-weight:700;color:#1A2332">阿姆斯特丹</div><div style="font-size:.68rem;color:#8096AE">Amsterdam · 9/25–9/27</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <div style="flex:1;background:#FFF7ED;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#EA580C">16°C</div>
+            <div style="font-size:.63rem;color:#9A6E3A">白天高温</div>
+          </div>
+          <div style="flex:1;background:#EFF6FF;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#2563EB">10°C</div>
+            <div style="font-size:.63rem;color:#3B6EA5">夜间低温</div>
+          </div>
+          <div style="flex:1;background:#F0FDF4;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#16A34A">14天</div>
+            <div style="font-size:.63rem;color:#2E7D52">平均雨天/月</div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.6">
+          ☁️ 多云阴天为主，秋雨频繁<br>
+          🧥 <b>穿衣</b>：薄羽绒/夹克 + 秋裤 + 防水外套<br>
+          ☂️ 随身带伞，阵雨说来就来<br>
+          👟 防水鞋推荐，运河区地面常湿
+        </div>
+      </div>
+
+      <!-- Cologne / Mannheim / Rhine -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:1.4rem">🇩🇪</span>
+          <div><div style="font-size:.85rem;font-weight:700;color:#1A2332">科隆 / 曼海姆</div><div style="font-size:.68rem;color:#8096AE">Cologne & Mannheim · 9/27–9/29</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <div style="flex:1;background:#FFF7ED;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#EA580C">17°C</div>
+            <div style="font-size:.63rem;color:#9A6E3A">白天高温</div>
+          </div>
+          <div style="flex:1;background:#EFF6FF;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#2563EB">9°C</div>
+            <div style="font-size:.63rem;color:#3B6EA5">夜间低温</div>
+          </div>
+          <div style="flex:1;background:#F0FDF4;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#16A34A">11天</div>
+            <div style="font-size:.63rem;color:#2E7D52">平均雨天/月</div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.6">
+          🌥️ 秋季凉爽，早晚温差明显<br>
+          🧥 <b>穿衣</b>：轻薄毛衣 + 夹克外套，晚上加厚<br>
+          ☂️ 备伞，莱茵河沿岸风大<br>
+          🎃 10月啤酒节氛围浓厚
+        </div>
+      </div>
+
+      <!-- Munich -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:1.4rem">🇩🇪</span>
+          <div><div style="font-size:.85rem;font-weight:700;color:#1A2332">慕尼黑</div><div style="font-size:.68rem;color:#8096AE">Munich · 9/29–10/1</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <div style="flex:1;background:#FFF7ED;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#EA580C">15°C</div>
+            <div style="font-size:.63rem;color:#9A6E3A">白天高温</div>
+          </div>
+          <div style="flex:1;background:#EFF6FF;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#2563EB">6°C</div>
+            <div style="font-size:.63rem;color:#3B6EA5">夜间低温</div>
+          </div>
+          <div style="flex:1;background:#F0FDF4;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#16A34A">12天</div>
+            <div style="font-size:.63rem;color:#2E7D52">平均雨天/月</div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.6">
+          🍂 秋意最浓，山区寒气下沉<br>
+          🧥 <b>穿衣</b>：中厚外套必备，晚上近似初冬<br>
+          🌦️ 偶发阵雨或薄雾，早晨较冷<br>
+          🍺 啤酒节露天场地风大，多穿一层
+        </div>
+      </div>
+
+      <!-- Salzburg -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:1.4rem">🇦🇹</span>
+          <div><div style="font-size:.85rem;font-weight:700;color:#1A2332">萨尔茨堡</div><div style="font-size:.68rem;color:#8096AE">Salzburg · 10/1–10/3</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <div style="flex:1;background:#FFF7ED;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#EA580C">13°C</div>
+            <div style="font-size:.63rem;color:#9A6E3A">白天高温</div>
+          </div>
+          <div style="flex:1;background:#EFF6FF;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#2563EB">5°C</div>
+            <div style="font-size:.63rem;color:#3B6EA5">夜间低温</div>
+          </div>
+          <div style="flex:1;background:#F0FDF4;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#16A34A">13天</div>
+            <div style="font-size:.63rem;color:#2E7D52">平均雨天/月</div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.6">
+          ⛰️ 阿尔卑斯山脚，温度比维也纳低3–4°<br>
+          🧥 <b>穿衣</b>：厚夹克/轻羽绒 + 围巾，早晚必加<br>
+          🌧️ 雨量较多，建议防水外套<br>
+          🏰 霍恩萨尔茨堡城堡山顶更冷
+        </div>
+      </div>
+
+      <!-- Vienna -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:1.4rem">🇦🇹</span>
+          <div><div style="font-size:.85rem;font-weight:700;color:#1A2332">维也纳</div><div style="font-size:.68rem;color:#8096AE">Vienna · 10/3–10/5</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <div style="flex:1;background:#FFF7ED;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#EA580C">15°C</div>
+            <div style="font-size:.63rem;color:#9A6E3A">白天高温</div>
+          </div>
+          <div style="flex:1;background:#EFF6FF;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#2563EB">7°C</div>
+            <div style="font-size:.63rem;color:#3B6EA5">夜间低温</div>
+          </div>
+          <div style="flex:1;background:#F0FDF4;border-radius:7px;padding:8px;text-align:center">
+            <div style="font-size:1.1rem;font-weight:800;color:#16A34A">9天</div>
+            <div style="font-size:.63rem;color:#2E7D52">平均雨天/月</div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.6">
+          🌤️ 相对最干燥，秋日暖阳概率较高<br>
+          🧥 <b>穿衣</b>：轻羽绒/厚夹克，白天可能脱外套<br>
+          🍷 环城大道旁秋叶金黄，适合拍照<br>
+          🎵 歌剧院等室内场所需正装或商务休闲
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 行李穿搭建议 -->
+    <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px;margin-top:12px">
+      <div style="font-size:.78rem;font-weight:700;color:#1A2332;margin-bottom:8px">🎒 行李穿搭清单建议</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;font-size:.72rem;color:#475569;line-height:1.8">
+        <div>
+          <div style="font-weight:700;color:#334155;margin-bottom:3px">上身</div>
+          ✓ 薄毛衣 × 2<br>
+          ✓ 长袖T恤 × 3<br>
+          ✓ 中厚夹克（必带）<br>
+          ✓ 防风防水外套 × 1
+        </div>
+        <div>
+          <div style="font-weight:700;color:#334155;margin-bottom:3px">下身</div>
+          ✓ 长裤 × 3（含一条厚款）<br>
+          ✓ 保暖内衣裤 × 1套<br>
+          ✓ 厚袜子 × 3双
+        </div>
+        <div>
+          <div style="font-weight:700;color:#334155;margin-bottom:3px">鞋 & 配件</div>
+          ✓ 防水休闲鞋（主力）<br>
+          ✓ 折叠雨伞<br>
+          ✓ 围巾（日夜温差用）<br>
+          ✓ 轻便手套（慕尼黑/萨尔茨堡夜用）
+        </div>
+        <div>
+          <div style="font-weight:700;color:#334155;margin-bottom:3px">其他</div>
+          ✓ 欧标转换插头（Type F/E）<br>
+          ✓ 充电宝（飞机禁托运）<br>
+          ✓ 防晒 SPF30+（秋日低角度紫外线）<br>
+          ✓ 唇膏 & 护手霜（干燥）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 急救 & 紧急电话 -->
+  <div style="margin-bottom:20px">
+    <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">🚨 急救 & 紧急联系</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
+
+      <!-- Netherlands -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.82rem;font-weight:700;color:#1A2332;margin-bottom:10px">🇳🇱 荷兰</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.73rem">
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE;width:55%">📞 综合紧急（警察/救护/消防）</td><td style="padding:5px 0;font-weight:700;color:#DC2626;font-size:.85rem">112</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🚓 非紧急警察</td><td style="padding:5px 0;font-weight:600">0900-8844</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🏥 家庭医生急诊（夜间）</td><td style="padding:5px 0;font-weight:600">088-003 0600</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🇨🇳 中国驻荷使馆</td><td style="padding:5px 0;font-weight:600">+31 70-3065061</td></tr>
+          <tr><td style="padding:5px 0;color:#8096AE">💊 药房（Apotheek）</td><td style="padding:5px 0;color:#475569">营业至18–20点</td></tr>
+        </table>
+      </div>
+
+      <!-- Germany -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.82rem;font-weight:700;color:#1A2332;margin-bottom:10px">🇩🇪 德国</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.73rem">
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE;width:55%">📞 紧急救援（警察/救护/消防）</td><td style="padding:5px 0;font-weight:700;color:#DC2626;font-size:.85rem">112</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🚓 警察</td><td style="padding:5px 0;font-weight:600">110</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🚑 救护车单独拨</td><td style="padding:5px 0;font-weight:600">112</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🇨🇳 中国驻德使馆</td><td style="padding:5px 0;font-weight:600">+49 30-27588531</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">☎️ 旅游援助热线（DRK）</td><td style="padding:5px 0;font-weight:600">19222</td></tr>
+          <tr><td style="padding:5px 0;color:#8096AE">💊 急诊药房（Notapotheke）</td><td style="padding:5px 0;color:#475569">搜 "Notapotheke"</td></tr>
+        </table>
+      </div>
+
+      <!-- Austria -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.82rem;font-weight:700;color:#1A2332;margin-bottom:10px">🇦🇹 奥地利</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.73rem">
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE;width:55%">📞 综合紧急</td><td style="padding:5px 0;font-weight:700;color:#DC2626;font-size:.85rem">112</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🚓 警察</td><td style="padding:5px 0;font-weight:600">133</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🚑 救护车</td><td style="padding:5px 0;font-weight:600">144</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🔥 消防</td><td style="padding:5px 0;font-weight:600">122</td></tr>
+          <tr style="border-bottom:1px solid #F1F5F9"><td style="padding:5px 0;color:#8096AE">🇨🇳 中国驻奥使馆</td><td style="padding:5px 0;font-weight:600">+43 1-7136306</td></tr>
+          <tr><td style="padding:5px 0;color:#8096AE">⛑️ 山岳救援</td><td style="padding:5px 0;font-weight:600">140</td></tr>
+        </table>
+      </div>
+
+      <!-- EU common -->
+      <div style="background:#EFF6FF;border-radius:10px;border:1px solid #BFDBFE;padding:14px">
+        <div style="font-size:.82rem;font-weight:700;color:#1E40AF;margin-bottom:8px">🇪🇺 整个申根区通用</div>
+        <div style="font-size:2rem;font-weight:900;color:#DC2626;text-align:center;margin:8px 0">112</div>
+        <div style="font-size:.72rem;color:#1D4ED8;text-align:center;line-height:1.6">
+          全欧洲统一急救号码<br>支持英语，可免费拨打<br>（含无信号区域部分覆盖）
+        </div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid #BFDBFE;font-size:.7rem;color:#3B82F6;line-height:1.7">
+          💡 建议把 112 存入手机通讯录<br>
+          💡 护照丢失→先联系中国使馆补办临时旅行证<br>
+          💡 信用卡被盗→立即致电卡背面挂失专线
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 实用生活信息 -->
+  <div style="margin-bottom:20px">
+    <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">💡 实用生活信息</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">
+
+      <!-- 电压插座 -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.78rem;font-weight:700;color:#1A2332;margin-bottom:8px">🔌 电压 & 插座</div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.8">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #F1F5F9;padding:3px 0"><span>电压</span><b>230V / 50Hz</b></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #F1F5F9;padding:3px 0"><span>插座类型</span><b>Type F（两圆孔）</b></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0"><span>国内设备兼容</span><b>✅ 大部分支持</b></div>
+          <div style="margin-top:8px;padding:8px;background:#FFF7ED;border-radius:6px;font-size:.69rem;color:#92400E">
+            ⚠️ 带一个欧标转换头即可；iPhone充电器天然支持100–240V，无需变压器
+          </div>
+        </div>
+      </div>
+
+      <!-- 货币 & 支付 -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.78rem;font-weight:700;color:#1A2332;margin-bottom:8px">💶 货币 & 支付</div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.8">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #F1F5F9;padding:3px 0"><span>货币</span><b>欧元 EUR €</b></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #F1F5F9;padding:3px 0"><span>参考汇率（建议出发前查）</span><b>≈ 7.8–8.0 CNY/€</b></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #F1F5F9;padding:3px 0"><span>信用卡接受度</span><b>✅ 极高（Visa/MC）</b></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0"><span>建议备现金</span><b>€200–300</b></div>
+          <div style="margin-top:8px;padding:8px;background:#F0FDF4;border-radius:6px;font-size:.69rem;color:#166534">
+            💡 景区、餐厅、超市基本可刷卡；小摊、教堂捐款、部分公厕需硬币
+          </div>
+        </div>
+      </div>
+
+      <!-- 小费文化 -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.78rem;font-weight:700;color:#1A2332;margin-bottom:8px">🤝 小费文化</div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.8">
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🍽️ <b>餐厅</b>：账单5–10%，或凑整数</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🚕 <b>出租车</b>：凑整或加€1–2</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🏨 <b>酒店行李员</b>：€1–2/件</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">☕ <b>咖啡馆</b>：不强制，留零钱即可</div>
+          <div style="padding:3px 0">🇩🇪 德国 vs 🇳🇱 荷兰 vs 🇦🇹 奥地利习惯接近</div>
+          <div style="margin-top:8px;padding:8px;background:#F5F3FF;border-radius:6px;font-size:.69rem;color:#7E22CE">
+            💡 刷卡时POS机常问"小费？"直接按0即可，不强制
+          </div>
+        </div>
+      </div>
+
+      <!-- WiFi & SIM -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.78rem;font-weight:700;color:#1A2332;margin-bottom:8px">📶 WiFi & 上网</div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.8">
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🌐 <b>推荐方案</b>：欧洲漫游eSIM（Airalo等）</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">📡 国内三大运营商均有欧洲套餐</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">☁️ Google/YouTube等需VPN（部分）</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🏨 酒店WiFi一般免费，速度尚可</div>
+          <div style="padding:3px 0">🚄 ICE高铁车上有WiFi，信号一般</div>
+          <div style="margin-top:8px;padding:8px;background:#EFF6FF;border-radius:6px;font-size:.69rem;color:#1D4ED8">
+            💡 推荐提前在国内购买欧洲流量eSIM，到埗即激活，省去找WiFi的烦恼
+          </div>
+        </div>
+      </div>
+
+      <!-- 时差 & 营业时间 -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.78rem;font-weight:700;color:#1A2332;margin-bottom:8px">⏰ 时差 & 营业时间</div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.8">
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🕐 时区<span style="float:right"><b>CEST UTC+2（夏令时）</b></span></div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🇨🇳 vs 欧洲<span style="float:right"><b>北京时间 -6小时</b></span></div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🏪 超市<span style="float:right">08:00–20:00（日短）</span></div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🏛️ 博物馆<span style="float:right">10:00–17:00为主</span></div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🍽️ 餐厅午市<span style="float:right">12:00–14:00</span></div>
+          <div style="padding:3px 0">⚠️ 德国周日超市大多关门</div>
+        </div>
+      </div>
+
+      <!-- 安全贴士 -->
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:14px">
+        <div style="font-size:.78rem;font-weight:700;color:#1A2332;margin-bottom:8px">🔒 安全贴士</div>
+        <div style="font-size:.72rem;color:#475569;line-height:1.8">
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">👜 背包防扒：前背或使用防割包</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🚇 地铁注意：阿姆斯特丹、科隆站区有扒手</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">📸 拍照时锁好随身物品</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">🌙 夜间避开偏僻小巷</div>
+          <div style="border-bottom:1px solid #F1F5F9;padding:3px 0">📄 护照复印件单独存放一份</div>
+          <div style="padding:3px 0">💊 随身备常用药：止泻、感冒、胃药</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 常用App -->
+  <div>
+    <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">📱 出行必备 App</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:12px;font-size:.72rem;color:#475569">
+        <div style="font-weight:700;color:#1A2332;margin-bottom:6px">🚆 交通</div>
+        <div>DB Navigator（德铁，买票/查时刻）</div>
+        <div>OeBB（奥地利国铁）</div>
+        <div>NS（荷兰国铁）</div>
+        <div>Google Maps（城内导航）</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:12px;font-size:.72rem;color:#475569">
+        <div style="font-weight:700;color:#1A2332;margin-bottom:6px">🗺 地图 & 导览</div>
+        <div>maps.me（离线地图）</div>
+        <div>Rick Steves Audio Europe（景点讲解）</div>
+        <div>Google Translate（离线包下载德语）</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:12px;font-size:.72rem;color:#475569">
+        <div style="font-weight:700;color:#1A2332;margin-bottom:6px">🍽 餐饮 & 生活</div>
+        <div>Yelp / Google Maps 查餐厅评分</div>
+        <div>Uber / Bolt（城市打车）</div>
+        <div>Flixbus（城间大巴备选）</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:12px;font-size:.72rem;color:#475569">
+        <div style="font-weight:700;color:#1A2332;margin-bottom:6px">💰 汇率 & 支付</div>
+        <div>Wise（跨境汇款/低手续费换汇）</div>
+        <div>XE Currency（实时汇率查询）</div>
+        <div>Revolut（境外消费免手续费卡）</div>
+      </div>
+    </div>
+  </div>
+
+</div>
 </div>
 
 <script>
