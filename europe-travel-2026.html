@@ -2,7 +2,11 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="欧洲攻略">
+<meta name="theme-color" content="#0D1B2E">
 <title>欧洲旅游攻略 2026｜9/25–10/5</title>
 <link rel="stylesheet" href="leaflet/leaflet.min.css"/>
 <script src="leaflet/leaflet.min.js"></script>
@@ -14,17 +18,20 @@
   --text:#1A2332;--muted:#60748A;--r:10px;
   --accent:#3B82F6;--accent-soft:#EFF6FF;
 }
-body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
 
 /* ── Header ── */
-header{background:linear-gradient(135deg,#0D1B2E 0%,#1A3A5C 100%);color:#fff;padding:10px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:0 1px 0 rgba(255,255,255,.07),0 4px 16px rgba(0,0,0,.35);z-index:1000}
+header{background:linear-gradient(135deg,#0D1B2E 0%,#1A3A5C 100%);color:#fff;padding:10px 18px;padding-top:max(10px,env(safe-area-inset-top));padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right));display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:0 1px 0 rgba(255,255,255,.07),0 4px 16px rgba(0,0,0,.35);z-index:1000}
 header h1{font-size:.97rem;font-weight:700;letter-spacing:-.01em}
 header p{font-size:.71rem;opacity:.55;margin-top:1px;letter-spacing:.01em}
 .legend{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .leg{display:flex;align-items:center;gap:4px;font-size:.68rem;opacity:.75}
 .leg-dot{width:7px;height:7px;border-radius:50%}
-.dl-btn{margin-left:8px;padding:5px 12px;background:rgba(249,115,22,.9);color:#fff;border:none;border-radius:6px;font-size:.74rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s}
+.dl-btn,.rf-btn{padding:5px 12px;color:#fff;border:none;border-radius:6px;font-size:.74rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s;-webkit-tap-highlight-color:transparent}
+.dl-btn{margin-left:8px;background:rgba(249,115,22,.9)}
 .dl-btn:hover{background:#ea6c0a}
+.rf-btn{margin-left:4px;background:rgba(255,255,255,.15)}
+.rf-btn:hover{background:rgba(255,255,255,.25)}
 
 /* ── Nav tabs ── */
 .nav-tabs{display:flex;flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;z-index:999;gap:0}
@@ -149,16 +156,22 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 
 @media(max-width:768px){
   .tab-content.active{flex-direction:column}
-  #map{height:45vw;min-height:180px;flex:none}
-  aside{width:100%;border-left:none;border-top:1px solid var(--border);flex:1;min-height:0;overflow-y:auto}
+  #map{height:42vw;min-height:200px;flex:none}
+  aside{width:100%;border-left:none;border-top:1px solid var(--border);flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
   .legend{display:none}
   .bi-section{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .bi-table{min-width:520px}
+  .nav-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav-tabs::-webkit-scrollbar{display:none}
+  .tab-btn{flex-shrink:0;padding:9px 13px;font-size:.75rem;white-space:nowrap}
 }
 @media(max-width:480px){
   .bi-table th:nth-child(4),
   .bi-table td:nth-child(4){display:none}
   .bi-table{min-width:300px}
+  header h1{font-size:.85rem}
+  header p{display:none}
+  .dl-btn,.rf-btn{padding:5px 9px;font-size:.7rem}
 }
 </style>
 </head>
@@ -175,6 +188,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <div class="leg"><div class="leg-dot" style="background:var(--at)"></div>奥地利</div>
   </div>
   <button class="dl-btn" onclick="downloadPage()">⬇ 下载</button>
+  <button class="rf-btn" onclick="location.reload()" title="刷新页面">↻</button>
 </header>
 
 <div class="nav-tabs">
