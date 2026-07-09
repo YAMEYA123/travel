@@ -1685,7 +1685,20 @@ const MAIN_ROUTE=[
   [48.200,15.619], // St. Pölten
   [48.208,16.374], // Vienna
 ]
-L.polyline(MAIN_ROUTE,{color:'#94A3B8',weight:2.5,dashArray:'8,5',opacity:.55}).addTo(map)
+// Color-coded by country segment
+const ROUTE_SEGS=[
+  // Netherlands (orange)
+  {pts:[[52.374,4.900],[52.090,5.121],[51.985,5.915],[51.470,6.852],[51.228,6.774],[50.942,6.958]],color:'#F97316'},
+  // Germany Rhine valley + south (blue)
+  {pts:[[50.942,6.958],[50.733,7.100],[50.360,7.578],[49.967,7.898],[49.800,8.108],[49.630,8.357],[49.479,8.469],[49.399,8.675],[48.783,9.183],[48.401,9.987],[48.369,10.898],[48.140,11.559]],color:'#3B82F6'},
+  // Austria (teal)
+  {pts:[[48.140,11.559],[47.856,12.126],[47.809,13.055],[48.306,14.286],[48.200,15.619],[48.208,16.374]],color:'#10B981'},
+]
+ROUTE_SEGS.forEach(s=>{
+  L.polyline(s.pts,{color:s.color,weight:4,dashArray:'10,6',opacity:.75}).addTo(map)
+  // Glow/shadow underneath
+  L.polyline(s.pts,{color:s.color,weight:8,opacity:.15,dashArray:null}).addTo(map)
+})
 
 // Transport style per tcls
 const T_STYLE={
