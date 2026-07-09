@@ -1282,9 +1282,56 @@ OVERVIEW.forEach(v=>{
     .addTo(overviewLayer)
 })
 overviewLayer.addTo(map)
-// Main route
-L.polyline([[52.374,4.900],[50.942,6.958],[48.140,11.559],[47.809,13.055],[48.208,16.374]],
-  {color:'#94A3B8',weight:2,dashArray:'6,4',opacity:.5}).addTo(map)
+// Main route — real highway/rail corridor waypoints (not straight lines)
+// AMS→CGN: A57/A3 via Utrecht, Nijmegen, Düsseldorf
+// CGN→MHG: A61 Rhine valley via Bonn, Koblenz, Bingen, Worms
+// MHG→MUC: A8 via Heidelberg, Stuttgart, Ulm, Augsburg
+// MUC→SZG: A8 via Rosenheim
+// SZG→VIE: A1 via Linz, St. Pölten
+const MAIN_ROUTE=[
+  [52.374,4.900],  // Amsterdam
+  [52.090,5.121],  // Utrecht
+  [51.985,5.915],  // Arnhem
+  [51.470,6.852],  // Oberhausen
+  [51.228,6.774],  // Düsseldorf
+  [50.942,6.958],  // Cologne
+  [50.733,7.100],  // Bonn
+  [50.360,7.578],  // Koblenz
+  [49.967,7.898],  // Bingen (Rhine Gorge)
+  [49.800,8.108],  // Mainz
+  [49.630,8.357],  // Worms
+  [49.479,8.469],  // Mannheim
+  [49.399,8.675],  // Heidelberg
+  [48.783,9.183],  // Stuttgart
+  [48.401,9.987],  // Ulm
+  [48.369,10.898], // Augsburg
+  [48.140,11.559], // Munich
+  [47.856,12.126], // Rosenheim
+  [47.809,13.055], // Salzburg
+  [48.306,14.286], // Linz
+  [48.200,15.619], // St. Pölten
+  [48.208,16.374], // Vienna
+]
+L.polyline(MAIN_ROUTE,{color:'#94A3B8',weight:2.5,dashArray:'8,5',opacity:.55}).addTo(map)
+
+// Transport style per tcls
+const T_STYLE={
+  'tr-train': {color:'#2563EB',weight:4,dashArray:'12,6',opacity:.9},
+  'tr-metro': {color:'#7C3AED',weight:3,dashArray:'8,5', opacity:.9},
+  'tr-tram':  {color:'#D97706',weight:3,dashArray:'6,4', opacity:.85},
+  'tr-bus':   {color:'#EA580C',weight:3,dashArray:'6,4', opacity:.85},
+  'tr-walk':  {color:'#16A34A',weight:2,dashArray:'3,6', opacity:.8},
+}
+const T_EMOJI={'tr-train':'🚆','tr-metro':'🚇','tr-tram':'🚋','tr-bus':'🚌','tr-walk':'🚶'}
+
+async function fetchOsrmWalk(from,to){
+  try{
+    const r=await fetch(`https://router.project-osrm.org/route/v1/foot/${from[1]},${from[0]};${to[1]},${to[0]}?overview=full&geometries=geojson`,{signal:AbortSignal.timeout(4000)})
+    const d=await r.json()
+    if(d.routes&&d.routes[0]) return d.routes[0].geometry.coordinates.map(c=>[c[1],c[0]])
+  }catch(e){}
+  return null
+}
 
 // Day route layer
 const dayLayer=L.layerGroup().addTo(map)
@@ -1295,17 +1342,40 @@ function clearDayRoute(){
   document.getElementById('mapInfo').classList.remove('show')
 }
 
-function drawDayRoute(idx){
+async function drawDayRoute(idx){
   const day=DAYS[idx]
   const pts=day.acts.filter(a=>a.lat)
   if(!pts.length) return
   overviewLayer.remove()
 
-  // Polyline
-  const coords=pts.map(a=>[a.lat,a.lng])
-  if(coords.length>1){
-    L.polyline(coords,{color:day.color,weight:3,opacity:.85}).addTo(dayLayer)
+  // Draw segments by transport type
+  for(let i=1;i<pts.length;i++){
+    const from=pts[i-1],to=pts[i]
+    const style=T_STYLE[to.tcls]||{color:day.color,weight:3,dashArray:null,opacity:.85}
+    let coords=[[from.lat,from.lng],[to.lat,to.lng]]
+
+    // Walking: try real street routing
+    if(to.tcls==='tr-walk'){
+      const walked=await fetchOsrmWalk([from.lat,from.lng],[to.lat,to.lng])
+      if(walked) coords=walked
+    }
+
+    L.polyline(coords,style).addTo(dayLayer)
+
+    // Midpoint transport badge
+    const emoji=T_EMOJI[to.tcls]
+    if(emoji){
+      const mid=coords[Math.floor(coords.length/2)]
+      const text=to.transport||''
+      const dur=text.match(/(\d+[^\s]*(?:min|h))/i)?.[1]||''
+      L.marker(mid,{icon:L.divIcon({
+        className:'',
+        html:`<div style="background:#fff;border:1.5px solid #CBD5E1;border-radius:20px;padding:2px 7px;font-size:11px;white-space:nowrap;box-shadow:0 1px 5px rgba(0,0,0,.15);color:#334155;display:flex;align-items:center;gap:3px">${emoji}${dur?' <span style="color:#64748B;font-size:10px">'+dur+'</span>':''}</div>`,
+        iconAnchor:[24,12]
+      }),interactive:false}).addTo(dayLayer)
+    }
   }
+
   // Numbered markers
   pts.forEach((a,i)=>{
     const icon=L.divIcon({className:'',
@@ -1315,7 +1385,7 @@ function drawDayRoute(idx){
       .bindPopup(`<b>${a.n}</b>${a.time?'<br><small>'+a.time+'</small>':''}${a.desc?'<br><small style="color:#64748B">'+a.desc+'</small>':''}`)
   })
 
-  // Hotel marker (confirmed only)
+  // Hotel marker
   if(day.hotelLat){
     const hotelIcon=L.divIcon({className:'',
       html:`<div style="background:#7C3AED;color:#fff;font-size:14px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);line-height:1">🏨</div>`,
@@ -1324,17 +1394,22 @@ function drawDayRoute(idx){
       .bindPopup(`<b>✅ 已确认住宿</b><br><small>${day.hotelName}</small>`)
   }
 
-  // Fly
-  const allPts=coords.slice()
+  // Fit bounds
+  const allPts=pts.map(a=>[a.lat,a.lng])
   if(day.hotelLat) allPts.push([day.hotelLat,day.hotelLng])
-  const bounds=L.latLngBounds(allPts)
-  map.fitBounds(bounds,{padding:[40,40]})
+  map.fitBounds(L.latLngBounds(allPts),{padding:[40,40]})
 
-  // Info overlay
-  const infoEl=document.getElementById('mapInfo')
+  // Info overlay with legend
   document.getElementById('mapInfoTitle').textContent=`D${day.num} ${day.title}`
-  document.getElementById('mapInfoBody').textContent=`${pts.length}个标注点 · ${day.date}`
-  infoEl.classList.add('show')
+  document.getElementById('mapInfoBody').innerHTML=
+    `${pts.length}个标注点 · ${day.date}<br>`+
+    `<span style="display:inline-flex;gap:8px;flex-wrap:wrap;margin-top:5px">`+
+    `<span style="color:#2563EB;font-size:.65rem">━━ 🚆火车</span>`+
+    `<span style="color:#7C3AED;font-size:.65rem">╌╌ 🚇地铁</span>`+
+    `<span style="color:#16A34A;font-size:.65rem">┅┅ 🚶步行</span>`+
+    `<span style="color:#D97706;font-size:.65rem">╌╌ 🚌公交</span>`+
+    `</span>`
+  document.getElementById('mapInfo').classList.add('show')
 }
 
 // ═══════════════════════════════════
