@@ -1825,32 +1825,42 @@ async function drawDayRoute(idx){
       .bindPopup(`<b>✅ 已确认住宿</b><br><small>${day.hotelName}</small>`)
   }
 
-  // ── 路线在后台异步画（PRECOMP_ROUTES 命中时几乎无延迟，fallback 最多 3s）──
+  // ── 第一遍：同步绘制所有已预计算的路线（零延迟）──
+  const fallbacks=[]
   for(let i=1;i<pts.length;i++){
     const from=pts[i-1],to=pts[i]
     const style=T_STYLE[to.tcls]||{color:day.color,weight:3,dashArray:null,opacity:.85}
-    let coords=[[from.lat,from.lng],[to.lat,to.lng]]
-
     const routeKey=`${from.lat},${from.lng}->${to.lat},${to.lng}`
-    if(to.tcls==='tr-walk'){
-      const pre=PRECOMP_ROUTES[routeKey]
-      if(pre){ coords=pre }
-      else {
-        const walked=await fetchOsrmWalk([from.lat,from.lng],[to.lat,to.lng])
-        if(walked) coords=walked
-      }
-    } else if(to.tcls==='tr-train'||to.tcls==='tr-bus'||to.tcls==='tr-tram'){
-      const pre=PRECOMP_ROUTES[routeKey]
-      if(pre){ coords=pre }
-      else if(tileMode==='intl'){
-        const driven=await fetchOsrmDrive([from.lat,from.lng],[to.lat,to.lng])
-        if(driven) coords=driven
+    const pre=PRECOMP_ROUTES[routeKey]
+    if(pre){
+      L.polyline(pre,style).addTo(dayLayer)
+    } else if(to.tcls==='tr-walk'||to.tcls==='tr-train'||to.tcls==='tr-bus'||to.tcls==='tr-tram'){
+      // 直线占位，稍后 async 替换
+      const pl=L.polyline([[from.lat,from.lng],[to.lat,to.lng]],{...style,opacity:.3,dashArray:'4,4'}).addTo(dayLayer)
+      fallbacks.push({from,to,style,pl,routeKey})
+    } else {
+      L.polyline([[from.lat,from.lng],[to.lat,to.lng]],style).addTo(dayLayer)
+    }
+  }
+
+  // ── 第二遍：异步补全未预计算的路线（通常为空）──
+  if(fallbacks.length){
+    Promise.all(fallbacks.map(async({from,to,style,pl,routeKey})=>{
+      let coords
+      if(to.tcls==='tr-walk'){
+        const w=await fetchOsrmWalk([from.lat,from.lng],[to.lat,to.lng])
+        if(w) coords=w
+      } else if(tileMode==='intl'){
+        const d=await fetchOsrmDrive([from.lat,from.lng],[to.lat,to.lng])
+        if(d) coords=d
       } else {
         coords=snapThroughMainRoute([from.lat,from.lng],[to.lat,to.lng])
       }
-    }
-
-    L.polyline(coords,style).addTo(dayLayer)
+      if(coords){
+        dayLayer.removeLayer(pl)
+        L.polyline(coords,style).addTo(dayLayer)
+      }
+    }))
   }
 
   // Info overlay with legend
