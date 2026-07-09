@@ -1421,7 +1421,7 @@ const BOOKINGS=[
     note:'ICE 1091，10:10抵达慕尼黑中央站',
     price:'约€6/人（约¥44）', url:'https://int.bahn.de/en',
     urlText:'DB购票（9/29 07:11）'},
-  {id:'hotel-man', pri:1, cat:'酒店',
+  {id:'hotel-man', pri:2, cat:'酒店',
     date:'9月28日（周一）1晚', name:'Holiday Inn Mannheim City – Hauptbahnhof',
     note:'中央站步行3min，D5晨班ICE 07:11出发极便利 · 🏅 IHG 24k积分/晚',
     price:'🏅 IHG 24k积分', url:'https://www.ihg.com/holidayinn/hotels/us/en/mannheim/mhghb/hoteldetail',
@@ -1476,7 +1476,7 @@ const BOOKINGS=[
     note:'慕尼黑南部，U3 Aidenbachstraße附近 · 🏅 IHG 92k积分/2晚（47k+45k）',
     price:'🏅 IHG 92k积分/2晚（47k+45k）', url:'https://www.ihg.com/holidayinn/hotels/us/en/munich/mucsu/hoteldetail',
     urlText:'IHG官网'},
-  {id:'hotel-szg', pri:2, cat:'酒店',
+  {id:'hotel-szg', pri:1, cat:'酒店',
     date:'10月1日–3日（共2晚）', name:'萨尔茨堡酒店',
     note:'推荐老城区附近，步行可达所有景点',
     price:'€90–350/晚', url:'https://www.booking.com/city/at/salzburg.html',
@@ -1527,7 +1527,7 @@ function updateProgress(){
   document.getElementById('progress-bar').style.width=pct+'%'
   document.getElementById('progress-text').textContent=`${done} / ${all.length} 已完成 (${pct}%)`
   // badge: count unchecked of pri 0+1
-  const urgent=[...document.querySelectorAll('.bk-check[data-pri="0"],.bk-check[data-pri="1"]')].filter(c=>!c.checked).length
+  const urgent=[...document.querySelectorAll('.bk-check[data-pri="0"]')].filter(c=>!c.checked).length
   const badge=document.getElementById('badge-todo')
   badge.textContent=urgent>0?urgent:''
   badge.style.display=urgent>0?'inline':'none'
