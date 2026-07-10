@@ -154,11 +154,15 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 .cm{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.72rem;border:2.5px solid rgba(255,255,255,.95);box-shadow:0 2px 8px rgba(0,0,0,.28)}
 .cn{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.65rem;border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 5px rgba(0,0,0,.22)}
 
-/* ── Sub-tabs (实用速查) ── */
-#es-subnav{overflow-x:auto;flex-wrap:nowrap!important;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:0}
-#es-subnav::-webkit-scrollbar{display:none}
-.es-btn{flex-shrink:0;white-space:nowrap;border:none;cursor:pointer;transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
-.es-btn.es-active{background:#fff!important;color:#1A2332!important}
+/* ── 统一子导航栏 ── */
+.subnav{display:flex;padding:10px 14px 0;background:#E8EDF4;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:4px}
+.subnav::-webkit-scrollbar{display:none}
+.snav-btn{padding:8px 15px;border-radius:8px 8px 0 0;font-size:.8rem;font-weight:600;background:#C8D4E3;color:#4E6580;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:38px;transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
+.snav-btn.snav-active{background:#fff;color:#1A2332}
+.snav-btn:not(.snav-active):active{background:#B8C8D8}
+/* ── Sub-tabs (实用速查) 兼容旧名 ── */
+#es-subnav{padding-bottom:0}
+.es-btn{flex-shrink:0}
 
 /* ── Hotel / Ticket table scroll wrappers ── */
 .hotel-tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r);box-shadow:0 1px 6px rgba(0,0,0,.08);margin-bottom:6px}
@@ -188,7 +192,35 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   .dl-btn,.rf-btn{padding:5px 9px;font-size:.7rem}
   .hotel-tbl{min-width:400px}
   .hotel-tbl th:nth-child(4),.hotel-tbl td:nth-child(4){display:none}
-  .es-btn{padding:6px 11px!important;font-size:.73rem!important}
+  .snav-btn{padding:7px 12px!important;font-size:.76rem!important}
+}
+
+/* ── 改进主 Nav ── */
+.nav-tabs{
+  overflow-x:auto;flex-wrap:nowrap;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding:0 6px;
+}
+.nav-tabs::-webkit-scrollbar{display:none}
+.tab-btn{
+  min-height:44px;border-radius:6px 6px 0 0;
+  padding:10px 13px;font-size:.78rem;
+}
+.tab-btn.active{
+  background:rgba(59,130,246,.08);
+  color:var(--accent);
+  border-bottom-color:var(--accent);
+}
+
+/* ── Tab 切换淡入 ── */
+@keyframes tabFadeIn{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.tab-content.active{animation:tabFadeIn .18s ease}
+
+/* ── 通用信息卡片 ── */
+.info-card{
+  background:#fff;border:1px solid var(--border);border-radius:12px;
+  padding:14px 16px;margin-bottom:14px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04);
 }
 </style>
 </head>
@@ -246,10 +278,10 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 <div class="tab-content" id="tab-booking" style="flex-direction:column">
 
   <!-- 预约&风险 子页签 -->
-  <div id="bk-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
-    <button onclick="switchBooking('booking',this)" class="bk-btn bk-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">📋 待预约</button>
-    <button onclick="switchBooking('risk',this)" class="bk-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;margin-right:4px">⚠️ 风险清单</button>
-    <button onclick="switchBooking('visa',this)" class="bk-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">🛂 签证清单</button>
+  <div id="bk-subnav" class="subnav">
+    <button onclick="switchBooking('booking',this)" class="snav-btn bk-btn snav-active">📋 待预约</button>
+    <button onclick="switchBooking('risk',this)" class="snav-btn bk-btn">⚠️ 风险清单</button>
+    <button onclick="switchBooking('visa',this)" class="snav-btn bk-btn">🛂 签证清单</button>
   </div>
   <div style="overflow-y:auto;flex:1;padding:20px" id="booking-page">
     <div id="bk-booking">
@@ -407,9 +439,9 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 <div class="tab-content" id="tab-tickets" style="flex-direction:column">
 
   <!-- 交通&住宿 子页签 -->
-  <div id="tk-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
-    <button onclick="switchTickets('tickets',this)" class="tk-btn tk-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">🎫 交通攻略</button>
-    <button onclick="switchTickets('hotel',this)" class="tk-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">🏨 住宿推荐</button>
+  <div id="tk-subnav" class="subnav">
+    <button onclick="switchTickets('tickets',this)" class="snav-btn tk-btn snav-active">🎫 交通攻略</button>
+    <button onclick="switchTickets('hotel',this)" class="snav-btn tk-btn">🏨 住宿推荐</button>
   </div>
 
   <div style="overflow-y:auto;flex:1;padding:14px 16px">
@@ -592,9 +624,9 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 
 <!-- TAB 8: Finance -->
 <div class="tab-content" id="tab-finance" style="flex-direction:column">
-<div id="fn-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
-  <button onclick="switchFinance('budget',this)" class="fn-btn fn-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px;flex-shrink:0;white-space:nowrap;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent">💰 费用总览</button>
-  <button onclick="switchFinance('splitbill',this)" class="fn-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;flex-shrink:0;white-space:nowrap;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent">💸 分账记账</button>
+<div id="fn-subnav" class="subnav">
+  <button onclick="switchFinance('budget',this)" class="snav-btn fn-btn snav-active">💰 费用总览</button>
+  <button onclick="switchFinance('splitbill',this)" class="snav-btn fn-btn">💸 分账记账</button>
 </div>
   <div style="overflow-y:auto;flex:1">
     <div id="fn-budget" style="padding:14px 16px">
@@ -771,13 +803,13 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 <div class="tab-content" id="tab-essentials" style="flex-direction:column;background:#F0F4F8">
 
   <!-- 子页签导航 -->
-  <div id="es-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0">
-    <button onclick="switchEssentials('weather',this)" class="es-btn es-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px">🌤 天气穿衣</button>
-    <button onclick="switchEssentials('emergency',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;margin-right:4px">🚨 急救电话</button>
-    <button onclick="switchEssentials('life',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;margin-right:4px">💡 实用信息</button>
-    <button onclick="switchEssentials('shopping',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;margin-right:4px">🛍 特产购物</button>
-    <button onclick="switchEssentials('apps',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;margin-right:4px">📱 必备App</button>
-    <button onclick="switchEssentials('bilingual',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569">🔤 中英对照</button>
+  <div id="es-subnav" class="subnav">
+    <button onclick="switchEssentials('weather',this)" class="snav-btn es-btn snav-active">🌤 天气穿衣</button>
+    <button onclick="switchEssentials('emergency',this)" class="snav-btn es-btn">🚨 急救电话</button>
+    <button onclick="switchEssentials('life',this)" class="snav-btn es-btn">💡 实用信息</button>
+    <button onclick="switchEssentials('shopping',this)" class="snav-btn es-btn">🛍 特产购物</button>
+    <button onclick="switchEssentials('apps',this)" class="snav-btn es-btn">📱 必备App</button>
+    <button onclick="switchEssentials('bilingual',this)" class="snav-btn es-btn">🔤 中英对照</button>
   </div>
 
   <div style="overflow-y:auto;flex:1">
@@ -1562,10 +1594,11 @@ function switchSubTab(sections, idPrefix, btnClass, name, btn){
     const el = document.getElementById(idPrefix + s)
     if(el) el.style.display = s === name ? '' : 'none'
   })
-  document.querySelectorAll('.' + btnClass).forEach(b => {
-    b.style.background = '#CBD5E1'; b.style.color = '#475569'
-  })
-  if(btn){ btn.style.background = '#fff'; btn.style.color = '#1A2332' }
+  document.querySelectorAll('.' + btnClass).forEach(b => b.classList.remove('snav-active'))
+  if(btn){
+    btn.classList.add('snav-active')
+    btn.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'})
+  }
 }
 function switchBooking(name, btn){ switchSubTab(['booking','risk','visa'], 'bk-', 'bk-btn', name, btn) }
 function switchTickets(name, btn){ switchSubTab(['tickets','hotel'], 'tk-', 'tk-btn', name, btn) }
@@ -1577,16 +1610,9 @@ function switchEssentials(name, btn){
     const el = document.getElementById('es-' + s)
     if(el) el.style.display = s === name ? '' : 'none'
   })
-  document.querySelectorAll('.es-btn').forEach(b => {
-    b.classList.remove('es-active')
-    b.style.background = '#CBD5E1'
-    b.style.color = '#475569'
-  })
+  document.querySelectorAll('.es-btn').forEach(b => b.classList.remove('snav-active'))
   if(btn){
-    btn.classList.add('es-active')
-    btn.style.background = '#fff'
-    btn.style.color = '#1A2332'
-    // scroll active button into view on mobile
+    btn.classList.add('snav-active')
     btn.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'})
   }
 }
