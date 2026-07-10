@@ -193,11 +193,9 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 
 <div class="nav-tabs">
   <button class="tab-btn active" onclick="switchTab('map',this)">🗺 地图动线</button>
-  <button class="tab-btn" onclick="switchTab('booking',this)">📋 待预约 <span id="badge-todo" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
-  <button class="tab-btn" onclick="switchTab('risk',this)">⚠️ 风险清单</button>
-  <button class="tab-btn" onclick="switchTab('tickets',this)">🎫 交通票攻略</button>
+  <button class="tab-btn" onclick="switchTab('booking',this)">📋 预约 & 风险 <span id="badge-todo" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
+  <button class="tab-btn" onclick="switchTab('tickets',this)">🎫 交通 & 住宿</button>
   <button class="tab-btn" onclick="switchTab('budget',this)">💰 费用总览</button>
-  <button class="tab-btn" onclick="switchTab('hotel',this)">🏨 住宿推荐</button>
   <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
   <button class="tab-btn" onclick="switchTab('bilingual',this)">🔤 中英对照</button>
   <button class="tab-btn" onclick="switchTab('essentials',this)">🌤 实用速查</button>
@@ -331,165 +329,87 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
       </div>
     </div>
     <div id="booking-list"></div>
-  </div>
-</div>
 
-<!-- TAB 3: Hotel -->
-<div class="tab-content" id="tab-hotel">
-  <div class="full-page">
-    <p style="font-size:.8rem;color:var(--muted);margin-bottom:18px">价格为旺季参考均价/晚，建议提前2–3个月预订。</p>
+    <!-- ⚠️ 风险清单 section -->
+    <div style="margin-top:18px;padding-top:14px;border-top:2px dashed var(--border)">
+      <div style="font-weight:700;font-size:.88rem;color:var(--muted);margin-bottom:12px;letter-spacing:.03em">⚠️ 风险清单</div>
 
-    <div class="bi-section">
-      <div class="city-hd" style="background:#FFF7ED;border-left:4px solid var(--nl)">🇳🇱 阿姆斯特丹 — 9/25、9/26（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：Sloterdijk 智选假日</small></div>
-      <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn Express Amsterdam - Sloterdijk Station</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">阿姆斯特丹 Sloterdijk 智选假日</div></td><td style="font-size:.72rem">Transformatorweg 36</td><td style="font-size:.72rem">紧贴Sloterdijk站·5min火车到中央站·史基浦直达约10min·免费早餐·IHG积分</td><td class="price-g">🏅 IHG 39k(9/25)+45k(9/26)</td></tr>
-      </table>
-      <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 距博物馆广场约3km，9/27去梵高/国立博物馆乘2/5路电车约15分钟</p>
-    </div>
-
-    <div class="bi-section">
-      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 科隆 — 9/27（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：科隆希尔顿酒店</small></div>
-      <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Hilton Cologne</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">科隆希尔顿酒店</div></td><td style="font-size:.72rem">Marzellenstraße 13-17</td><td style="font-size:.72rem">大教堂旁100m·中央站步行2min·位置绝佳·1晚短住首选</td><td class="price-g">🏅 Hilton 53k/晚</td></tr>
-      </table>
-    </div>
-
-    <div class="bi-section">
-      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 曼海姆 — 9/28（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：Holiday Inn Mannheim City</small></div>
-      <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn Mannheim City – Hauptbahnhof</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">曼海姆城市假日酒店</div></td><td style="font-size:.72rem">Willy-Brandt-Platz 3</td><td style="font-size:.72rem">中央站旁步行3min·D5晨班ICE 07:11出发极便利·IHG积分</td><td class="price-g">🏅 IHG 24k/晚</td></tr>
-      </table>
-    </div>
-
-    <div class="bi-section">
-      <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 慕尼黑 — 9/29–10/1（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定</small></div>
-      <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn München Süd</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">慕尼黑南部假日酒店</div></td><td style="font-size:.72rem">Kistlerhofstraße 142</td><td style="font-size:.72rem">慕尼黑南部·U3 Aidenbachstraße约15min市区·性价比高</td><td class="price-g">🏅 IHG 92k/2晚（47k+45k）</td></tr>
-      </table>
-      <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 D5新天鹅堡需先坐U3到Hbf换区域列车；D6博物馆建议早上在Hbf寄存行李后出发萨尔茨堡</p>
-    </div>
-
-    <div class="bi-section">
-      <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 萨尔茨堡 — 10/1–10/3（共2晚）<br><small style="font-weight:400;color:var(--muted)">⏳ 待预订 — 推荐老城附近</small></div>
-      <table class="hotel-tbl"><tr><th>档次</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag htag-eco">经济</span></td><td><b>Motel One Salzburg-Süd</b></td><td style="font-size:.72rem">Söllheimer Str. 2</td><td style="font-size:.72rem">设计风格·性价比高·巴士5min老城</td><td class="price-g">€90–130</td></tr>
-      <tr><td><span class="htag htag-mid">舒适</span></td><td><b>Boutique Hotel am Dom</b></td><td style="font-size:.72rem">Goldgasse 17</td><td style="font-size:.72rem">老城核心·大教堂旁·复古精品</td><td class="price-g">€160–230</td></tr>
-      <tr><td><span class="htag htag-lux">豪华</span></td><td><b>Hotel Sacher Salzburg</b></td><td style="font-size:.72rem">Schwarzstraße 5-7</td><td style="font-size:.72rem">萨尔扎赫河畔·要塞对岸绝景·5星</td><td class="price-g">€350–550</td></tr>
-      </table>
-      <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 推荐住老城河对岸（Linzer Gasse一带），步行可达所有景点；D7早08:30出发哈尔施塔特，住近中央站更方便</p>
-    </div>
-
-    <div class="bi-section">
-      <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 维也纳 — 10/3–10/5（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定</small></div>
-      <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
-      <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>DoubleTree by Hilton Vienna Schönbrunn</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">维也纳美泉宫逸林酒店</div></td><td style="font-size:.72rem">Schönbrunner Str. 474</td><td style="font-size:.72rem">美泉宫步行5min·U4直连市区·D10步行入宫·机场U4→U1→S7约50min</td><td class="price-g">🏅 Hilton 35k/晚</td></tr>
-      </table>
-    </div>
-
-    <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:4px">
-      <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">💰 住宿费用汇总（10晚/人）</div>
-      <table class="hotel-tbl"><tr><th>档次</th><th>均价/晚</th><th>10晚总计（含萨尔茨堡待定）</th></tr>
-      <tr><td><span class="htag htag-eco">经济</span></td><td>€80–130</td><td class="price-g">€800–1,300</td></tr>
-      <tr><td><span class="htag htag-mid">舒适</span></td><td>€130–230</td><td class="price-g">€1,300–2,300</td></tr>
-      <tr><td><span class="htag htag-lux">豪华</span></td><td>€350–700</td><td class="price-g">€3,500–7,000</td></tr>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- TAB 5: Risk -->
-<div class="tab-content" id="tab-risk">
-  <div style="overflow-y:auto;flex:1;padding:14px 16px">
-
-    <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:14px 16px;margin-bottom:12px">
-      <div style="font-weight:700;font-size:.9rem;color:#991B1B;margin-bottom:10px">🔴 高风险 — 可能直接打乱计划</div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
-        <div style="font-weight:600;font-size:.82rem">1. 安妮之家（D1）必须提前网上预约</div>
-        <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">旺季 9/26 周六 19:00 场次极易售罄，官网可能数周前已无票。需立即在 <a href="https://www.annefrank.org/en/museum/tickets/" target="_blank" style="color:#DC2626">annefrank.org</a> 预约指定场次，无法现场购票入场。</div>
+      <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-weight:700;font-size:.9rem;color:#991B1B;margin-bottom:10px">🔴 高风险 — 可能直接打乱计划</div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
+          <div style="font-weight:600;font-size:.82rem">1. 安妮之家（D1）必须提前网上预约</div>
+          <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">旺季 9/26 周六 19:00 场次极易售罄，官网可能数周前已无票。需立即在 <a href="https://www.annefrank.org/en/museum/tickets/" target="_blank" style="color:#DC2626">annefrank.org</a> 预约指定场次，无法现场购票入场。</div>
+        </div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
+          <div style="font-weight:600;font-size:.82rem">2. 新天鹅堡（D5）门票须提前预订</div>
+          <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">旺季现场排队 2–3 小时甚至无票，必须提前在官网选定入场时间段。9/30 是旺季热门日期，建议至少提前 2–4 周购票。</div>
+        </div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
+          <div style="font-weight:600;font-size:.82rem">3. D5 Bayern Ticket 不适用 07:00 出发（周三工作日）</div>
+          <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">Bayern Ticket 工作日从 09:00 起才生效，07:00 的慕尼黑→菲森列车需购普通来回票（约 €32/人），切勿刷 Bayern Ticket 上车，会被补票罚款。</div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:.82rem">4. D8 萨尔茨堡行程极满 + 当晚需赶 Westbahn 18:52</div>
+          <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">要塞→午饭→莫扎特故居→米拉贝尔宫→格特雷德街→晚饭→18:52 Westbahn，全程无缓冲。任一环节超时将产生连锁压力。建议提前在 westbahn.at 购票锁定座位，避免现场抢票。</div>
+        </div>
       </div>
 
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
-        <div style="font-weight:600;font-size:.82rem">2. 新天鹅堡（D5）门票须提前预订</div>
-        <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">旺季现场排队 2–3 小时甚至无票，必须提前在官网选定入场时间段。9/30 是旺季热门日期，建议至少提前 2–4 周购票。</div>
+      <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-weight:700;font-size:.9rem;color:#92400E;margin-bottom:10px">🟠 中等风险 — 影响体验但可应对</div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
+          <div style="font-weight:600;font-size:.82rem">5. D6 行李寄存勿忘</div>
+          <div style="font-size:.75rem;color:#78350F;margin-top:3px">D6 退房后直接去慕尼黑中央站寄存行李（约 €5–8），12:09 出发前取回即可。萨尔茨堡同样可在中央站寄存，13:55 抵达后寄存行李再参观茨威格中心，无需拖行李赶时间。</div>
+        </div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
+          <div style="font-weight:600;font-size:.82rem">6. D1 全天行程偏重，缓冲极少</div>
+          <div style="font-size:.75rem;color:#78350F;margin-top:3px">羊角村来回约 7 小时（09:00 出发，16:30 返回阿姆斯特丹），接着逛九街，再赶 19:00 安妮之家。火车若晚点或游览超时，中间仅剩约 2 小时，全天无休息点，对时差初期体力有一定考验。</div>
+        </div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
+          <div style="font-weight:600;font-size:.82rem">7. D5 啤酒节：新天鹅堡后体力消耗大</div>
+          <div style="font-size:.75rem;color:#78350F;margin-top:3px">D5 全天爬山徒步后晚上去啤酒节，体力要求较高。帐篷座位通常需提前半年预约，walk-in 几乎没座位，以站饮体验为主。若太累可临时放弃，啤酒节免票入场无损失。</div>
+        </div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
+          <div style="font-weight:600;font-size:.82rem">8. 萨尔茨堡酒店尚未预订</div>
+          <div style="font-size:.75rem;color:#78350F;margin-top:3px">D6 下午 13:55 抵达，D7 早 08:30 即需出发哈尔施塔特。若临时选酒店，可能无法保证靠近中央站的位置，影响早起接驳效率。建议尽快选定并预订。</div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:.82rem">9. D4（9/29）慕尼黑行李中转需规划好路线</div>
+          <div style="font-size:.75rem;color:#78350F;margin-top:3px">10:20 在慕尼黑中央站寄存行李后游览全天，傍晚18:00结束后需回中央站取行李，再乘U3/U6至 Aidenbachstraße 约20min到 Holiday Inn München Süd 入住。注意储物柜付款方式（硬币或App），取包后需拖行李换乘，建议全天最后一站定在中央站附近。</div>
+        </div>
       </div>
 
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
-        <div style="font-weight:600;font-size:.82rem">3. D5 Bayern Ticket 不适用 07:00 出发（周三工作日）</div>
-        <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">Bayern Ticket 工作日从 09:00 起才生效，07:00 的慕尼黑→菲森列车需购普通来回票（约 €32/人），切勿刷 Bayern Ticket 上车，会被补票罚款。</div>
+      <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-weight:700;font-size:.9rem;color:#166534;margin-bottom:10px">🟡 低风险 — 注意即可</div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
+          <div style="font-weight:600;font-size:.82rem">10. D3/D4 曼海姆中转晚点风险</div>
+          <div style="font-size:.75rem;color:#14532D;margin-top:3px">D3 IC 2440 科隆→曼海姆和 D4 ICE 1091 曼海姆→慕尼黑分开购票，两程独立，无换乘风险。ICE 晚点率约 20–30%，大多在 15 分钟内。D4 曼海姆 07:11 出发，若晚点仍可赶上 10:10 前后抵慕尼黑，对行程影响有限。</div>
+        </div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
+          <div style="font-weight:600;font-size:.82rem">11. D2（9/27）取行李至上车仅45分钟</div>
+          <div style="font-size:.75rem;color:#14532D;margin-top:3px">行程安排 20:15 从水坝广场出发取存于中央站的行李，21:01 IC 60403 开车，约45分钟缓冲。中央站储物柜找到、取包、上电梯找站台均需时间，建议 19:55 就往中央站走，可在站内随便吃点东西打发时间。存包时务必记好格号或拍照备忘。</div>
+        </div>
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
+          <div style="font-weight:600;font-size:.82rem">12. D10 机场时间缓冲约 3 小时</div>
+          <div style="font-size:.75rem;color:#14532D;margin-top:3px">15:00 从美泉宫出发，U1→S7 约 40 分钟，约 15:45 到 VIE 机场，19:00 国际航班提前 3 小时到场基本够用。若行李多或地铁延误需留意，可改乘 CAT 快轨（16 分钟，€12）更保险。</div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:.82rem">13. D7 哈尔施塔特游客极多</div>
+          <div style="font-size:.75rem;color:#14532D;margin-top:3px">村子面积极小，旺季人流密集，渡船可能需要排队。已安排 08:30 出发尽量错峰，方向正确。下午 15:00 前离开可避开下午人流高峰。</div>
+        </div>
       </div>
 
-      <div>
-        <div style="font-weight:600;font-size:.82rem">4. D8 萨尔茨堡行程极满 + 当晚需赶 Westbahn 18:52</div>
-        <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">要塞→午饭→莫扎特故居→米拉贝尔宫→格特雷德街→晚饭→18:52 Westbahn，全程无缓冲。任一环节超时将产生连锁压力。建议提前在 westbahn.at 购票锁定座位，避免现场抢票。</div>
+      <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:12px 16px">
+        <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">✅ 优先处理清单</div>
+        <div style="font-size:.75rem;line-height:1.9">
+          🔴 <b>立刻</b>：安妮之家 9/26 19:00 场次预约<br>
+          🔴 <b>立刻</b>：新天鹅堡门票预订（选定 9/30 <b>10:30</b> 场次）<br>
+          🔴 <b>确认</b>：D5（9/30 周三）购买普通来回票，非 Bayern Ticket<br>
+          🟠 <b>尽快</b>：萨尔茨堡酒店选定并预订（靠近中央站或老城）<br>
+          🟠 <b>尽快</b>：Westbahn 萨尔茨堡→Hütteldorf 10/3 18:52 在 westbahn.at 购票<br>
+          🟡 <b>行前</b>：D6 退房后先到慕尼黑 Hbf 寄存行李，12:09 前取回上车
+        </div>
       </div>
     </div>
-
-    <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:12px">
-      <div style="font-weight:700;font-size:.9rem;color:#92400E;margin-bottom:10px">🟠 中等风险 — 影响体验但可应对</div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
-        <div style="font-weight:600;font-size:.82rem">5. D6 行李寄存勿忘</div>
-        <div style="font-size:.75rem;color:#78350F;margin-top:3px">D6 退房后直接去慕尼黑中央站寄存行李（约 €5–8），12:09 出发前取回即可。萨尔茨堡同样可在中央站寄存，13:55 抵达后寄存行李再参观茨威格中心，无需拖行李赶时间。</div>
-      </div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
-        <div style="font-weight:600;font-size:.82rem">6. D1 全天行程偏重，缓冲极少</div>
-        <div style="font-size:.75rem;color:#78350F;margin-top:3px">羊角村来回约 7 小时（09:00 出发，16:30 返回阿姆斯特丹），接着逛九街，再赶 19:00 安妮之家。火车若晚点或游览超时，中间仅剩约 2 小时，全天无休息点，对时差初期体力有一定考验。</div>
-      </div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
-        <div style="font-weight:600;font-size:.82rem">7. D5 啤酒节：新天鹅堡后体力消耗大</div>
-        <div style="font-size:.75rem;color:#78350F;margin-top:3px">D5 全天爬山徒步后晚上去啤酒节，体力要求较高。帐篷座位通常需提前半年预约，walk-in 几乎没座位，以站饮体验为主。若太累可临时放弃，啤酒节免票入场无损失。</div>
-      </div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FED7AA">
-        <div style="font-weight:600;font-size:.82rem">8. 萨尔茨堡酒店尚未预订</div>
-        <div style="font-size:.75rem;color:#78350F;margin-top:3px">D6 下午 13:55 抵达，D7 早 08:30 即需出发哈尔施塔特。若临时选酒店，可能无法保证靠近中央站的位置，影响早起接驳效率。建议尽快选定并预订。</div>
-      </div>
-
-      <div>
-        <div style="font-weight:600;font-size:.82rem">9. D4（9/29）慕尼黑行李中转需规划好路线</div>
-        <div style="font-size:.75rem;color:#78350F;margin-top:3px">10:20 在慕尼黑中央站寄存行李后游览全天，傍晚18:00结束后需回中央站取行李，再乘U3/U6至 Aidenbachstraße 约20min到 Holiday Inn München Süd 入住。注意储物柜付款方式（硬币或App），取包后需拖行李换乘，建议全天最后一站定在中央站附近。</div>
-      </div>
-    </div>
-
-    <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:14px 16px;margin-bottom:12px">
-      <div style="font-weight:700;font-size:.9rem;color:#166534;margin-bottom:10px">🟡 低风险 — 注意即可</div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
-        <div style="font-weight:600;font-size:.82rem">10. D3/D4 曼海姆中转晚点风险</div>
-        <div style="font-size:.75rem;color:#14532D;margin-top:3px">D3 IC 2440 科隆→曼海姆和 D4 ICE 1091 曼海姆→慕尼黑分开购票，两程独立，无换乘风险。ICE 晚点率约 20–30%，大多在 15 分钟内。D4 曼海姆 07:11 出发，若晚点仍可赶上 10:10 前后抵慕尼黑，对行程影响有限。</div>
-      </div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
-        <div style="font-weight:600;font-size:.82rem">11. D2（9/27）取行李至上车仅45分钟</div>
-        <div style="font-size:.75rem;color:#14532D;margin-top:3px">行程安排 20:15 从水坝广场出发取存于中央站的行李，21:01 IC 60403 开车，约45分钟缓冲。中央站储物柜找到、取包、上电梯找站台均需时间，建议 19:55 就往中央站走，可在站内随便吃点东西打发时间。存包时务必记好格号或拍照备忘。</div>
-      </div>
-
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
-        <div style="font-weight:600;font-size:.82rem">12. D10 机场时间缓冲约 3 小时</div>
-        <div style="font-size:.75rem;color:#14532D;margin-top:3px">15:00 从美泉宫出发，U1→S7 约 40 分钟，约 15:45 到 VIE 机场，19:00 国际航班提前 3 小时到场基本够用。若行李多或地铁延误需留意，可改乘 CAT 快轨（16 分钟，€12）更保险。</div>
-      </div>
-
-      <div>
-        <div style="font-weight:600;font-size:.82rem">13. D7 哈尔施塔特游客极多</div>
-        <div style="font-size:.75rem;color:#14532D;margin-top:3px">村子面积极小，旺季人流密集，渡船可能需要排队。已安排 08:30 出发尽量错峰，方向正确。下午 15:00 前离开可避开下午人流高峰。</div>
-      </div>
-    </div>
-
-    <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:12px 16px">
-      <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">✅ 优先处理清单</div>
-      <div style="font-size:.75rem;line-height:1.9">
-        🔴 <b>立刻</b>：安妮之家 9/26 19:00 场次预约<br>
-        🔴 <b>立刻</b>：新天鹅堡门票预订（选定 9/30 <b>10:30</b> 场次）<br>
-        🔴 <b>确认</b>：D5（9/30 周三）购买普通来回票，非 Bayern Ticket<br>
-        🟠 <b>尽快</b>：萨尔茨堡酒店选定并预订（靠近中央站或老城）<br>
-        🟠 <b>尽快</b>：Westbahn 萨尔茨堡→Hütteldorf 10/3 18:52 在 westbahn.at 购票<br>
-        🟡 <b>行前</b>：D6 退房后先到慕尼黑 Hbf 寄存行李，12:09 前取回上车
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -605,6 +525,67 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
       </table>
     </div>
 
+    <!-- 🏨 住宿推荐 section -->
+    <div style="margin-top:18px;padding-top:14px;border-top:2px dashed var(--border)">
+      <div style="font-weight:700;font-size:.88rem;color:var(--muted);margin-bottom:12px;letter-spacing:.03em">🏨 住宿推荐</div>
+      <p style="font-size:.8rem;color:var(--muted);margin-bottom:18px">价格为旺季参考均价/晚，建议提前2–3个月预订。</p>
+
+      <div class="bi-section">
+        <div class="city-hd" style="background:#FFF7ED;border-left:4px solid var(--nl)">🇳🇱 阿姆斯特丹 — 9/25、9/26（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：Sloterdijk 智选假日</small></div>
+        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn Express Amsterdam - Sloterdijk Station</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">阿姆斯特丹 Sloterdijk 智选假日</div></td><td style="font-size:.72rem">Transformatorweg 36</td><td style="font-size:.72rem">紧贴Sloterdijk站·5min火车到中央站·史基浦直达约10min·免费早餐·IHG积分</td><td class="price-g">🏅 IHG 39k(9/25)+45k(9/26)</td></tr>
+        </table>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 距博物馆广场约3km，9/27去梵高/国立博物馆乘2/5路电车约15分钟</p>
+      </div>
+
+      <div class="bi-section">
+        <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 科隆 — 9/27（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：科隆希尔顿酒店</small></div>
+        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Hilton Cologne</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">科隆希尔顿酒店</div></td><td style="font-size:.72rem">Marzellenstraße 13-17</td><td style="font-size:.72rem">大教堂旁100m·中央站步行2min·位置绝佳·1晚短住首选</td><td class="price-g">🏅 Hilton 53k/晚</td></tr>
+        </table>
+      </div>
+
+      <div class="bi-section">
+        <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 曼海姆 — 9/28（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：Holiday Inn Mannheim City</small></div>
+        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn Mannheim City – Hauptbahnhof</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">曼海姆城市假日酒店</div></td><td style="font-size:.72rem">Willy-Brandt-Platz 3</td><td style="font-size:.72rem">中央站旁步行3min·D5晨班ICE 07:11出发极便利·IHG积分</td><td class="price-g">🏅 IHG 24k/晚</td></tr>
+        </table>
+      </div>
+
+      <div class="bi-section">
+        <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 慕尼黑 — 9/29–10/1（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定</small></div>
+        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn München Süd</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">慕尼黑南部假日酒店</div></td><td style="font-size:.72rem">Kistlerhofstraße 142</td><td style="font-size:.72rem">慕尼黑南部·U3 Aidenbachstraße约15min市区·性价比高</td><td class="price-g">🏅 IHG 92k/2晚（47k+45k）</td></tr>
+        </table>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 D5新天鹅堡需先坐U3到Hbf换区域列车；D6博物馆建议早上在Hbf寄存行李后出发萨尔茨堡</p>
+      </div>
+
+      <div class="bi-section">
+        <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 萨尔茨堡 — 10/1–10/3（共2晚）<br><small style="font-weight:400;color:var(--muted)">⏳ 待预订 — 推荐老城附近</small></div>
+        <table class="hotel-tbl"><tr><th>档次</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <tr><td><span class="htag htag-eco">经济</span></td><td><b>Motel One Salzburg-Süd</b></td><td style="font-size:.72rem">Söllheimer Str. 2</td><td style="font-size:.72rem">设计风格·性价比高·巴士5min老城</td><td class="price-g">€90–130</td></tr>
+        <tr><td><span class="htag htag-mid">舒适</span></td><td><b>Boutique Hotel am Dom</b></td><td style="font-size:.72rem">Goldgasse 17</td><td style="font-size:.72rem">老城核心·大教堂旁·复古精品</td><td class="price-g">€160–230</td></tr>
+        <tr><td><span class="htag htag-lux">豪华</span></td><td><b>Hotel Sacher Salzburg</b></td><td style="font-size:.72rem">Schwarzstraße 5-7</td><td style="font-size:.72rem">萨尔扎赫河畔·要塞对岸绝景·5星</td><td class="price-g">€350–550</td></tr>
+        </table>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 推荐住老城河对岸（Linzer Gasse一带），步行可达所有景点；D7早08:30出发哈尔施塔特，住近中央站更方便</p>
+      </div>
+
+      <div class="bi-section">
+        <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 维也纳 — 10/3–10/5（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定</small></div>
+        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>DoubleTree by Hilton Vienna Schönbrunn</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">维也纳美泉宫逸林酒店</div></td><td style="font-size:.72rem">Schönbrunner Str. 474</td><td style="font-size:.72rem">美泉宫步行5min·U4直连市区·D10步行入宫·机场U4→U1→S7约50min</td><td class="price-g">🏅 Hilton 35k/晚</td></tr>
+        </table>
+      </div>
+
+      <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:4px">
+        <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">💰 住宿费用汇总（10晚/人）</div>
+        <table class="hotel-tbl"><tr><th>档次</th><th>均价/晚</th><th>10晚总计（含萨尔茨堡待定）</th></tr>
+        <tr><td><span class="htag htag-eco">经济</span></td><td>€80–130</td><td class="price-g">€800–1,300</td></tr>
+        <tr><td><span class="htag htag-mid">舒适</span></td><td>€130–230</td><td class="price-g">€1,300–2,300</td></tr>
+        <tr><td><span class="htag htag-lux">豪华</span></td><td>€350–700</td><td class="price-g">€3,500–7,000</td></tr>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 
