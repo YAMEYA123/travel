@@ -245,8 +245,15 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 </div>
 
 <!-- TAB 2: Booking Checklist -->
-<div class="tab-content" id="tab-booking">
-  <div class="full-page" id="booking-page">
+<div class="tab-content" id="tab-booking" style="flex-direction:column">
+
+  <!-- 预约&风险 子页签 -->
+  <div id="bk-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
+    <button onclick="switchBooking('booking',this)" class="bk-btn bk-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">📋 待预约</button>
+    <button onclick="switchBooking('risk',this)" class="bk-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">⚠️ 风险清单</button>
+  </div>
+  <div style="overflow-y:auto;flex:1;padding:20px" id="booking-page">
+    <div id="bk-booking">
     <!-- progress bar -->
     <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -265,6 +272,8 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     </div>
     <div id="booking-list"></div>
 
+    </div><!-- /bk-booking -->
+    <div id="bk-risk" style="display:none">
     <!-- ⚠️ 风险清单 section -->
     <div style="margin-top:18px;padding-top:14px;border-top:2px dashed var(--border)">
       <div style="font-weight:700;font-size:.88rem;color:var(--muted);margin-bottom:12px;letter-spacing:.03em">⚠️ 风险清单</div>
@@ -344,14 +353,22 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
           🟡 <b>行前</b>：D6 退房后先到慕尼黑 Hbf 寄存行李，12:09 前取回上车
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div><!-- /bk-risk -->
+  </div><!-- /booking-page -->
+</div><!-- /tab-booking -->
 
 <!-- TAB 6: Tickets -->
-<div class="tab-content" id="tab-tickets">
+<div class="tab-content" id="tab-tickets" style="flex-direction:column">
+
+  <!-- 交通&住宿 子页签 -->
+  <div id="tk-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
+    <button onclick="switchTickets('tickets',this)" class="tk-btn tk-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">🎫 交通攻略</button>
+    <button onclick="switchTickets('hotel',this)" class="tk-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">🏨 住宿推荐</button>
+  </div>
+
   <div style="overflow-y:auto;flex:1;padding:14px 16px">
 
+    <div id="tk-tickets">
     <!-- 总结卡 -->
     <div style="background:linear-gradient(135deg,#EFF6FF,#F0FDF4);border:1px solid #BFDBFE;border-radius:10px;padding:14px 16px;margin-bottom:12px">
       <div style="font-weight:700;font-size:.9rem;margin-bottom:8px">💡 一句话结论</div>
@@ -460,6 +477,8 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
       </table></div>
     </div>
 
+    </div><!-- /tk-tickets -->
+    <div id="tk-hotel" style="display:none">
     <!-- 🏨 住宿推荐 section -->
     <div style="margin-top:18px;padding-top:14px;border-top:2px dashed var(--border)">
       <div style="font-weight:700;font-size:.88rem;color:var(--muted);margin-bottom:12px;letter-spacing:.03em">🏨 住宿推荐</div>
@@ -520,9 +539,9 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
         <tr><td><span class="htag htag-lux">豪华</span></td><td>€350–700</td><td class="price-g">€3,500–7,000</td></tr>
         </table></div>
       </div>
-    </div>
-  </div>
-</div>
+    </div><!-- /tk-hotel -->
+  </div><!-- /tk-scroll -->
+</div><!-- /tab-tickets -->
 
 <!-- TAB 8: Budget -->
 <div class="tab-content" id="tab-budget">
@@ -1503,6 +1522,20 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 </div>
 
 <script>
+// ── Generic sub-tab switcher ──
+function switchSubTab(sections, idPrefix, btnClass, name, btn){
+  sections.forEach(s => {
+    const el = document.getElementById(idPrefix + s)
+    if(el) el.style.display = s === name ? '' : 'none'
+  })
+  document.querySelectorAll('.' + btnClass).forEach(b => {
+    b.style.background = '#CBD5E1'; b.style.color = '#475569'
+  })
+  if(btn){ btn.style.background = '#fff'; btn.style.color = '#1A2332' }
+}
+function switchBooking(name, btn){ switchSubTab(['booking','risk'], 'bk-', 'bk-btn', name, btn) }
+function switchTickets(name, btn){ switchSubTab(['tickets','hotel'], 'tk-', 'tk-btn', name, btn) }
+
 // ── Essentials sub-tabs ──
 function switchEssentials(name, btn){
   const sections = ['weather','emergency','life','shopping','apps','bilingual']
