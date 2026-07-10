@@ -174,25 +174,127 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   #map{height:42vw;min-height:200px;flex:none}
   aside{width:100%;border-left:none;border-top:1px solid var(--border);flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
   .legend{display:none}
-  .bi-section{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .bi-table{min-width:520px}
   .nav-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .nav-tabs::-webkit-scrollbar{display:none}
   .tab-btn{flex-shrink:0;padding:10px 13px;font-size:.75rem;white-space:nowrap;min-height:44px}
-  /* inline styled tables in tickets/booking tabs */
   .tickets-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .full-page{padding:14px}
 }
 @media(max-width:480px){
-  .bi-table th:nth-child(4),
-  .bi-table td:nth-child(4){display:none}
-  .bi-table{min-width:300px}
   header h1{font-size:.85rem}
   header p{display:none}
   .dl-btn,.rf-btn{padding:5px 9px;font-size:.7rem}
-  .hotel-tbl{min-width:400px}
-  .hotel-tbl th:nth-child(4),.hotel-tbl td:nth-child(4){display:none}
   .snav-btn{padding:7px 12px!important;font-size:.76rem!important}
+}
+
+/* ══ 移动端表格→卡片化 (≤640px) ══ */
+@media(max-width:640px){
+
+  /* ── bi-table：中英对照 ── */
+  .bi-section{overflow-x:unset}
+  .bi-table{min-width:0!important;display:block;box-shadow:none;border-radius:0;font-size:.84rem}
+  .bi-table tr:first-child{display:none}  /* 隐藏表头行 */
+  .bi-table tr{
+    display:block;margin-bottom:10px;
+    border:1px solid var(--border);border-radius:10px;
+    overflow:hidden;background:#fff;
+    box-shadow:0 1px 5px rgba(0,0,0,.07);
+  }
+  .bi-table tr:hover{background:unset}
+  .bi-table td{
+    display:flex;align-items:flex-start;gap:8px;
+    padding:8px 13px;border-bottom:1px solid #EEF2F7;
+    font-size:.82rem;line-height:1.5;background:#fff!important;
+  }
+  .bi-table td:last-child{border-bottom:none}
+  .bi-table td::before{
+    font-size:.62rem;font-weight:700;color:var(--muted);letter-spacing:.04em;
+    min-width:34px;flex-shrink:0;padding-top:2px;text-transform:uppercase;
+  }
+  /* 中文词 — 卡片标题 */
+  .bi-table td:nth-child(1){
+    display:block;font-size:.95rem;font-weight:700;
+    background:#EFF4FA!important;padding:10px 13px;
+    border-bottom:2px solid #DDE6F0;color:var(--text);
+  }
+  .bi-table td:nth-child(1)::before{display:none}
+  /* 译文 */
+  .bi-table td:nth-child(2){color:#2563EB;font-weight:500;font-style:italic}
+  .bi-table td:nth-child(2)::before{content:'译'}
+  /* 类型 */
+  .bi-table td:nth-child(3)::before{content:'类型'}
+  /* 备注 */
+  .bi-table td:nth-child(4){color:var(--muted);font-size:.76rem}
+  .bi-table td:nth-child(4)::before{content:'备注'}
+
+  /* ── hotel-tbl：酒店推荐 ── */
+  .hotel-tbl-wrap{border-radius:10px;box-shadow:0 1px 5px rgba(0,0,0,.07);overflow:hidden}
+  .hotel-tbl{min-width:0!important;display:block;border-radius:0;box-shadow:none}
+  .hotel-tbl tr:first-child{display:none}
+  .hotel-tbl tr{display:block;padding:12px 14px;border-bottom:1px solid var(--border);position:relative}
+  .hotel-tbl tr:last-child{border-bottom:none}
+  .hotel-tbl tr:hover{background:#F8FAFD}
+  .hotel-tbl td{display:block;border:none;padding:1px 0;font-size:.82rem;background:transparent!important}
+  /* 状态徽章 — 右上角 */
+  .hotel-tbl td:nth-child(1){position:absolute;top:12px;right:12px}
+  /* 酒店名 — 主标题 */
+  .hotel-tbl td:nth-child(2){font-size:.9rem;font-weight:700;padding-right:64px;line-height:1.4;margin-bottom:4px;color:var(--text)}
+  /* 地址 */
+  .hotel-tbl td:nth-child(3){font-size:.72rem;color:var(--muted);margin-bottom:3px}
+  .hotel-tbl td:nth-child(3)::before{content:'📍 '}
+  /* 特点 */
+  .hotel-tbl td:nth-child(4){font-size:.76rem;color:#334155;line-height:1.45}
+  /* 参考价 */
+  .hotel-tbl td:nth-child(5){
+    font-weight:700;color:#059669;font-size:.84rem;
+    margin-top:7px;padding-top:7px;
+    border-top:1px dashed #A7F3D0;
+  }
+  .hotel-tbl td:nth-child(5)::before{content:'💰 '}
+
+  /* ── shop-table：特产购物 ── */
+  .shop-table{display:block;font-size:.82rem}
+  .shop-table tr:first-child{display:none}
+  .shop-table tr{
+    display:block;margin-bottom:10px;
+    border:1px solid #DDE3EC;border-radius:9px;overflow:hidden;background:#fff;
+  }
+  .shop-table td{
+    display:flex;align-items:flex-start;gap:8px;
+    padding:7px 12px;border-bottom:1px solid #F1F5F9;
+    font-size:.8rem;line-height:1.45;
+  }
+  .shop-table td:last-child{border-bottom:none}
+  .shop-table td::before{
+    font-size:.62rem;font-weight:700;color:var(--muted);letter-spacing:.04em;
+    min-width:34px;flex-shrink:0;padding-top:2px;text-transform:uppercase;
+  }
+  /* 商品名 — 卡片标题 */
+  .shop-table td:nth-child(1){
+    display:block;font-size:.88rem;font-weight:600;
+    background:#F8FAFC;padding:9px 12px;
+    border-bottom:1px solid #E2E8F0;
+  }
+  .shop-table td:nth-child(1)::before{display:none}
+  /* 购买地点 */
+  .shop-table td:nth-child(2){color:#334155}
+  .shop-table td:nth-child(2)::before{content:'地点'}
+  /* 参考价 */
+  .shop-table td:nth-child(3){font-weight:700;color:#059669}
+  .shop-table td:nth-child(3)::before{content:'价格'}
+  /* 备注 */
+  .shop-table td:nth-child(4){color:var(--muted);font-size:.76rem}
+  .shop-table td:nth-child(4)::before{content:'备注'}
+}
+
+/* ── tbl-ticket：交通票价表移动端优化 ── */
+@media(max-width:640px){
+  .tbl-ticket{font-size:.8rem!important;min-width:0!important}
+  .tbl-ticket th,.tbl-ticket td{padding:7px 9px!important;line-height:1.45}
+  /* 价格列高亮 */
+  .tbl-ticket td:nth-child(2):not(:only-child){font-weight:700;color:#059669;white-space:nowrap}
+  /* 判断/说明列 wrap 展示 */
+  .tbl-ticket td:nth-child(3){font-size:.76rem!important;color:#334155}
 }
 
 /* ── 改进主 Nav ── */
@@ -458,7 +560,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <!-- 阿姆斯特丹 -->
     <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🇳🇱 阿姆斯特丹 — 各自买票即可</div>
-      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tbl-ticket" style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#FEF3C7"><th style="padding:5px 8px;text-align:left">卡种</th><th style="padding:5px 8px;text-align:left">价格</th><th style="padding:5px 8px;text-align:left">判断</th></tr>
         <tr style="border-bottom:1px solid #FED7AA"><td style="padding:5px 8px">I Amsterdam City Card 48h</td><td style="padding:5px 8px">€85</td><td style="padding:5px 8px;color:#B45309">❌ 不划算：安妮之家不含，羊角村NS铁路不含，两馆仅值€46.50</td></tr>
         <tr><td style="padding:5px 8px">感应刷银行卡/手机</td><td style="padding:5px 8px">按次计费</td><td style="padding:5px 8px;color:#166534">✅ 推荐：GVB地铁/电车直接感应上车，无需额外办卡</td></tr>
@@ -477,7 +579,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <!-- 慕尼黑 -->
     <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🇩🇪 慕尼黑 — MVV 单日票，按需买</div>
-      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tbl-ticket" style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#DBEAFE"><th style="padding:5px 8px;text-align:left">票种</th><th style="padding:5px 8px;text-align:left">价格</th><th style="padding:5px 8px;text-align:left">适用</th></tr>
         <tr style="border-bottom:1px solid #BFDBFE"><td style="padding:5px 8px"><b>MVV 内区日票</b> Tageskarte Innenraum</td><td style="padding:5px 8px"><b>€9.20</b></td><td style="padding:5px 8px;color:#166534">✅ D4（行李寄存+城市游+晚上取行李）、D5（新天鹅堡返程+啤酒节晚场）各买一张；D6直接退房去车站，无需MVV</td></tr>
         <tr style="border-bottom:1px solid #BFDBFE"><td style="padding:5px 8px">MVV 内区单程</td><td style="padding:5px 8px">€3.90</td><td style="padding:5px 8px;color:#92400E">仅乘1–2次时用，4次以上日票更省</td></tr>
@@ -512,7 +614,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <!-- 维也纳 -->
     <div style="background:#ECFDF5;border:1px solid #BBF7D0;border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🇦🇹 维也纳 — 单日公交票即可</div>
-      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tbl-ticket" style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#D1FAE5"><th style="padding:5px 8px;text-align:left">票种</th><th style="padding:5px 8px;text-align:left">价格</th><th style="padding:5px 8px;text-align:left">判断</th></tr>
         <tr style="border-bottom:1px solid #BBF7D0"><td style="padding:5px 8px"><b>24h 无限票</b></td><td style="padding:5px 8px"><b>€8</b></td><td style="padding:5px 8px;color:#166534">✅ D9 购一张，全天 U-Bahn 畅行</td></tr>
         <tr style="border-bottom:1px solid #BBF7D0"><td style="padding:5px 8px">维也纳城市卡 24h</td><td style="padding:5px 8px">€17</td><td style="padding:5px 8px;color:#B45309">❌ 景点折扣极小，美景宫/KHM均不在折扣内，不值</td></tr>
@@ -524,7 +626,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <!-- 城际铁路 -->
     <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🚆 城际铁路 — 单独买票，不买通票</div>
-      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tbl-ticket" style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#F1F5F9"><th style="padding:5px 8px;text-align:left">路段</th><th style="padding:5px 8px;text-align:right">单独买票</th></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">阿姆斯特丹 → 科隆 IC 60403（直达）</td><td style="padding:5px 8px;text-align:right">€19（约¥151）</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">科隆 → 曼海姆（IC 2440，9/28 18:53）</td><td style="padding:5px 8px;text-align:right">约€6/人（约¥44）</td></tr>
@@ -542,7 +644,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <!-- 汇总 -->
     <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:12px 16px">
       <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">📋 全程票务一览表</div>
-      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tbl-ticket" style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#1E293B;color:#fff"><th style="padding:6px 8px;text-align:left">城市/日</th><th style="padding:6px 8px;text-align:left">方案</th><th style="padding:6px 8px;text-align:right">费用</th></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">阿姆斯特丹 D0–D2</td><td style="padding:5px 8px">感应刷卡上车，博物馆单独购票</td><td style="padding:5px 8px;text-align:right">—</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">科隆 D2–D3</td><td style="padding:5px 8px">步行为主，无需交通卡</td><td style="padding:5px 8px;text-align:right">—</td></tr>
