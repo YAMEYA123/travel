@@ -2776,25 +2776,35 @@ function sbDelMember(i){
 
 // ── 添加记录 ──
 function sbAddRecord(){
-  const desc    = document.getElementById('sb-desc').value.trim()
-  const amount  = parseFloat(document.getElementById('sb-amount').value)
-  const currency= document.getElementById('sb-currency').value
-  const payer   = document.getElementById('sb-payer').value
-  const checked = [...document.querySelectorAll('#sb-splitters input:checked')].map(c=>c.value)
+  const desc     = document.getElementById('sb-desc').value.trim()
+  const amount   = parseFloat(document.getElementById('sb-amount').value)
+  const currency = document.getElementById('sb-currency').value
+  const payer    = document.getElementById('sb-payer').value
+  const checked  = [...document.querySelectorAll('#sb-splitters input:checked')].map(c=>c.value)
+  const dateVal  = document.getElementById('sb-date').value
+  const location = document.getElementById('sb-location').value.trim()
 
   if(!desc)   return alert('请填写消费说明')
   if(!amount || amount<=0) return alert('请填写有效金额')
   if(!payer)  return alert('请选择付款人')
   if(!checked.length) return alert('请选择至少一位参与人')
 
+  // 日期显示格式 MM/DD，无值则用今天
+  const dateDisplay = dateVal
+    ? dateVal.slice(5).replace('-','/')
+    : new Date().toLocaleDateString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('月','/')  .replace('日','')
+
   sbData.records.unshift({
     id: Date.now(), desc, amount, currency, payer,
     splitters: checked,
-    date: new Date().toLocaleDateString('zh-CN',{month:'2-digit',day:'2-digit'})
+    date: dateDisplay,
+    location: location || ''
   })
   sbSave(); sbRenderRecords(); sbRenderSettle()
   document.getElementById('sb-desc').value = ''
   document.getElementById('sb-amount').value = ''
+  document.getElementById('sb-location').value = ''
+  // 日期保留，方便连续同日记账
 }
 
 function sbDelRecord(id){
@@ -2813,7 +2823,10 @@ function sbRenderRecords(){
   tbody.innerHTML = sbData.records.map(r=>{
     const each = (r.amount / r.splitters.length).toFixed(2)
     return `<tr style="border-bottom:1px solid #F1F5F9">
-      <td style="padding:7px 10px;font-size:.75rem;color:#94A3B8;white-space:nowrap">${r.date}</td>
+      <td style="padding:7px 10px;font-size:.75rem;color:#94A3B8;white-space:nowrap">
+        ${r.date}
+        ${r.location?`<div style="font-size:.68rem;color:#CBD5E1;margin-top:1px">📍${r.location}</div>`:''}
+      </td>
       <td style="padding:7px 10px;font-size:.82rem;font-weight:600">${r.desc}</td>
       <td style="padding:7px 10px;font-size:.82rem;font-weight:700;color:#0F172A;white-space:nowrap">
         ${r.currency}${r.amount.toFixed(2)}
@@ -2917,6 +2930,9 @@ function sbClearAll(){
 // 初始化
 document.addEventListener('DOMContentLoaded', ()=>{
   sbRenderMembers(); sbRenderRecords(); sbRenderSettle()
+  // 预填今天日期
+  const todayEl = document.getElementById('sb-date')
+  if(todayEl) todayEl.value = new Date().toISOString().slice(0,10)
   document.getElementById('sb-new-member')?.addEventListener('keydown',e=>e.key==='Enter'&&sbAddMember())
   document.getElementById('sb-amount')?.addEventListener('keydown',e=>e.key==='Enter'&&sbAddRecord())
 })
@@ -2945,6 +2961,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
       <input id="sb-desc" type="text" placeholder="消费说明（如：晚餐、门票）"
         style="grid-column:1/-1;padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
+      <input id="sb-date" type="date"
+        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none;color:#374151">
+      <input id="sb-location" type="text" placeholder="📍 地点（选填，如：阿姆斯特丹）"
+        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
       <div style="display:flex;gap:6px">
         <select id="sb-currency"
           style="padding:8px 8px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;background:#fff;outline:none">
