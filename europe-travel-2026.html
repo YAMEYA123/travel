@@ -154,6 +154,17 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 .cm{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.72rem;border:2.5px solid rgba(255,255,255,.95);box-shadow:0 2px 8px rgba(0,0,0,.28)}
 .cn{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.65rem;border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 5px rgba(0,0,0,.22)}
 
+/* ── Sub-tabs (实用速查) ── */
+#es-subnav{overflow-x:auto;flex-wrap:nowrap!important;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:0}
+#es-subnav::-webkit-scrollbar{display:none}
+.es-btn{flex-shrink:0;white-space:nowrap;border:none;cursor:pointer;transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
+.es-btn.es-active{background:#fff!important;color:#1A2332!important}
+
+/* ── Hotel / Ticket table scroll wrappers ── */
+.hotel-tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r);box-shadow:0 1px 6px rgba(0,0,0,.08);margin-bottom:6px}
+.hotel-tbl{min-width:520px;box-shadow:none;border-radius:0}
+
+/* ── Responsive ── */
 @media(max-width:768px){
   .tab-content.active{flex-direction:column}
   #map{height:42vw;min-height:200px;flex:none}
@@ -163,7 +174,10 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   .bi-table{min-width:520px}
   .nav-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .nav-tabs::-webkit-scrollbar{display:none}
-  .tab-btn{flex-shrink:0;padding:9px 13px;font-size:.75rem;white-space:nowrap}
+  .tab-btn{flex-shrink:0;padding:10px 13px;font-size:.75rem;white-space:nowrap;min-height:44px}
+  /* inline styled tables in tickets/booking tabs */
+  .tickets-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .full-page{padding:14px}
 }
 @media(max-width:480px){
   .bi-table th:nth-child(4),
@@ -172,6 +186,9 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   header h1{font-size:.85rem}
   header p{display:none}
   .dl-btn,.rf-btn{padding:5px 9px;font-size:.7rem}
+  .hotel-tbl{min-width:400px}
+  .hotel-tbl th:nth-child(4),.hotel-tbl td:nth-child(4){display:none}
+  .es-btn{padding:6px 11px!important;font-size:.73rem!important}
 }
 </style>
 </head>
@@ -428,11 +445,11 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <!-- 阿姆斯特丹 -->
     <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🇳🇱 阿姆斯特丹 — 各自买票即可</div>
-      <table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#FEF3C7"><th style="padding:5px 8px;text-align:left">卡种</th><th style="padding:5px 8px;text-align:left">价格</th><th style="padding:5px 8px;text-align:left">判断</th></tr>
         <tr style="border-bottom:1px solid #FED7AA"><td style="padding:5px 8px">I Amsterdam City Card 48h</td><td style="padding:5px 8px">€85</td><td style="padding:5px 8px;color:#B45309">❌ 不划算：安妮之家不含，羊角村NS铁路不含，两馆仅值€46.50</td></tr>
         <tr><td style="padding:5px 8px">感应刷银行卡/手机</td><td style="padding:5px 8px">按次计费</td><td style="padding:5px 8px;color:#166534">✅ 推荐：GVB地铁/电车直接感应上车，无需额外办卡</td></tr>
-      </table>
+      </table></div>
       <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 梵高博物馆（€25）和国立博物馆（€21.50）需提前官网分别购票，顺手买即可</div>
     </div>
 
@@ -447,12 +464,12 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <!-- 慕尼黑 -->
     <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🇩🇪 慕尼黑 — MVV 单日票，按需买</div>
-      <table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#DBEAFE"><th style="padding:5px 8px;text-align:left">票种</th><th style="padding:5px 8px;text-align:left">价格</th><th style="padding:5px 8px;text-align:left">适用</th></tr>
         <tr style="border-bottom:1px solid #BFDBFE"><td style="padding:5px 8px"><b>MVV 内区日票</b> Tageskarte Innenraum</td><td style="padding:5px 8px"><b>€9.20</b></td><td style="padding:5px 8px;color:#166534">✅ D4（行李寄存+城市游+晚上取行李）、D5（新天鹅堡返程+啤酒节晚场）各买一张；D6直接退房去车站，无需MVV</td></tr>
         <tr style="border-bottom:1px solid #BFDBFE"><td style="padding:5px 8px">MVV 内区单程</td><td style="padding:5px 8px">€3.90</td><td style="padding:5px 8px;color:#92400E">仅乘1–2次时用，4次以上日票更省</td></tr>
         <tr><td style="padding:5px 8px">Bayern Ticket</td><td style="padding:5px 8px">€29+</td><td style="padding:5px 8px;color:#B45309">❌ D5 工作日07:00出发不适用；本行程其余日程无需要</td></tr>
-      </table>
+      </table></div>
       <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 慕尼黑 U/S-Bahn 支持感应刷银行卡上车；日票可在 MVV App 或车站自动机购买</div>
     </div>
 
@@ -482,19 +499,19 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     <!-- 维也纳 -->
     <div style="background:#ECFDF5;border:1px solid #BBF7D0;border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🇦🇹 维也纳 — 单日公交票即可</div>
-      <table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#D1FAE5"><th style="padding:5px 8px;text-align:left">票种</th><th style="padding:5px 8px;text-align:left">价格</th><th style="padding:5px 8px;text-align:left">判断</th></tr>
         <tr style="border-bottom:1px solid #BBF7D0"><td style="padding:5px 8px"><b>24h 无限票</b></td><td style="padding:5px 8px"><b>€8</b></td><td style="padding:5px 8px;color:#166534">✅ D9 购一张，全天 U-Bahn 畅行</td></tr>
         <tr style="border-bottom:1px solid #BBF7D0"><td style="padding:5px 8px">维也纳城市卡 24h</td><td style="padding:5px 8px">€17</td><td style="padding:5px 8px;color:#B45309">❌ 景点折扣极小，美景宫/KHM均不在折扣内，不值</td></tr>
         <tr><td style="padding:5px 8px">单程票</td><td style="padding:5px 8px">€2.40</td><td style="padding:5px 8px;color:#92400E">D10 零散乘坐可用（退房→中央站→机场）</td></tr>
-      </table>
+      </table></div>
       <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 维也纳 U-Bahn 也支持感应刷卡上车；D10 机场 S7 可直接刷银行卡</div>
     </div>
 
     <!-- 城际铁路 -->
     <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="font-weight:700;font-size:.86rem;margin-bottom:8px">🚆 城际铁路 — 单独买票，不买通票</div>
-      <table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#F1F5F9"><th style="padding:5px 8px;text-align:left">路段</th><th style="padding:5px 8px;text-align:right">单独买票</th></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">阿姆斯特丹 → 科隆 IC 60403（直达）</td><td style="padding:5px 8px;text-align:right">€19（约¥151）</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">科隆 → 曼海姆（IC 2440，9/28 18:53）</td><td style="padding:5px 8px;text-align:right">约€6/人（约¥44）</td></tr>
@@ -505,14 +522,14 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">萨尔茨堡 → 维也纳 Hütteldorf（Westbahn，10/3 18:52）</td><td style="padding:5px 8px;text-align:right">€15/人（约¥117）</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px;font-weight:600">单独买票合计/人</td><td style="padding:5px 8px;text-align:right;font-weight:600;color:#166534">约 €105–115</td></tr>
         <tr><td style="padding:5px 8px;color:#B45309">Eurail/Interrail 3国通票</td><td style="padding:5px 8px;text-align:right;color:#B45309">约 €280–350 ❌</td></tr>
-      </table>
+      </table></div>
       <div style="font-size:.7rem;color:var(--muted);margin-top:6px">💡 越早购票越便宜；萨尔茨堡→维也纳选 Westbahn 18:52→Hütteldorf（21:14），直乘U4到酒店无需换乘，在 westbahn.at 购票，含座位预订</div>
     </div>
 
     <!-- 汇总 -->
     <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:12px 16px">
       <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">📋 全程票务一览表</div>
-      <table style="width:100%;border-collapse:collapse;font-size:.74rem">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#1E293B;color:#fff"><th style="padding:6px 8px;text-align:left">城市/日</th><th style="padding:6px 8px;text-align:left">方案</th><th style="padding:6px 8px;text-align:right">费用</th></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">阿姆斯特丹 D0–D2</td><td style="padding:5px 8px">感应刷卡上车，博物馆单独购票</td><td style="padding:5px 8px;text-align:right">—</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">科隆 D2–D3</td><td style="padding:5px 8px">步行为主，无需交通卡</td><td style="padding:5px 8px;text-align:right">—</td></tr>
@@ -522,7 +539,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px" colspan="2"><b style="color:#059669">⭐ 萨尔茨堡 D6–D8</b> — 萨尔茨堡卡 48h（D6 17:00 激活）</td><td style="padding:5px 8px;text-align:right;color:#059669"><b>€48</b></td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">维也纳 D9</td><td style="padding:5px 8px">24h 无限公交票</td><td style="padding:5px 8px;text-align:right">€8</td></tr>
         <tr><td style="padding:5px 8px">维也纳 D10</td><td style="padding:5px 8px">单程票（退房→机场）</td><td style="padding:5px 8px;text-align:right">约€5</td></tr>
-      </table>
+      </table></div>
     </div>
 
     <!-- 🏨 住宿推荐 section -->
@@ -532,58 +549,58 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 
       <div class="bi-section">
         <div class="city-hd" style="background:#FFF7ED;border-left:4px solid var(--nl)">🇳🇱 阿姆斯特丹 — 9/25、9/26（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：Sloterdijk 智选假日</small></div>
-        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <div class="hotel-tbl-wrap"><table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
         <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn Express Amsterdam - Sloterdijk Station</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">阿姆斯特丹 Sloterdijk 智选假日</div></td><td style="font-size:.72rem">Transformatorweg 36</td><td style="font-size:.72rem">紧贴Sloterdijk站·5min火车到中央站·史基浦直达约10min·免费早餐·IHG积分</td><td class="price-g">🏅 IHG 39k(9/25)+45k(9/26)</td></tr>
-        </table>
+        </table></div>
         <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 距博物馆广场约3km，9/27去梵高/国立博物馆乘2/5路电车约15分钟</p>
       </div>
 
       <div class="bi-section">
         <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 科隆 — 9/27（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：科隆希尔顿酒店</small></div>
-        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <div class="hotel-tbl-wrap"><table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
         <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Hilton Cologne</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">科隆希尔顿酒店</div></td><td style="font-size:.72rem">Marzellenstraße 13-17</td><td style="font-size:.72rem">大教堂旁100m·中央站步行2min·位置绝佳·1晚短住首选</td><td class="price-g">🏅 Hilton 53k/晚</td></tr>
-        </table>
+        </table></div>
       </div>
 
       <div class="bi-section">
         <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 曼海姆 — 9/28（共1晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定：Holiday Inn Mannheim City</small></div>
-        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <div class="hotel-tbl-wrap"><table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
         <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn Mannheim City – Hauptbahnhof</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">曼海姆城市假日酒店</div></td><td style="font-size:.72rem">Willy-Brandt-Platz 3</td><td style="font-size:.72rem">中央站旁步行3min·D5晨班ICE 07:11出发极便利·IHG积分</td><td class="price-g">🏅 IHG 24k/晚</td></tr>
-        </table>
+        </table></div>
       </div>
 
       <div class="bi-section">
         <div class="city-hd" style="background:#EFF6FF;border-left:4px solid var(--de)">🇩🇪 慕尼黑 — 9/29–10/1（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定</small></div>
-        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <div class="hotel-tbl-wrap"><table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
         <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>Holiday Inn München Süd</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">慕尼黑南部假日酒店</div></td><td style="font-size:.72rem">Kistlerhofstraße 142</td><td style="font-size:.72rem">慕尼黑南部·U3 Aidenbachstraße约15min市区·性价比高</td><td class="price-g">🏅 IHG 92k/2晚（47k+45k）</td></tr>
-        </table>
+        </table></div>
         <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 D5新天鹅堡需先坐U3到Hbf换区域列车；D6博物馆建议早上在Hbf寄存行李后出发萨尔茨堡</p>
       </div>
 
       <div class="bi-section">
         <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 萨尔茨堡 — 10/1–10/3（共2晚）<br><small style="font-weight:400;color:var(--muted)">⏳ 待预订 — 推荐老城附近</small></div>
-        <table class="hotel-tbl"><tr><th>档次</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <div class="hotel-tbl-wrap"><table class="hotel-tbl"><tr><th>档次</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
         <tr><td><span class="htag htag-eco">经济</span></td><td><b>Motel One Salzburg-Süd</b></td><td style="font-size:.72rem">Söllheimer Str. 2</td><td style="font-size:.72rem">设计风格·性价比高·巴士5min老城</td><td class="price-g">€90–130</td></tr>
         <tr><td><span class="htag htag-mid">舒适</span></td><td><b>Boutique Hotel am Dom</b></td><td style="font-size:.72rem">Goldgasse 17</td><td style="font-size:.72rem">老城核心·大教堂旁·复古精品</td><td class="price-g">€160–230</td></tr>
         <tr><td><span class="htag htag-lux">豪华</span></td><td><b>Hotel Sacher Salzburg</b></td><td style="font-size:.72rem">Schwarzstraße 5-7</td><td style="font-size:.72rem">萨尔扎赫河畔·要塞对岸绝景·5星</td><td class="price-g">€350–550</td></tr>
-        </table>
+        </table></div>
         <p style="font-size:.7rem;color:var(--muted);margin-top:5px">💡 推荐住老城河对岸（Linzer Gasse一带），步行可达所有景点；D7早08:30出发哈尔施塔特，住近中央站更方便</p>
       </div>
 
       <div class="bi-section">
         <div class="city-hd" style="background:#ECFDF5;border-left:4px solid var(--at)">🇦🇹 维也纳 — 10/3–10/5（共2晚）<br><small style="font-weight:400;color:var(--muted)">✅ 已选定</small></div>
-        <table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
+        <div class="hotel-tbl-wrap"><table class="hotel-tbl"><tr><th>状态</th><th>酒店</th><th>地址</th><th>特点</th><th>参考价/晚</th></tr>
         <tr><td><span class="htag" style="background:#DCFCE7;color:#166534">✅ 已选</span></td><td><b>DoubleTree by Hilton Vienna Schönbrunn</b><div style="font-size:.68rem;color:#94A3B8;font-style:italic">维也纳美泉宫逸林酒店</div></td><td style="font-size:.72rem">Schönbrunner Str. 474</td><td style="font-size:.72rem">美泉宫步行5min·U4直连市区·D10步行入宫·机场U4→U1→S7约50min</td><td class="price-g">🏅 Hilton 35k/晚</td></tr>
-        </table>
+        </table></div>
       </div>
 
       <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:4px">
         <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">💰 住宿费用汇总（10晚/人）</div>
-        <table class="hotel-tbl"><tr><th>档次</th><th>均价/晚</th><th>10晚总计（含萨尔茨堡待定）</th></tr>
+        <div class="hotel-tbl-wrap"><table class="hotel-tbl"><tr><th>档次</th><th>均价/晚</th><th>10晚总计（含萨尔茨堡待定）</th></tr>
         <tr><td><span class="htag htag-eco">经济</span></td><td>€80–130</td><td class="price-g">€800–1,300</td></tr>
         <tr><td><span class="htag htag-mid">舒适</span></td><td>€130–230</td><td class="price-g">€1,300–2,300</td></tr>
         <tr><td><span class="htag htag-lux">豪华</span></td><td>€350–700</td><td class="price-g">€3,500–7,000</td></tr>
-        </table>
+        </table></div>
       </div>
     </div>
   </div>
@@ -728,12 +745,12 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 <div class="tab-content" id="tab-essentials" style="flex-direction:column;background:#F0F4F8">
 
   <!-- 子页签导航 -->
-  <div id="es-subnav" style="display:flex;gap:6px;padding:10px 16px 0;background:#E8EDF4;flex-wrap:wrap;flex-shrink:0">
-    <button onclick="switchEssentials('weather',this)" class="es-btn es-active" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#fff;color:#1A2332">🌤 天气穿衣</button>
-    <button onclick="switchEssentials('emergency',this)" class="es-btn" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#CBD5E1;color:#475569">🚨 急救电话</button>
-    <button onclick="switchEssentials('life',this)" class="es-btn" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#CBD5E1;color:#475569">💡 实用信息</button>
-    <button onclick="switchEssentials('shopping',this)" class="es-btn" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#CBD5E1;color:#475569">🛍 特产购物</button>
-    <button onclick="switchEssentials('apps',this)" class="es-btn" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#CBD5E1;color:#475569">📱 必备App</button>
+  <div id="es-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0">
+    <button onclick="switchEssentials('weather',this)" class="es-btn es-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px">🌤 天气穿衣</button>
+    <button onclick="switchEssentials('emergency',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;margin-right:4px">🚨 急救电话</button>
+    <button onclick="switchEssentials('life',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;margin-right:4px">💡 实用信息</button>
+    <button onclick="switchEssentials('shopping',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;margin-right:4px">🛍 特产购物</button>
+    <button onclick="switchEssentials('apps',this)" class="es-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569">📱 必备App</button>
   </div>
 
   <div style="overflow-y:auto;flex:1">
@@ -1429,10 +1446,17 @@ function switchEssentials(name, btn){
     if(el) el.style.display = s === name ? '' : 'none'
   })
   document.querySelectorAll('.es-btn').forEach(b => {
+    b.classList.remove('es-active')
     b.style.background = '#CBD5E1'
     b.style.color = '#475569'
   })
-  if(btn){ btn.style.background = '#fff'; btn.style.color = '#1A2332' }
+  if(btn){
+    btn.classList.add('es-active')
+    btn.style.background = '#fff'
+    btn.style.color = '#1A2332'
+    // scroll active button into view on mobile
+    btn.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'})
+  }
 }
 
 // ── Download ──
