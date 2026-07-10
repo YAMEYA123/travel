@@ -300,77 +300,114 @@ const shoppingList = {
 
 ## 八、GitHub Pages 部署方案
 
-旅游攻略单文件 HTML 最适合用 GitHub Pages 免费托管，可生成可分享的公开链接。
+旅游攻略单文件 HTML 最适合用 GitHub Pages 免费托管，生成可分享的公开链接。**用户无需懂 git，Claude 通过 GitHub API 完成全部上传操作。**
 
-### 快速部署（5 分钟）
+### 用户只需提供两样东西
 
-```bash
-# 1. 初始化仓库
-git init my-travel-guide
-cd my-travel-guide
+1. **GitHub 仓库地址**（如 `https://github.com/yourname/travel`）
+2. **GitHub Personal Access Token**
 
-# 2. 放入攻略文件（命名为 index.html 可省去路径）
-cp 欧洲攻略.html index.html
-
-# 3. 提交并推送
-git add index.html
-git commit -m "Add travel guide"
-git branch -M main
-git remote add origin https://github.com/<用户名>/<仓库名>.git
-git push -u origin main
-```
-
-然后在 GitHub 仓库 → **Settings → Pages → Source** 选 `main` 分支，保存后约 1 分钟生效。
-
-访问地址：`https://<用户名>.github.io/<仓库名>/`
+> 👇 没做过？按下面教程一步步来，5 分钟搞定。
 
 ---
 
-### 仓库结构建议
+### 教程一：创建 GitHub 仓库
+
+> 已有仓库可跳过此步。
+
+**第一步：注册 / 登录**
+打开 [github.com](https://github.com)，没有账号点右上角 **Sign up** 注册，已有账号点 **Sign in**。
+
+**第二步：新建仓库**
+登录后点右上角 **`+`** 图标 → 选 **New repository**。
+
+**第三步：填写信息**
+
+| 字段 | 填写内容 |
+|------|---------|
+| Repository name | 随便取，如 `travel`（只能用英文和短横线） |
+| Description | 选填，如"我的旅游攻略" |
+| Public / Private | 必须选 **Public**（免费 Pages 只支持公开仓库） |
+| Initialize this repository | 勾选 **Add a README file** |
+
+**第四步：点击 Create repository**
+页面跳转后，复制浏览器地址栏的链接，就是仓库地址，格式为：
+`https://github.com/你的用户名/travel`
+
+---
+
+### 教程二：生成 Personal Access Token
+
+> Token 是 GitHub 给你的"操作密钥"，让 Claude 代替你上传文件。
+
+**第一步：进入设置**
+点击页面右上角**头像** → 下拉菜单最底部点 **Settings**。
+
+**第二步：找到开发者设置**
+左侧菜单滚到最底部，点 **Developer settings**。
+
+**第三步：选择 Token 类型**
+点 **Personal access tokens** → 选 **Tokens (classic)**。
+
+**第四步：生成 Token**
+点右上角 **Generate new token** → 选 **Generate new token (classic)**，可能需要输入密码确认身份。
+
+**第五步：填写信息**
+
+| 字段 | 填写内容 |
+|------|---------|
+| Note | 随便写，如 `travel-guide` |
+| Expiration | 建议选 **30 days**（用完即过期，更安全） |
+| Select scopes | 勾选 **repo**（点一下 repo 前面的方框，下面子项会自动全选） |
+
+**第六步：复制 Token**
+点最底部绿色按钮 **Generate token**，页面出现一串以 `ghp_` 开头的字符串。
+⚠️ **立刻复制保存**，离开页面后就再也看不到了。
+
+---
+
+### Claude 的操作流程
+
+收到仓库地址和 Token 后，Claude 自动完成：
 
 ```
-my-travel-guide/
-├── index.html          # 主攻略页（单文件 App）
-├── README.md           # 简要说明 + 链接
-└── assets/             # 本地图片（非必须）
+1. 调用 GitHub API 上传 index.html（攻略文件）
+2. 检查仓库是否已开启 Pages，否则自动开启
+3. 返回访问链接：https://<用户名>.github.io/<仓库名>/
 ```
 
-### 多目的地攻略管理
-
-```
-travel-guides/
-├── index.html          # 导航首页（卡片列表 → 各攻略）
-├── europe-2026.html
-├── japan-2025.html
-└── yunnan-2024.html
-```
-
-### 自定义域名（可选）
+核心 API 调用（Claude 执行，用户无需关心）：
 
 ```bash
-echo "travel.yourdomain.com" > CNAME
-git add CNAME && git commit -m "Add custom domain" && git push
+# 上传/更新文件
+curl -X PUT https://api.github.com/repos/<用户名>/<仓库名>/contents/index.html \
+  -H "Authorization: token <TOKEN>" \
+  -d '{"message":"Update travel guide","content":"<base64内容>"}'
+
+# 开启 GitHub Pages
+curl -X POST https://api.github.com/repos/<用户名>/<仓库名>/pages \
+  -H "Authorization: token <TOKEN>" \
+  -d '{"source":{"branch":"main","path":"/"}}'
 ```
 
-DNS 添加 CNAME 记录指向 `<用户名>.github.io`。
+### 多目的地管理
 
-### 更新攻略
+同一个仓库可以存多份攻略，每次上传时指定不同文件名：
 
-```bash
-git add index.html
-git commit -m "Update D3 itinerary"
-git push
-# GitHub Pages 自动重新部署，约 30 秒生效
-```
+| 文件名 | 访问链接 |
+|--------|---------|
+| `index.html` | `yourname.github.io/travel/` |
+| `japan-2025.html` | `yourname.github.io/travel/japan-2025.html` |
+| `yunnan-2024.html` | `yourname.github.io/travel/yunnan-2024.html` |
 
 ### 注意事项
 
 | 项目 | 说明 |
 |------|------|
-| 仓库可见性 | Public 仓库才能用免费 Pages；私有仓库需 GitHub Pro |
-| localStorage | 每个访客独立存储，进度不跨设备同步 |
-| 图片 | 建议外链或 Base64 内嵌，避免仓库过大 |
-| 中文路径 | 文件名用英文，避免 URL 编码问题 |
+| 仓库可见性 | 必须是 **Public** 才能用免费 Pages |
+| Token 安全 | 用完后建议在 GitHub 撤销（Revoke），需要时再生成新的 |
+| 更新攻略 | 重新提供文件即可，Claude 覆盖上传，30 秒内生效 |
+| localStorage | 每位访客进度独立存储，不跨设备同步 |
 
 ---
 
