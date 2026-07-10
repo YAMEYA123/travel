@@ -201,6 +201,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
   <button class="tab-btn" onclick="switchTab('bilingual',this)">🔤 中英对照</button>
   <button class="tab-btn" onclick="switchTab('essentials',this)">🌤 实用速查</button>
+  <button class="tab-btn" onclick="switchTab('splitbill',this)">💸 分账记账</button>
 </div>
 
 <!-- TAB 1: Map -->
@@ -2724,6 +2725,284 @@ function buildBudgetTable(){
 }
 
 buildBudgetTable()
+
+// ══════════════════════════════════════════
+// 💸 分账记账模块
+// ══════════════════════════════════════════
+const SB_KEY = 'splitbill_v1'
+let sbData = JSON.parse(localStorage.getItem(SB_KEY) || 'null') || { members:[], records:[] }
+
+function sbSave(){ localStorage.setItem(SB_KEY, JSON.stringify(sbData)) }
+
+// ── 渲染成员标签 ──
+function sbRenderMembers(){
+  const wrap = document.getElementById('sb-members')
+  const sel  = document.getElementById('sb-payer')
+  const sels = document.getElementById('sb-splitters')
+  if(!wrap) return
+  wrap.innerHTML = sbData.members.map((m,i)=>`
+    <span style="display:inline-flex;align-items:center;gap:4px;background:#EFF6FF;border:1px solid #BFDBFE;
+      border-radius:20px;padding:3px 10px 3px 12px;font-size:.78rem;font-weight:600;color:#1D4ED8">
+      ${m}
+      <button onclick="sbDelMember(${i})" style="border:none;background:none;cursor:pointer;color:#93C5FD;
+        font-size:.9rem;line-height:1;padding:0 2px" title="删除">×</button>
+    </span>`).join('')
+  // 更新付款人下拉
+  sel.innerHTML = '<option value="">— 选择付款人 —</option>' +
+    sbData.members.map(m=>`<option value="${m}">${m}</option>`).join('')
+  // 更新参与人多选
+  sels.innerHTML = sbData.members.map(m=>`
+    <label style="display:inline-flex;align-items:center;gap:5px;margin:3px 6px 3px 0;
+      font-size:.8rem;cursor:pointer;user-select:none">
+      <input type="checkbox" value="${m}" checked
+        style="width:14px;height:14px;accent-color:#3B82F6"> ${m}
+    </label>`).join('')
+}
+
+function sbAddMember(){
+  const inp = document.getElementById('sb-new-member')
+  const name = inp.value.trim()
+  if(!name || sbData.members.includes(name)) return
+  sbData.members.push(name)
+  sbSave(); sbRenderMembers(); sbRenderRecords(); sbRenderSettle()
+  inp.value = ''
+}
+
+function sbDelMember(i){
+  if(!confirm(`删除成员「${sbData.members[i]}」？相关记录不会删除。`)) return
+  sbData.members.splice(i,1)
+  sbSave(); sbRenderMembers(); sbRenderSettle()
+}
+
+// ── 添加记录 ──
+function sbAddRecord(){
+  const desc    = document.getElementById('sb-desc').value.trim()
+  const amount  = parseFloat(document.getElementById('sb-amount').value)
+  const currency= document.getElementById('sb-currency').value
+  const payer   = document.getElementById('sb-payer').value
+  const checked = [...document.querySelectorAll('#sb-splitters input:checked')].map(c=>c.value)
+
+  if(!desc)   return alert('请填写消费说明')
+  if(!amount || amount<=0) return alert('请填写有效金额')
+  if(!payer)  return alert('请选择付款人')
+  if(!checked.length) return alert('请选择至少一位参与人')
+
+  sbData.records.unshift({
+    id: Date.now(), desc, amount, currency, payer,
+    splitters: checked,
+    date: new Date().toLocaleDateString('zh-CN',{month:'2-digit',day:'2-digit'})
+  })
+  sbSave(); sbRenderRecords(); sbRenderSettle()
+  document.getElementById('sb-desc').value = ''
+  document.getElementById('sb-amount').value = ''
+}
+
+function sbDelRecord(id){
+  sbData.records = sbData.records.filter(r=>r.id!==id)
+  sbSave(); sbRenderRecords(); sbRenderSettle()
+}
+
+// ── 渲染记录列表 ──
+function sbRenderRecords(){
+  const tbody = document.getElementById('sb-record-list')
+  if(!tbody) return
+  if(!sbData.records.length){
+    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#94A3B8;padding:24px;font-size:.8rem">暂无记录</td></tr>'
+    return
+  }
+  tbody.innerHTML = sbData.records.map(r=>{
+    const each = (r.amount / r.splitters.length).toFixed(2)
+    return `<tr style="border-bottom:1px solid #F1F5F9">
+      <td style="padding:7px 10px;font-size:.75rem;color:#94A3B8;white-space:nowrap">${r.date}</td>
+      <td style="padding:7px 10px;font-size:.82rem;font-weight:600">${r.desc}</td>
+      <td style="padding:7px 10px;font-size:.82rem;font-weight:700;color:#0F172A;white-space:nowrap">
+        ${r.currency}${r.amount.toFixed(2)}
+        <div style="font-size:.65rem;color:#94A3B8;font-weight:400">
+          由 <b style="color:#3B82F6">${r.payer}</b> 付
+        </div>
+      </td>
+      <td style="padding:7px 10px;font-size:.72rem;color:#64748B">
+        ${r.splitters.join('、')}<br>
+        <span style="color:#10B981;font-weight:600">每人 ${r.currency}${each}</span>
+      </td>
+      <td style="padding:7px 10px;text-align:center">
+        <button onclick="sbDelRecord(${r.id})"
+          style="border:none;background:#FEE2E2;color:#DC2626;border-radius:5px;
+          padding:2px 8px;font-size:.7rem;cursor:pointer">删</button>
+      </td>
+    </tr>`
+  }).join('')
+}
+
+// ── 结算计算（最优转账算法）──
+function sbCalcSettle(){
+  const RATES = { EUR:7.8, CNY:1, USD:7.3, GBP:9.2, JPY:0.048 }
+  // 统计每人净余额（CNY）
+  const balance = {}
+  sbData.members.forEach(m=>balance[m]=0)
+  sbData.records.forEach(r=>{
+    const rate = RATES[r.currency] || 1
+    const totalCNY = r.amount * rate
+    const each = totalCNY / r.splitters.length
+    if(balance[r.payer]!==undefined) balance[r.payer] += totalCNY
+    r.splitters.forEach(s=>{ if(balance[s]!==undefined) balance[s] -= each })
+  })
+  // 最优转账
+  const creditors=[], debtors=[]
+  Object.entries(balance).forEach(([name,val])=>{
+    if(val>0.01) creditors.push({name,val})
+    else if(val<-0.01) debtors.push({name,val:-val})
+  })
+  creditors.sort((a,b)=>b.val-a.val)
+  debtors.sort((a,b)=>b.val-a.val)
+  const transfers=[]
+  let ci=0, di=0
+  const cr=[...creditors.map(c=>({...c}))], dr=[...debtors.map(d=>({...d}))]
+  while(ci<cr.length && di<dr.length){
+    const pay = Math.min(cr[ci].val, dr[di].val)
+    transfers.push({from:dr[di].name, to:cr[ci].name, amount:pay})
+    cr[ci].val -= pay; dr[di].val -= pay
+    if(cr[ci].val<0.01) ci++
+    if(dr[di].val<0.01) di++
+  }
+  return { balance, transfers }
+}
+
+function sbRenderSettle(){
+  const el = document.getElementById('sb-settle-result')
+  if(!el) return
+  if(!sbData.members.length){ el.innerHTML='<p style="color:#94A3B8;font-size:.8rem">请先添加成员</p>'; return }
+
+  const {balance, transfers} = sbCalcSettle()
+
+  const balHTML = `<div style="margin-bottom:16px">
+    <div style="font-size:.75rem;font-weight:700;color:#64748B;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">各人净余额</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      ${Object.entries(balance).map(([name,val])=>{
+        const pos = val>0.01, neg = val<-0.01
+        const bg = pos?'#ECFDF5':neg?'#FEF2F2':'#F8FAFC'
+        const clr = pos?'#059669':neg?'#DC2626':'#94A3B8'
+        const sign = pos?'+':''
+        return `<div style="background:${bg};border-radius:8px;padding:8px 14px;min-width:80px;text-align:center">
+          <div style="font-size:.82rem;font-weight:700;color:#1E293B">${name}</div>
+          <div style="font-size:.9rem;font-weight:800;color:${clr};margin-top:2px">${sign}¥${Math.abs(val).toFixed(0)}</div>
+          <div style="font-size:.62rem;color:#94A3B8;margin-top:1px">${pos?'应收':neg?'应付':'持平'}</div>
+        </div>`
+      }).join('')}
+    </div>
+  </div>`
+
+  const txHTML = transfers.length ? `
+    <div>
+      <div style="font-size:.75rem;font-weight:700;color:#64748B;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">最优还款方案</div>
+      ${transfers.map(t=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;
+          border:1px solid #E2E8F0;border-radius:8px;margin-bottom:8px">
+          <span style="font-size:.85rem;font-weight:700;color:#DC2626">${t.from}</span>
+          <span style="color:#94A3B8;font-size:.8rem">→ 转账</span>
+          <span style="font-size:.85rem;font-weight:700;color:#059669">${t.to}</span>
+          <span style="margin-left:auto;font-size:.95rem;font-weight:800;color:#1E293B">¥${t.amount.toFixed(0)}</span>
+        </div>`).join('')}
+    </div>` : `<div style="color:#10B981;font-size:.85rem;font-weight:600;padding:12px 0">✅ 已结清，无需转账</div>`
+
+  el.innerHTML = balHTML + txHTML
+}
+
+function sbClearAll(){
+  if(!confirm('清空所有分账记录？成员列表保留。')) return
+  sbData.records = []
+  sbSave(); sbRenderRecords(); sbRenderSettle()
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', ()=>{
+  sbRenderMembers(); sbRenderRecords(); sbRenderSettle()
+  document.getElementById('sb-new-member')?.addEventListener('keydown',e=>e.key==='Enter'&&sbAddMember())
+  document.getElementById('sb-amount')?.addEventListener('keydown',e=>e.key==='Enter'&&sbAddRecord())
+})
 </script>
+
+<!-- TAB 10: Split Bill -->
+<div class="tab-content" id="tab-splitbill" style="overflow-y:auto;flex-direction:column;background:#F0F4F8">
+<div style="max-width:780px;margin:0 auto;padding:20px 16px 40px;width:100%">
+
+  <!-- 成员管理 -->
+  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
+    <h2 style="font-size:.88rem;font-weight:700;color:#1E293B;margin-bottom:14px">👥 出行成员</h2>
+    <div id="sb-members" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:28px"></div>
+    <div style="display:flex;gap:8px">
+      <input id="sb-new-member" type="text" placeholder="输入姓名后按 Enter 或点添加"
+        style="flex:1;padding:7px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
+      <button onclick="sbAddMember()"
+        style="padding:7px 18px;background:#3B82F6;color:#fff;border:none;border-radius:7px;
+        font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap">添加</button>
+    </div>
+  </div>
+
+  <!-- 记账 -->
+  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
+    <h2 style="font-size:.88rem;font-weight:700;color:#1E293B;margin-bottom:14px">➕ 添加消费</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <input id="sb-desc" type="text" placeholder="消费说明（如：晚餐、门票）"
+        style="grid-column:1/-1;padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
+      <div style="display:flex;gap:6px">
+        <select id="sb-currency"
+          style="padding:8px 8px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;background:#fff;outline:none">
+          <option value="EUR">€ EUR</option>
+          <option value="CNY">¥ CNY</option>
+          <option value="USD">$ USD</option>
+          <option value="GBP">£ GBP</option>
+        </select>
+        <input id="sb-amount" type="number" min="0" step="0.01" placeholder="金额"
+          style="flex:1;padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
+      </div>
+      <select id="sb-payer"
+        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;background:#fff;outline:none">
+        <option value="">— 付款人 —</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:.75rem;font-weight:600;color:#64748B;margin-bottom:6px">参与分摊（默认全选）</div>
+      <div id="sb-splitters" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+    </div>
+    <button onclick="sbAddRecord()"
+      style="width:100%;padding:9px;background:#10B981;color:#fff;border:none;border-radius:8px;
+      font-size:.85rem;font-weight:700;cursor:pointer">记一笔</button>
+  </div>
+
+  <!-- 记录列表 -->
+  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <h2 style="font-size:.88rem;font-weight:700;color:#1E293B">📋 消费记录</h2>
+      <button onclick="sbClearAll()"
+        style="padding:4px 12px;background:#FEE2E2;color:#DC2626;border:none;border-radius:5px;
+        font-size:.72rem;font-weight:600;cursor:pointer">清空记录</button>
+    </div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+      <table style="width:100%;border-collapse:collapse;font-size:.8rem;min-width:400px">
+        <thead><tr style="background:#F8FAFC;font-size:.72rem;color:#64748B">
+          <th style="padding:7px 10px;text-align:left;font-weight:600">日期</th>
+          <th style="padding:7px 10px;text-align:left;font-weight:600">说明</th>
+          <th style="padding:7px 10px;text-align:left;font-weight:600">金额</th>
+          <th style="padding:7px 10px;text-align:left;font-weight:600">参与人</th>
+          <th style="padding:7px 10px;text-align:center;font-weight:600"></th>
+        </tr></thead>
+        <tbody id="sb-record-list"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 结算 -->
+  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <h2 style="font-size:.88rem;font-weight:700;color:#1E293B">🧮 结算方案</h2>
+      <span style="font-size:.7rem;color:#94A3B8">汇率仅供估算，以实际为准</span>
+    </div>
+    <div id="sb-settle-result"></div>
+  </div>
+
+</div>
+</div>
+
 </body>
 </html>
