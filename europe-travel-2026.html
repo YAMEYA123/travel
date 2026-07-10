@@ -725,11 +725,22 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 </div>
 
 <!-- TAB 9: Essentials -->
-<div class="tab-content" id="tab-essentials" style="overflow-y:auto;flex-direction:column;background:#F0F4F8">
-<div style="max-width:860px;margin:0 auto;padding:20px 16px 40px;width:100%">
+<div class="tab-content" id="tab-essentials" style="flex-direction:column;background:#F0F4F8">
+
+  <!-- 子页签导航 -->
+  <div id="es-subnav" style="display:flex;gap:6px;padding:10px 16px 0;background:#E8EDF4;flex-wrap:wrap;flex-shrink:0">
+    <button onclick="switchEssentials('weather',this)" class="es-btn es-active" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#fff;color:#1A2332">🌤 天气穿衣</button>
+    <button onclick="switchEssentials('emergency',this)" class="es-btn" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#CBD5E1;color:#475569">🚨 急救电话</button>
+    <button onclick="switchEssentials('life',this)" class="es-btn" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#CBD5E1;color:#475569">💡 实用信息</button>
+    <button onclick="switchEssentials('shopping',this)" class="es-btn" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#CBD5E1;color:#475569">🛍 特产购物</button>
+    <button onclick="switchEssentials('apps',this)" class="es-btn" style="padding:6px 14px;border:none;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;cursor:pointer;background:#CBD5E1;color:#475569">📱 必备App</button>
+  </div>
+
+  <div style="overflow-y:auto;flex:1">
+  <div style="max-width:860px;margin:0 auto;padding:20px 16px 40px;width:100%">
 
   <!-- 天气穿衣 -->
-  <div style="margin-bottom:20px">
+  <div id="es-weather" style="margin-bottom:20px">
     <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">🌤 天气 & 穿衣指南（10月初）</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">
 
@@ -911,7 +922,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   </div>
 
   <!-- 急救 & 紧急电话 -->
-  <div style="margin-bottom:20px">
+  <div id="es-emergency" style="margin-bottom:20px;display:none">
     <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">🚨 急救 & 紧急联系</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
 
@@ -971,7 +982,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   </div>
 
   <!-- 实用生活信息 -->
-  <div style="margin-bottom:20px">
+  <div id="es-life" style="margin-bottom:20px;display:none">
     <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">💡 实用生活信息</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">
 
@@ -1062,7 +1073,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   </div>
 
   <!-- 特产 & 纪念品 -->
-  <div style="margin-bottom:20px">
+  <div id="es-shopping" style="margin-bottom:20px;display:none">
     <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">🛍 特产 & 纪念品推荐</h2>
     <style>
       .shop-city{font-size:.78rem;font-weight:700;color:#fff;padding:7px 12px;border-radius:9px 9px 0 0;margin-top:14px;display:flex;align-items:center;gap:6px}
@@ -1221,7 +1232,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   </div>
 
   <!-- 常用App -->
-  <div>
+  <div id="es-apps" style="display:none">
     <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">📱 出行必备 App</h2>
     <style>
       .app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
@@ -1406,8 +1417,24 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 
 </div>
 </div>
+</div>
+</div>
 
 <script>
+// ── Essentials sub-tabs ──
+function switchEssentials(name, btn){
+  const sections = ['weather','emergency','life','shopping','apps']
+  sections.forEach(s => {
+    const el = document.getElementById('es-' + s)
+    if(el) el.style.display = s === name ? '' : 'none'
+  })
+  document.querySelectorAll('.es-btn').forEach(b => {
+    b.style.background = '#CBD5E1'
+    b.style.color = '#475569'
+  })
+  if(btn){ btn.style.background = '#fff'; btn.style.color = '#1A2332' }
+}
+
 // ── Download ──
 function downloadPage(){
   // 把 localStorage 数据内联到 HTML，下载后离线打开仍能恢复勾选状态
