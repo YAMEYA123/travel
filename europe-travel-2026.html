@@ -212,10 +212,9 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   <button class="tab-btn active" onclick="switchTab('map',this)">🗺 地图动线</button>
   <button class="tab-btn" onclick="switchTab('booking',this)">📋 预约 & 风险 <span id="badge-todo" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
   <button class="tab-btn" onclick="switchTab('tickets',this)">🎫 交通 & 住宿</button>
-  <button class="tab-btn" onclick="switchTab('budget',this)">💰 费用总览</button>
+  <button class="tab-btn" onclick="switchTab('finance',this)">💰 费用 & 分账</button>
   <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
   <button class="tab-btn" onclick="switchTab('essentials',this)">🌤 实用速查</button>
-  <button class="tab-btn" onclick="switchTab('splitbill',this)">💸 分账记账</button>
 </div>
 
 <!-- TAB 1: Map -->
@@ -545,9 +544,14 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   </div><!-- /tk-scroll -->
 </div><!-- /tab-tickets -->
 
-<!-- TAB 8: Budget -->
-<div class="tab-content" id="tab-budget">
-  <div style="overflow-y:auto;flex:1;padding:14px 16px">
+<!-- TAB 8: Finance -->
+<div class="tab-content" id="tab-finance" style="flex-direction:column">
+<div id="fn-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
+  <button onclick="switchFinance('budget',this)" class="fn-btn fn-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px;flex-shrink:0;white-space:nowrap;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent">💰 费用总览</button>
+  <button onclick="switchFinance('splitbill',this)" class="fn-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;flex-shrink:0;white-space:nowrap;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent">💸 分账记账</button>
+</div>
+  <div style="overflow-y:auto;flex:1">
+    <div id="fn-budget" style="padding:14px 16px">
 
     <!-- 控制条 -->
     <div style="position:sticky;top:0;z-index:10;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.08);display:flex;align-items:center;gap:20px;flex-wrap:wrap">
@@ -629,8 +633,93 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
       </div>
     </div>
 
+    </div><!-- /fn-budget -->
+    <div id="fn-splitbill" style="display:none;background:#F0F4F8">
+<div style="max-width:780px;margin:0 auto;padding:20px 16px 40px;width:100%">
+
+  <!-- 成员管理 -->
+  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
+    <h2 style="font-size:.88rem;font-weight:700;color:#1E293B;margin-bottom:14px">👥 出行成员</h2>
+    <div id="sb-members" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:28px"></div>
+    <div style="display:flex;gap:8px">
+      <input id="sb-new-member" type="text" placeholder="输入姓名后按 Enter 或点添加"
+        style="flex:1;padding:7px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
+      <button onclick="sbAddMember()"
+        style="padding:7px 18px;background:#3B82F6;color:#fff;border:none;border-radius:7px;
+        font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap">添加</button>
+    </div>
   </div>
-</div>
+
+  <!-- 记账 -->
+  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
+    <h2 style="font-size:.88rem;font-weight:700;color:#1E293B;margin-bottom:14px">➕ 添加消费</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <input id="sb-desc" type="text" placeholder="消费说明（如：晚餐、门票）"
+        style="grid-column:1/-1;padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
+      <input id="sb-date" type="date"
+        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none;color:#374151">
+      <input id="sb-location" type="text" placeholder="📍 地点（选填，如：阿姆斯特丹）"
+        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
+      <div style="display:flex;gap:6px">
+        <select id="sb-currency"
+          style="padding:8px 8px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;background:#fff;outline:none">
+          <option value="EUR">€ EUR</option>
+          <option value="CNY">¥ CNY</option>
+          <option value="USD">$ USD</option>
+          <option value="GBP">£ GBP</option>
+        </select>
+        <input id="sb-amount" type="number" min="0" step="0.01" placeholder="金额"
+          style="flex:1;padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
+      </div>
+      <select id="sb-payer"
+        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;background:#fff;outline:none">
+        <option value="">— 付款人 —</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:.75rem;font-weight:600;color:#64748B;margin-bottom:6px">参与分摊（默认全选）</div>
+      <div id="sb-splitters" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+    </div>
+    <button onclick="sbAddRecord()"
+      style="width:100%;padding:9px;background:#10B981;color:#fff;border:none;border-radius:8px;
+      font-size:.85rem;font-weight:700;cursor:pointer">记一笔</button>
+  </div>
+
+  <!-- 记录列表 -->
+  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <h2 style="font-size:.88rem;font-weight:700;color:#1E293B">📋 消费记录</h2>
+      <button onclick="sbClearAll()"
+        style="padding:4px 12px;background:#FEE2E2;color:#DC2626;border:none;border-radius:5px;
+        font-size:.72rem;font-weight:600;cursor:pointer">清空记录</button>
+    </div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+      <table style="width:100%;border-collapse:collapse;font-size:.8rem;min-width:400px">
+        <thead><tr style="background:#F8FAFC;font-size:.72rem;color:#64748B">
+          <th style="padding:7px 10px;text-align:left;font-weight:600">日期</th>
+          <th style="padding:7px 10px;text-align:left;font-weight:600">说明</th>
+          <th style="padding:7px 10px;text-align:left;font-weight:600">金额</th>
+          <th style="padding:7px 10px;text-align:left;font-weight:600">参与人</th>
+          <th style="padding:7px 10px;text-align:center;font-weight:600"></th>
+        </tr></thead>
+        <tbody id="sb-record-list"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 结算 -->
+  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <h2 style="font-size:.88rem;font-weight:700;color:#1E293B">🧮 结算方案</h2>
+      <span style="font-size:.7rem;color:#94A3B8">汇率仅供估算，以实际为准</span>
+    </div>
+    <div id="sb-settle-result"></div>
+  </div>
+
+</div><!-- /splitbill-maxwidth -->
+    </div><!-- /fn-splitbill -->
+  </div><!-- /fn-scroll -->
+</div><!-- /tab-finance -->
 
 <!-- TAB 7: Schengen Visa -->
 <div class="tab-content" id="tab-schengen">
@@ -1465,6 +1554,10 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
 </div>
 
 <script>
+// Finance sub-tab switcher
+function switchFinance(name, btn){
+  switchSubTab(['budget','splitbill'], 'fn-', 'fn-btn', name, btn)
+}
 // ── Generic sub-tab switcher ──
 function switchSubTab(sections, idPrefix, btnClass, name, btn){
   sections.forEach(s => {
@@ -3032,91 +3125,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 })
 </script>
 
-<!-- TAB 10: Split Bill -->
-<div class="tab-content" id="tab-splitbill" style="overflow-y:auto;flex-direction:column;background:#F0F4F8">
-<div style="max-width:780px;margin:0 auto;padding:20px 16px 40px;width:100%">
-
-  <!-- 成员管理 -->
-  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
-    <h2 style="font-size:.88rem;font-weight:700;color:#1E293B;margin-bottom:14px">👥 出行成员</h2>
-    <div id="sb-members" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:28px"></div>
-    <div style="display:flex;gap:8px">
-      <input id="sb-new-member" type="text" placeholder="输入姓名后按 Enter 或点添加"
-        style="flex:1;padding:7px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
-      <button onclick="sbAddMember()"
-        style="padding:7px 18px;background:#3B82F6;color:#fff;border:none;border-radius:7px;
-        font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap">添加</button>
-    </div>
-  </div>
-
-  <!-- 记账 -->
-  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
-    <h2 style="font-size:.88rem;font-weight:700;color:#1E293B;margin-bottom:14px">➕ 添加消费</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-      <input id="sb-desc" type="text" placeholder="消费说明（如：晚餐、门票）"
-        style="grid-column:1/-1;padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
-      <input id="sb-date" type="date"
-        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none;color:#374151">
-      <input id="sb-location" type="text" placeholder="📍 地点（选填，如：阿姆斯特丹）"
-        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
-      <div style="display:flex;gap:6px">
-        <select id="sb-currency"
-          style="padding:8px 8px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;background:#fff;outline:none">
-          <option value="EUR">€ EUR</option>
-          <option value="CNY">¥ CNY</option>
-          <option value="USD">$ USD</option>
-          <option value="GBP">£ GBP</option>
-        </select>
-        <input id="sb-amount" type="number" min="0" step="0.01" placeholder="金额"
-          style="flex:1;padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;outline:none">
-      </div>
-      <select id="sb-payer"
-        style="padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:7px;font-size:.82rem;background:#fff;outline:none">
-        <option value="">— 付款人 —</option>
-      </select>
-    </div>
-    <div style="margin-bottom:12px">
-      <div style="font-size:.75rem;font-weight:600;color:#64748B;margin-bottom:6px">参与分摊（默认全选）</div>
-      <div id="sb-splitters" style="display:flex;flex-wrap:wrap;gap:4px"></div>
-    </div>
-    <button onclick="sbAddRecord()"
-      style="width:100%;padding:9px;background:#10B981;color:#fff;border:none;border-radius:8px;
-      font-size:.85rem;font-weight:700;cursor:pointer">记一笔</button>
-  </div>
-
-  <!-- 记录列表 -->
-  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px;margin-bottom:16px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <h2 style="font-size:.88rem;font-weight:700;color:#1E293B">📋 消费记录</h2>
-      <button onclick="sbClearAll()"
-        style="padding:4px 12px;background:#FEE2E2;color:#DC2626;border:none;border-radius:5px;
-        font-size:.72rem;font-weight:600;cursor:pointer">清空记录</button>
-    </div>
-    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-      <table style="width:100%;border-collapse:collapse;font-size:.8rem;min-width:400px">
-        <thead><tr style="background:#F8FAFC;font-size:.72rem;color:#64748B">
-          <th style="padding:7px 10px;text-align:left;font-weight:600">日期</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600">说明</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600">金额</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600">参与人</th>
-          <th style="padding:7px 10px;text-align:center;font-weight:600"></th>
-        </tr></thead>
-        <tbody id="sb-record-list"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- 结算 -->
-  <div style="background:#fff;border-radius:12px;border:1px solid #E2E8F0;padding:18px 20px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <h2 style="font-size:.88rem;font-weight:700;color:#1E293B">🧮 结算方案</h2>
-      <span style="font-size:.7rem;color:#94A3B8">汇率仅供估算，以实际为准</span>
-    </div>
-    <div id="sb-settle-result"></div>
-  </div>
-
-</div>
-</div>
 
 </body>
 </html>
