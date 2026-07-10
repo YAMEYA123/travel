@@ -120,7 +120,7 @@ while creditors and debtors remain:
 #### 关键实现要点
 
 - 数据 key：`localStorage.setItem('splitbill_v1', JSON.stringify({members, records}))`
-- 记录结构：`{id, desc, amount, currency, payer, splitters[], date}`
+- 记录结构：`{id, desc, amount, currency, payer, splitters[], date, location}`（date/location 选填，date 默认预填今天）
 - 结算卡片：余额正数绿色（应收）、负数红色（应付）、接近零灰色（持平）
 - 移动端：表格横向滚动，`min-width:400px` + `-webkit-overflow-scrolling:touch`
 
