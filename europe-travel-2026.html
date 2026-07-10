@@ -1082,31 +1082,183 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   <!-- 常用App -->
   <div>
     <h2 style="font-size:.9rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#60748A;margin-bottom:12px">📱 出行必备 App</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
-      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:12px;font-size:.72rem;color:#475569">
-        <div style="font-weight:700;color:#1A2332;margin-bottom:6px">🚆 交通</div>
-        <div>DB Navigator（德铁，买票/查时刻）</div>
-        <div>OeBB（奥地利国铁）</div>
-        <div>NS（荷兰国铁）</div>
-        <div>Google Maps（城内导航）</div>
+    <style>
+      .app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+      .app-card{background:#fff;border-radius:14px;border:1px solid #DDE3EC;padding:12px 10px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+      .app-icon{width:54px;height:54px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+      .app-name{font-size:.74rem;font-weight:700;color:#1A2332;line-height:1.2}
+      .app-desc{font-size:.63rem;color:#64748B;line-height:1.35;flex:1}
+      .app-dl{display:inline-flex;align-items:center;gap:4px;margin-top:4px;background:#000;color:#fff;border-radius:7px;padding:5px 9px;font-size:.62rem;font-weight:600;text-decoration:none;white-space:nowrap}
+      .app-dl svg{width:11px;height:11px;fill:#fff;flex-shrink:0}
+      .app-cat{font-size:.72rem;font-weight:700;letter-spacing:.04em;color:#60748A;margin:14px 0 8px;text-transform:uppercase}
+    </style>
+
+    <!-- 交通票务 -->
+    <div class="app-cat">🚆 交通票务</div>
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#cc0000,#ff3333)">🚄</div>
+        <div class="app-name">DB Navigator</div>
+        <div class="app-desc">德国国铁，查时刻 / 买票 / 实时延误</div>
+        <a class="app-dl" href="https://apps.apple.com/de/app/db-navigator/id343555245" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
       </div>
-      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:12px;font-size:.72rem;color:#475569">
-        <div style="font-weight:700;color:#1A2332;margin-bottom:6px">🗺 地图 & 导览</div>
-        <div>maps.me（离线地图）</div>
-        <div>Rick Steves Audio Europe（景点讲解）</div>
-        <div>Google Translate（离线包下载德语）</div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#e30613,#ff6b6b)">🇦🇹</div>
+        <div class="app-name">ÖBB</div>
+        <div class="app-desc">奥地利国铁，维也纳购票必备</div>
+        <a class="app-dl" href="https://apps.apple.com/at/app/%C3%B6bb/id447796812" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
       </div>
-      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:12px;font-size:.72rem;color:#475569">
-        <div style="font-weight:700;color:#1A2332;margin-bottom:6px">🍽 餐饮 & 生活</div>
-        <div>Yelp / Google Maps 查餐厅评分</div>
-        <div>Uber / Bolt（城市打车）</div>
-        <div>Flixbus（城间大巴备选）</div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#003082,#005cbf)">🇳🇱</div>
+        <div class="app-name">NS Reisplanner</div>
+        <div class="app-desc">荷兰国铁，阿姆斯特丹城铁购票</div>
+        <a class="app-dl" href="https://apps.apple.com/nl/app/ns/id370362301" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
       </div>
-      <div style="background:#fff;border-radius:10px;border:1px solid #DDE3EC;padding:12px;font-size:.72rem;color:#475569">
-        <div style="font-weight:700;color:#1A2332;margin-bottom:6px">💰 汇率 & 支付</div>
-        <div>Wise（跨境汇款/低手续费换汇）</div>
-        <div>XE Currency（实时汇率查询）</div>
-        <div>Revolut（境外消费免手续费卡）</div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1a73e8,#4285f4)">🗓</div>
+        <div class="app-name">Trainline</div>
+        <div class="app-desc">多国火车票一站买，跨境线路方便</div>
+        <a class="app-dl" href="https://apps.apple.com/app/trainline-buy-train-tickets/id366165378" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+    </div>
+
+    <!-- 地图导航 -->
+    <div class="app-cat">🗺 地图导航</div>
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1a73e8,#34a853)">📍</div>
+        <div class="app-name">Google Maps</div>
+        <div class="app-desc">城内导航首选，公交 / 步行 / 驾车</div>
+        <a class="app-dl" href="https://apps.apple.com/app/google-maps/id585027354" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#00b2a9,#00796b)">🌐</div>
+        <div class="app-name">MAPS.ME</div>
+        <div class="app-desc">离线地图，无网络也可导航步行</div>
+        <a class="app-dl" href="https://apps.apple.com/app/maps-me-offline-map-nav/id510623322" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#4285f4,#34a853)">🌍</div>
+        <div class="app-name">Google 翻译</div>
+        <div class="app-desc">提前下载德语离线包，拍照翻译菜单</div>
+        <a class="app-dl" href="https://apps.apple.com/app/google-translate/id414704506" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#ff6b35,#f7c59f)">🎧</div>
+        <div class="app-name">Rick Steves Audio</div>
+        <div class="app-desc">欧洲景点英文音频讲解，免费离线听</div>
+        <a class="app-dl" href="https://apps.apple.com/us/app/rick-steves-audio-europe/id398723081" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+    </div>
+
+    <!-- 打车出行 -->
+    <div class="app-cat">🚖 打车出行</div>
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="app-icon" style="background:#000">🚗</div>
+        <div class="app-name">Uber</div>
+        <div class="app-desc">欧洲多城可用，中文界面，价格透明</div>
+        <a class="app-dl" href="https://apps.apple.com/app/uber-request-a-ride/id368677368" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#34d186,#1a7a4a)">⚡</div>
+        <div class="app-name">Bolt</div>
+        <div class="app-desc">欧洲本土打车，通常比 Uber 便宜</div>
+        <a class="app-dl" href="https://apps.apple.com/app/bolt-request-a-ride/id675817630" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#73d700,#4a9e00)">🚌</div>
+        <div class="app-name">FlixBus</div>
+        <div class="app-desc">城间大巴备选，€5–15，提前买更便宜</div>
+        <a class="app-dl" href="https://apps.apple.com/app/flixbus-bus-travel-in-europe/id1006022345" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+    </div>
+
+    <!-- 支付汇率 -->
+    <div class="app-cat">💰 支付汇率</div>
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#00b9ff,#0050b3)">💸</div>
+        <div class="app-name">Wise</div>
+        <div class="app-desc">低手续费换汇，跨境汇款首选</div>
+        <a class="app-dl" href="https://apps.apple.com/app/wise-international-money-app/id612261027" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#2563eb,#7c3aed)">💳</div>
+        <div class="app-name">Revolut</div>
+        <div class="app-desc">境外消费无手续费，实时汇率扣款</div>
+        <a class="app-dl" href="https://apps.apple.com/app/revolut-send-money-worldwide/id932456060" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#f97316,#dc2626)">💱</div>
+        <div class="app-name">XE Currency</div>
+        <div class="app-desc">实时汇率查询，换钱前对比必看</div>
+        <a class="app-dl" href="https://apps.apple.com/app/xe-currency-converter-money/id426203589" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+    </div>
+
+    <!-- 餐饮住宿 -->
+    <div class="app-cat">🍽 餐饮住宿</div>
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#FF0000,#cc0000)">⭐</div>
+        <div class="app-name">Yelp</div>
+        <div class="app-desc">欧洲餐厅评分，查附近好吃的</div>
+        <a class="app-dl" href="https://apps.apple.com/app/yelp-food-services-around-me/id284910350" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+      </div>
+      <div class="app-card">
+        <div class="app-icon" style="background:linear-gradient(135deg,#003580,#0071c2)">🏨</div>
+        <div class="app-name">Booking.com</div>
+        <div class="app-desc">临时改签住宿，免费取消房型方便</div>
+        <a class="app-dl" href="https://apps.apple.com/app/booking-com-hotels-travel/id367003839" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
       </div>
     </div>
   </div>
