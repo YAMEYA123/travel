@@ -79,6 +79,7 @@ paris-travel-2025.html    ← 单城市
 | 费用总览 | 💰 | 分类预算 + 人数 × 汇率计算器 |
 | 住宿推荐 | 🏨 | 每晚住处 + 地址 + Booking/Hotels 链接 |
 | 实用速查 | 🌤 | 见 3.3 |
+| **分账记账** | 💸 | **多人游必含，见 3.4** |
 
 若为**申根区或有签证需求**，额外加 Tab：
 
@@ -87,7 +88,43 @@ paris-travel-2025.html    ← 单城市
 | 签证清单 | 🛂 | 申请材料逐项打勾，含行程单下载入口 |
 | 中英对照 | 🔤 | 高频短语对照表（景点、问路、点餐、购物、求助） |
 
-### 3.3 实用速查模块内容
+### 3.3 分账记账模块（💸）
+
+**所有生成的攻略默认包含此 Tab**，数据存 `localStorage`，刷新不丢失。
+
+#### 三个子区块
+
+| 区块 | 功能 |
+|------|------|
+| 👥 成员管理 | 添加/删除出行人，输入姓名 Enter 快速添加 |
+| ➕ 添加消费 | 选货币（EUR/CNY/USD/GBP）、填金额、选付款人、勾选参与人（默认全选） |
+| 📋 消费记录 | 按时间倒序列表，每条显示日期/说明/金额/付款人/每人分摊额，支持单条删除 |
+| 🧮 结算方案 | 自动计算各人净余额（CNY）+ 最优还款路径（最少转账次数） |
+
+#### 结算算法
+
+```javascript
+// 1. 汇率换算（固定参考汇率，标注「仅供估算」）
+const RATES = { EUR:7.8, CNY:1, USD:7.3, GBP:9.2, JPY:0.048 }
+
+// 2. 计算净余额
+balance[payer] += totalCNY          // 付款人余额增加
+splitters.forEach(s => balance[s] -= each)  // 参与人减少
+
+// 3. 最优转账（贪心，债权人/债务人排序后最小转账次数）
+while creditors and debtors remain:
+    pay = min(creditor.val, debtor.val)
+    record transfer(debtor → creditor, pay)
+```
+
+#### 关键实现要点
+
+- 数据 key：`localStorage.setItem('splitbill_v1', JSON.stringify({members, records}))`
+- 记录结构：`{id, desc, amount, currency, payer, splitters[], date}`
+- 结算卡片：余额正数绿色（应收）、负数红色（应付）、接近零灰色（持平）
+- 移动端：表格横向滚动，`min-width:400px` + `-webkit-overflow-scrolling:touch`
+
+### 3.4 实用速查模块内容
 
 1. **实用生活信息**：插座/电压、货币/付款方式、小费习惯、网络/SIM卡、时区、安全提示
 2. **🛍 特产 & 纪念品推荐**：按城市分表，含品名（中/英）、购买地点、参考价、推荐标签（必买/送礼/食品/药妆）、退税提示
