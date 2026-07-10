@@ -213,7 +213,6 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   <button class="tab-btn" onclick="switchTab('booking',this)">📋 预约 & 风险 <span id="badge-todo" style="background:#EF4444;color:#fff;border-radius:10px;padding:1px 6px;font-size:.65rem;margin-left:3px"></span></button>
   <button class="tab-btn" onclick="switchTab('tickets',this)">🎫 交通 & 住宿</button>
   <button class="tab-btn" onclick="switchTab('finance',this)">💰 费用 & 分账</button>
-  <button class="tab-btn" onclick="switchTab('schengen',this)">🛂 申根签清单</button>
   <button class="tab-btn" onclick="switchTab('essentials',this)">🌤 实用速查</button>
 </div>
 
@@ -249,7 +248,8 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
   <!-- 预约&风险 子页签 -->
   <div id="bk-subnav" style="display:flex;padding:10px 16px 0;background:#E8EDF4;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
     <button onclick="switchBooking('booking',this)" class="bk-btn bk-active" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#fff;color:#1A2332;margin-right:4px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">📋 待预约</button>
-    <button onclick="switchBooking('risk',this)" class="bk-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">⚠️ 风险清单</button>
+    <button onclick="switchBooking('risk',this)" class="bk-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;margin-right:4px">⚠️ 风险清单</button>
+    <button onclick="switchBooking('visa',this)" class="bk-btn" style="padding:8px 16px;border-radius:8px 8px 0 0;font-size:.78rem;font-weight:600;background:#CBD5E1;color:#475569;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">🛂 签证清单</button>
   </div>
   <div style="overflow-y:auto;flex:1;padding:20px" id="booking-page">
     <div id="bk-booking">
@@ -354,6 +354,52 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
       </div>
     </div><!-- /risk-section -->
     </div><!-- /bk-risk -->
+    <div id="bk-visa" style="display:none">
+    <div style="margin-top:18px;padding-top:14px;border-top:2px dashed var(--border)">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#EEF2FF,#F0FDF4);border:1px solid #C7D2FE;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-weight:700;font-size:.95rem;margin-bottom:6px">🛂 德国申根签证材料清单（C类/短期）</div>
+      <div style="font-size:.78rem;color:#1E293B;line-height:1.9">
+        停留分布：荷兰 <b>2晚</b>、德国 <b>4晚</b>、奥地利 <b>4晚</b>。德奥并列最多，取<b>最先入境的那个</b>→ 德国（9/27首入境）为主申国。<br>
+        ✅ 需向 <b>VFS Global 德国签证中心</b> 递交申请（北京/上海/广州/成都/重庆/武汉均有）。<br>
+        ✅ 签证最早可提前<b>6个月</b>递交；建议<b>出发前6–8周</b>（即2026年8月上旬）递交，给足处理时间。
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-weight:700;font-size:.9rem">材料准备进度</span>
+        <span id="sz-progress-text" style="font-size:.8rem;color:var(--muted)"></span>
+      </div>
+      <div style="background:#F1F5F9;border-radius:99px;height:8px;overflow:hidden">
+        <div id="sz-progress-bar" style="height:100%;background:linear-gradient(90deg,#6366F1,#10B981);border-radius:99px;transition:width .4s ease;width:0%"></div>
+      </div>
+      <div style="display:flex;gap:14px;margin-top:8px;flex-wrap:wrap">
+        <span style="font-size:.72rem;display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#DC2626;display:inline-block"></span>必备材料</span>
+        <span style="font-size:.72rem;display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#6366F1;display:inline-block"></span>辅助/加分</span>
+      </div>
+    </div>
+
+    <!-- Checklist items rendered by JS -->
+    <div id="sz-list"></div>
+
+    <!-- Timeline card -->
+    <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:14px 16px;margin-top:4px">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">⏱ 申请时间线</div>
+      <div style="font-size:.75rem;line-height:2;color:#1E293B">
+        📅 <b>最早可递交</b>：2026年3月25日（出发前6个月）<br>
+        📅 <b>建议递交窗口</b>：2026年8月1日–8月15日（出发前6–8周，避开暑期旺季积压）<br>
+        📅 <b>最晚递交日</b>：2026年9月10日（出发前15天，极限）<br>
+        ⏳ 正常处理时长 <b>10–15个工作日</b>，旺季建议留足4周<br>
+        🔗 VFS德国预约：<a href="https://www.vfsglobal.com/Germany/China/" target="_blank" style="color:#4F46E5;font-weight:600">vfsglobal.com/Germany/China</a><br>
+        🔗 德国驻华大使馆签证须知：<a href="https://china.diplo.de/cn-zh/service/visa-einreise/schengenvisumkurzaufenthalt" target="_blank" style="color:#4F46E5">china.diplo.de</a>
+      </div>
+    </div>
+
+    </div><!-- /visa-section -->
+    </div><!-- /bk-visa -->
   </div><!-- /booking-page -->
 </div><!-- /tab-booking -->
 
@@ -720,54 +766,6 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
     </div><!-- /fn-splitbill -->
   </div><!-- /fn-scroll -->
 </div><!-- /tab-finance -->
-
-<!-- TAB 7: Schengen Visa -->
-<div class="tab-content" id="tab-schengen">
-  <div style="overflow-y:auto;flex:1;padding:14px 16px">
-
-    <!-- Header -->
-    <div style="background:linear-gradient(135deg,#EEF2FF,#F0FDF4);border:1px solid #C7D2FE;border-radius:10px;padding:14px 16px;margin-bottom:14px">
-      <div style="font-weight:700;font-size:.95rem;margin-bottom:6px">🛂 德国申根签证材料清单（C类/短期）</div>
-      <div style="font-size:.78rem;color:#1E293B;line-height:1.9">
-        停留分布：荷兰 <b>2晚</b>、德国 <b>4晚</b>、奥地利 <b>4晚</b>。德奥并列最多，取<b>最先入境的那个</b>→ 德国（9/27首入境）为主申国。<br>
-        ✅ 需向 <b>VFS Global 德国签证中心</b> 递交申请（北京/上海/广州/成都/重庆/武汉均有）。<br>
-        ✅ 签证最早可提前<b>6个月</b>递交；建议<b>出发前6–8周</b>（即2026年8月上旬）递交，给足处理时间。
-      </div>
-    </div>
-
-    <!-- Progress bar -->
-    <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span style="font-weight:700;font-size:.9rem">材料准备进度</span>
-        <span id="sz-progress-text" style="font-size:.8rem;color:var(--muted)"></span>
-      </div>
-      <div style="background:#F1F5F9;border-radius:99px;height:8px;overflow:hidden">
-        <div id="sz-progress-bar" style="height:100%;background:linear-gradient(90deg,#6366F1,#10B981);border-radius:99px;transition:width .4s ease;width:0%"></div>
-      </div>
-      <div style="display:flex;gap:14px;margin-top:8px;flex-wrap:wrap">
-        <span style="font-size:.72rem;display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#DC2626;display:inline-block"></span>必备材料</span>
-        <span style="font-size:.72rem;display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#6366F1;display:inline-block"></span>辅助/加分</span>
-      </div>
-    </div>
-
-    <!-- Checklist items rendered by JS -->
-    <div id="sz-list"></div>
-
-    <!-- Timeline card -->
-    <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:14px 16px;margin-top:4px">
-      <div style="font-weight:700;font-size:.85rem;margin-bottom:8px">⏱ 申请时间线</div>
-      <div style="font-size:.75rem;line-height:2;color:#1E293B">
-        📅 <b>最早可递交</b>：2026年3月25日（出发前6个月）<br>
-        📅 <b>建议递交窗口</b>：2026年8月1日–8月15日（出发前6–8周，避开暑期旺季积压）<br>
-        📅 <b>最晚递交日</b>：2026年9月10日（出发前15天，极限）<br>
-        ⏳ 正常处理时长 <b>10–15个工作日</b>，旺季建议留足4周<br>
-        🔗 VFS德国预约：<a href="https://www.vfsglobal.com/Germany/China/" target="_blank" style="color:#4F46E5;font-weight:600">vfsglobal.com/Germany/China</a><br>
-        🔗 德国驻华大使馆签证须知：<a href="https://china.diplo.de/cn-zh/service/visa-einreise/schengenvisumkurzaufenthalt" target="_blank" style="color:#4F46E5">china.diplo.de</a>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 <!-- TAB 9: Essentials -->
 <div class="tab-content" id="tab-essentials" style="flex-direction:column;background:#F0F4F8">
@@ -1569,7 +1567,7 @@ function switchSubTab(sections, idPrefix, btnClass, name, btn){
   })
   if(btn){ btn.style.background = '#fff'; btn.style.color = '#1A2332' }
 }
-function switchBooking(name, btn){ switchSubTab(['booking','risk'], 'bk-', 'bk-btn', name, btn) }
+function switchBooking(name, btn){ switchSubTab(['booking','risk','visa'], 'bk-', 'bk-btn', name, btn) }
 function switchTickets(name, btn){ switchSubTab(['tickets','hotel'], 'tk-', 'tk-btn', name, btn) }
 
 // ── Essentials sub-tabs ──
