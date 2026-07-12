@@ -459,7 +459,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
         <div style="font-weight:700;font-size:.9rem;color:#166534;margin-bottom:10px">🟡 低风险 — 注意即可</div>
         <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
           <div style="font-weight:600;font-size:.82rem">10. D3/D4 乌尔姆中转方案</div>
-          <div style="font-size:.75rem;color:#14532D;margin-top:3px">D3 IC 2440 科隆→乌尔姆（18:53出发，23:13到达，1次换乘，约¥43/人），D4 RB 乌尔姆→慕尼黑东站（08:15出发，09:39到达）。两程独立购票，无换乘风险。Moxy酒店距东站步行2min，到达即可寄存行李出发游览。</div>
+          <div style="font-size:.75rem;color:#14532D;margin-top:3px">D3 IC 2440 科隆→乌尔姆（18:53出发，23:13到达，1次换乘，约¥58/人），D4 RB 乌尔姆→慕尼黑东站（08:15出发，09:39到达）。两程独立购票，无换乘风险。Moxy酒店距东站步行2min，到达即可寄存行李出发游览。</div>
         </div>
         <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #BBF7D0">
           <div style="font-weight:600;font-size:.82rem">11. D2（9/27）取行李至上车仅45分钟</div>
@@ -629,7 +629,7 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
       <div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tbl-ticket" style="width:100%;border-collapse:collapse;font-size:.74rem">
         <tr style="background:#F1F5F9"><th style="padding:5px 8px;text-align:left">路段</th><th style="padding:5px 8px;text-align:right">单独买票</th></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">阿姆斯特丹 → 科隆 IC 60403（直达）</td><td style="padding:5px 8px;text-align:right">€19（约¥151）</td></tr>
-        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">科隆 → 乌尔姆（IC 2440，9/28 18:53）</td><td style="padding:5px 8px;text-align:right">约€6/人（约¥44）</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">科隆 → 乌尔姆（IC 2440，9/28 18:53）</td><td style="padding:5px 8px;text-align:right">约€6/人（约¥58）</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">乌尔姆 → 慕尼黑东站（RB，9/29 08:15）</td><td style="padding:5px 8px;text-align:right">约€27/人（约¥200）</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 ↔ 菲森（拜仁日票，D5 2人）</td><td style="padding:5px 8px;text-align:right">€44</td></tr>
         <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 8px">慕尼黑 → 萨尔茨堡（ICE 1215，10/1 12:09）</td><td style="padding:5px 8px;text-align:right">€6.99</td></tr>
@@ -1961,9 +1961,9 @@ const DAYS=[
     {n:'IC → 乌尔姆', en:'Köln → Ulm (IC 2440)', time:'18:53', key:true,
       lat:50.9429, lng:6.9579,
       transport:'🚆 IC 2440 约4h20min', tcls:'tr-train',
-      desc:'IC 2440，约¥43/人，23:13抵达乌尔姆，1次换乘，票价最低，省去次日早起赶车',
+      desc:'IC 2440，约¥58/人，23:13抵达乌尔姆，1次换乘，票价最低，省去次日早起赶车',
       book:{text:'购买9/28 科隆→乌尔姆',cls:'book-btn warn',
-        url:'https://int.bahn.de/en', price:'约¥43/人', mustBook:true}},
+        url:'https://int.bahn.de/en', price:'约¥58/人', mustBook:true}},
     {n:'抵达乌尔姆 → 入住', en:'Ulm Hbf → Hotel', time:'23:13', key:true,
       lat:48.3994, lng:9.9905,
       desc:'ibis Ulm City（待确认），中央站步行5min，入住休息明早08:15出发前往慕尼黑'},
@@ -2602,7 +2602,7 @@ const BOOKINGS=[
   {id:'cgn-man', pri:0, cat:'城际火车',
     date:'9月28日（周一）18:53出发', name:'科隆 → 乌尔姆 IC 2440',
     note:'IC 2440，23:13抵达乌尔姆，1次换乘，票价最低',
-    price:'约€6/人（约¥44）', url:'https://int.bahn.de/en',
+    price:'约€6/人（约¥58）', url:'https://int.bahn.de/en',
     urlText:'DB购票（9/28 18:53）'},
   {id:'man-muc', pri:0, cat:'城际火车',
     date:'9月29日（周二）08:15出发', name:'乌尔姆 → 慕尼黑东站 RB',
@@ -2904,7 +2904,7 @@ const COST_ITEMS=[
   {id:'b01',cat:'🚆 城际铁路',name:'史基浦机场 → 阿姆斯特丹中央站',date:'9/25',price:5.50,cur:'EUR',type:0,note:'NS火车，刷卡上车'},
   {id:'b02',cat:'🚆 城际铁路',name:'阿姆斯特丹 → 斯滕韦克来回（羊角村）',date:'9/26',price:20,cur:'EUR',type:0,note:'NS国铁，约€20往返/人'},
   {id:'b03',cat:'🚆 城际铁路',name:'阿姆斯特丹 → 科隆 IC 60403',date:'9/27',price:151,cur:'CNY',type:0,note:'21:01直达，nsinternational.com'},
-  {id:'b04',cat:'🚆 城际铁路',name:'科隆 → 乌尔姆 IC 2440',date:'9/28',price:44,cur:'CNY',type:0,note:'18:53出发，DB购票'},
+  {id:'b04',cat:'🚆 城际铁路',name:'科隆 → 乌尔姆 IC 2440',date:'9/28',price:58,cur:'CNY',type:0,note:'18:53出发，DB购票'},
   {id:'b05',cat:'🚆 城际铁路',name:'乌尔姆 → 慕尼黑东站 RB',date:'9/29',price:200,cur:'CNY',type:0,note:'08:15出发，约€27/人×2，DB购票'},
   {id:'b06',cat:'🚆 城际铁路',name:'拜仁日票 Bayern Ticket（D5，2人）',date:'9/30',price:44,cur:'EUR',type:0,note:'09:11出发，工作日09:00起生效，含慕尼黑↔菲森来回+全天MVV'},
   {id:'b07',cat:'🚆 城际铁路',name:'慕尼黑 → 萨尔茨堡',date:'10/1',price:6.99,cur:'EUR',type:0,note:'DB/ÖBB，12:09出发'},
