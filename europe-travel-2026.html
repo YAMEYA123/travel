@@ -418,8 +418,8 @@ aside{width:380px;flex-shrink:0;overflow-y:auto;background:#FAFCFF;border-left:1
           <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">旺季 9/26 周六 19:00 场次极易售罄，官网可能数周前已无票。需立即在 <a href="https://www.annefrank.org/en/museum/tickets/" target="_blank" style="color:#DC2626">annefrank.org</a> 预约指定场次，无法现场购票入场。</div>
         </div>
         <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
-          <div style="font-weight:600;font-size:.82rem">2. 新天鹅堡（D5）门票须提前预订</div>
-          <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">旺季现场排队 2–3 小时甚至无票，必须提前在官网选定入场时间段。9/30 是旺季热门日期，建议至少提前 2–4 周购票。</div>
+          <div style="font-weight:600;font-size:.82rem">2. 新天鹅堡（D5）须提前预约入场时段</div>
+          <div style="font-size:.75rem;color:#7F1D1D;margin-top:3px">持拜仁城堡套票（Mehrtagesticket）免门票，但仍须提前在官网选"Multi-Day Ticket Holder"预约 9/30 <b>12:30</b> 场次，支付€2.50/人预约费。旺季时段极易售罄，建议至少提前 2–4 周操作。</div>
         </div>
         <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #FECACA">
           <div style="font-weight:600;font-size:.82rem">3. D5 拜仁日票：09:11 出发，新天鹅堡改预 12:30 场</div>
@@ -2605,11 +2605,16 @@ DAYS.forEach((day,i)=>{
 // ═══════════════════════════════════
 const BOOKINGS=[
   // 优先级: 0=立刻 1=尽快 2=较早 3=可选
+  {id:'castle-pass', pri:0, cat:'景点门票',
+    date:'出发前购买，D4慕尼黑皇宫首次激活', name:'拜仁城堡套票 Mehrtagesticket（€40/人）',
+    note:'含慕尼黑皇宫（€15）+ 新天鹅堡（€21）+ 40+景点，从首次激活起14天有效',
+    price:'€40/人', url:'https://bsv-shop.bayern.de',
+    urlText:'BSV官网购票'},
   {id:'neu-ticket', pri:0, cat:'景点门票',
-    date:'9月30日（周三）', name:'新天鹅堡门票',
-    note:'旺季极易售罄，越早越好。选9/30入场时段，步行票',
-    price:'€23.50/人', url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau',
-    urlText:'官网购票'},
+    date:'9月30日（周三）12:30场次', name:'新天鹅堡时段预约（持城堡套票）',
+    note:'套票免门票，仍需在官网选"Multi-Day Ticket Holder"预约时段，到Ticketcenter出示套票换票',
+    price:'€2.50/人（预约费）', url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau',
+    urlText:'官网预约12:30场次'},
   {id:'cgn-man', pri:0, cat:'城际火车',
     date:'9月28日（周一）18:53出发', name:'科隆 → 乌尔姆 IC 2440',
     note:'IC 2440，23:13抵达乌尔姆，1次换乘，票价最低',
