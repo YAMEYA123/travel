@@ -197,6 +197,6 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
 .segment button{width:100%;min-width:0;white-space:nowrap}
 
 @media(max-width:680px){
-  .segment{width:150px;flex:0 0 150px}
+  .segment{width:auto;flex:0 0 auto;grid-auto-columns:56px}
   .segment button{padding:0 4px}
 }
