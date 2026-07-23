@@ -1,0 +1,43 @@
+export const quickInfo = [
+  {title:'九月底天气',items:['阿姆斯特丹约11–18°C，多风多阵雨','科隆与慕尼黑约9–18°C，早晚偏凉','萨尔茨堡湖区约7–17°C，山区体感更低','维也纳约10–19°C；以临行前7天预报为准','穿衣建议：速干内层＋保暖中层＋防水外壳']},
+  {title:'紧急号码',items:['欧盟通用急救/报警：112','荷兰警察非紧急：0900-8844','德国警察：110 · 急救/消防：112','奥地利警察：133 · 急救：144']},
+  {title:'支付与现金',items:['银行卡/Apple Pay覆盖度高，仍备€100–150现金','荷兰部分小店偏好本地借记卡，先看Visa/Mastercard标识','德国啤酒屋、市场及储物柜可能需要现金','奥地利餐厅结账时主动告知小费后的总金额']},
+  {title:'小费习惯',items:['荷兰餐厅服务好可给5–10%，非强制','德国餐厅通常凑整或给5–10%','奥地利餐厅约5–10%，报总额而非把零钱留桌上','酒店行李员：€1–2/件']},
+  {title:'网络与插座',items:['三国均使用欧标Type C/F，电压230V','中国两脚扁插通常需要转换头','建议购买欧盟通用eSIM，提前下载离线地图','跨城列车Wi-Fi不稳定，车票截图离线保存']},
+  {title:'安全与健康',items:['中央站、地铁和热门景点注意手机与钱包','护照原件贴身，云端另存证件与保单副本','随身备止泻、感冒、胃药及个人常用药','饮用水通常安全；餐厅自来水不一定免费']},
+  {title:'退税',items:['满足单店最低消费后向商户索取退税单','离开欧盟时在维也纳机场先海关验货盖章','托运行李中的退税商品要在托运前办理海关','再到Global Blue或Planet柜台退款']},
+]
+
+export const packing = [
+  {group:'证件与票据',items:['护照及申根签证','旅行保险英文保单','机票、火车票离线截图','酒店确认单','银行卡2张分开放','少量欧元现金']},
+  {group:'衣物',items:['防水轻薄外套','针织衫/抓绒中层','长裤2–3条','舒适防滑步行鞋','轻便手套与薄围巾','折叠伞']},
+  {group:'电子设备',items:['手机与充电线','欧标转换插头','充电宝（随身携带）','eSIM/漫游方案','耳机','备用数据线']},
+  {group:'随身小包',items:['纸巾与湿巾','水杯','常用药','创可贴','小袋零食','酒店名片/地址截图']},
+]
+
+export const apps = [
+  ['Google Maps','全程地图、公交与步行导航','https://maps.google.com'],['NS','荷兰火车实时班次','https://www.ns.nl/en'],['9292','荷兰综合公共交通','https://9292.nl/en'],['DB Navigator','德国铁路、站台和延误','https://int.bahn.de/en'],['MVV-App','慕尼黑市内交通','https://www.mvv-muenchen.de/en'],['ÖBB','奥地利铁路','https://www.oebb.at/en/'],['Westbahn','萨尔茨堡至维也纳车票','https://westbahn.at/en/'],['Salzburg Verkehr','萨尔茨堡公交','https://salzburg-verkehr.at/'],['WienMobil','维也纳公共交通','https://www.wienerlinien.at/web/wl-en'],['Google Translate','菜单与现场沟通','https://translate.google.com'],['DeepL','德语长句翻译','https://www.deepl.com'],['Global Blue','退税进度查询','https://www.globalblue.com/'],['Splitwise','额外的多人分账备份','https://www.splitwise.com/'],
+]
+
+export const shopping = [
+  {city:'阿姆斯特丹',items:['Tony’s Chocolonely巧克力','荷兰奶酪（真空包装）','Royal Delft蓝陶小件','HEMA设计文具','郁金香主题纪念品（注意入境植物限制）']},
+  {city:'科隆',items:['4711古龙水旅行装','科隆大教堂纪念品','Kölsch细长啤酒杯','当地巧克力']},
+  {city:'慕尼黑',items:['啤酒节纪念杯与徽章','Haribo限定口味','巴伐利亚传统小饰品','Dallmayr咖啡与茶']},
+  {city:'萨尔茨堡',items:['莫扎特巧克力球','Zaunerstollen杏仁糕','岩盐制品','《音乐之声》纪念品']},
+  {city:'维也纳',items:['Manner威化','Demel/Sacher甜点礼盒','Julius Meinl咖啡','奥地利水晶或博物馆文创']},
+]
+
+export const glossary = [
+  ['中央火车站','Hauptbahnhof / Hbf','交通'],['站台','Gleis','交通'],['换乘','Umsteigen','交通'],['行李寄存柜','Schließfach / Left luggage','交通'],['特价票','Super Sparpreis','交通'],['区域列车','Regionalbahn / Regional-Express','交通'],['科隆大教堂','Kölner Dom','景点'],['慕尼黑皇宫','Residenz München','景点'],['新天鹅堡','Schloss Neuschwanstein','景点'],['萨尔茨堡要塞','Festung Hohensalzburg','景点'],['艺术史博物馆','Kunsthistorisches Museum','景点'],['美泉宫','Schloss Schönbrunn','景点'],['请问站台在哪里？','Wo ist das Gleis?','应急'],['这班车去……吗？','Fährt dieser Zug nach …?','应急'],['请结账','Zahlen, bitte.','餐厅'],['不要再续杯','Bitte nicht mehr.','餐厅'],
+]
+
+export const risks = [
+  ['高','新天鹅堡时段必须预约','持14天套票仍需选择Multi-Day Ticket Holder并支付预约费。'],['高','9/28科隆至慕尼黑换乘2次','当天持续查看DB App；前序延误时保留原票并按DB指引改乘。'],['高','9/30行李必须寄存在慕尼黑Hbf','不要留在Moxy，否则新天鹅堡返程后无法顺路赶萨尔茨堡。'],['中','D1羊角村接安妮之家','返程延误就取消九街，安妮之家预约优先。'],['中','D2取行李到发车缓冲有限','19:50开始返回中央站，最迟20:15取到行李。'],['中','慕尼黑至萨尔茨堡票种限制','拜仁日票只覆盖区域列车，不含Railjet和ICE。'],['中','Moxy两晚是两个订单','首次入住时请前台关联，尽量原房续住。'],['低','哈尔施塔特旺季人多','优先早出发；盐矿观景台按排队情况取舍。'],['低','维也纳返程日不要再绕市区','13:30取行李，15:00直接前往机场。'],
+]
+
+export const visaGroups = [
+  {title:'身份与申请',items:['德国申根签证申请表并签字','护照原件及资料页/签证页复印件','旧护照（如有）','身份证和户口簿复印件','近期35×45mm白底照片×2']},
+  {title:'行程与住宿',items:['详细英文行程单','往返机票订单','全程酒店确认单（含姓名、日期、地址）','已购跨城火车票','德国停留天数说明附信']},
+  {title:'资金与工作',items:['近3个月银行流水','在职证明英文版','营业执照复印件加盖公章','年假批准文件','工资单或完税证明（可选）']},
+  {title:'保险与递交',items:['保额不少于€30,000的申根旅行保险','覆盖全程及所有申根国、医疗救援和遣返','预约VFS Global德国签证中心','准备签证费与VFS服务费','所有材料保留扫描件']},
+]

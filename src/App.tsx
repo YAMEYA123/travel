@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CalendarDays, Check, CircleDollarSign, Map, MapPin, Navigation, TicketCheck, TrainFront, WalletCards } from 'lucide-react'
+import { CalendarDays, Check, CircleDollarSign, Map, MapPin, Navigation, TicketCheck, TrainFront, WalletCards, Wrench } from 'lucide-react'
 import { bookings, days, route } from './data'
 import type { Activity } from './types'
+import ExpenseLedger from './ExpenseLedger'
+import Toolbox from './Toolbox'
 
-type View = 'overview' | 'days' | 'route' | 'bookings' | 'budget'
+type View = 'overview' | 'days' | 'route' | 'bookings' | 'budget' | 'tools'
 const views: {id:View;label:string;icon:typeof MapPin}[] = [
   {id:'overview',label:'总览',icon:Navigation},{id:'days',label:'日程',icon:CalendarDays},
   {id:'route',label:'路线',icon:Map},{id:'bookings',label:'预订',icon:TicketCheck},
-  {id:'budget',label:'预算',icon:WalletCards},
+  {id:'budget',label:'费用',icon:WalletCards},{id:'tools',label:'工具',icon:Wrench},
 ]
 
 const kindIcon: Record<Activity['kind'], string> = {sight:'◎',train:'↗',food:'◇',hotel:'⌂',note:'!'}
@@ -79,7 +81,7 @@ function BookingsView() {
 
 function BudgetView() {
   const rows=[['城际与市内交通','约 €180','含已购DB/NS车票'],['景点与城市卡','约 €245','含两人城堡套票'],['餐饮','约 €550','按两人每日€50估算'],['已确认积分住宿','积分兑换','阿姆斯特丹、科隆、慕尼黑、维也纳'],['待订住宿','3晚','萨尔茨堡']]
-  return <section className="budget-page"><p className="eyebrow">TRIP LEDGER</p><h1>预算概览</h1><div className="budget-hero"><CircleDollarSign/><div><span>两人可变支出参考</span><strong>€975–1,150</strong><small>不含国际机票与积分住宿</small></div></div><div className="ledger">{rows.map((r,i)=><div key={r[0]}><span>{String(i+1).padStart(2,'0')}</span><b>{r[0]}</b><strong>{r[1]}</strong><small>{r[2]}</small></div>)}</div><p className="budget-note">价格会随预约时间和实际消费变化；详细逐项预算仍保留在文字版攻略中。</p></section>
+  return <section className="budget-page"><p className="eyebrow">TRIP LEDGER</p><h1>预算与分账</h1><div className="budget-hero"><CircleDollarSign/><div><span>两人可变支出参考</span><strong>€975–1,150</strong><small>不含国际机票与积分住宿</small></div></div><div className="ledger">{rows.map((r,i)=><div key={r[0]}><span>{String(i+1).padStart(2,'0')}</span><b>{r[0]}</b><strong>{r[1]}</strong><small>{r[2]}</small></div>)}</div><p className="budget-note">价格会随预约时间和实际消费变化；详细逐项预算仍保留在文字版攻略中。</p><ExpenseLedger/></section>
 }
 
 export default function App() {
@@ -87,6 +89,6 @@ export default function App() {
   const [view,setView]=useState<View>(views.some(v=>v.id===hash)?hash:'overview')
   const navigate=(next:View)=>{setView(next);history.replaceState(null,'',`#/${next}`);scrollTo({top:0,behavior:'smooth'})}
   useEffect(()=>{const fn=()=>setView((location.hash.replace('#/','')||'overview') as View);addEventListener('hashchange',fn);return()=>removeEventListener('hashchange',fn)},[])
-  const page=useMemo(()=>view==='overview'?<Overview goDays={()=>navigate('days')}/>:view==='days'?<DaysView/>:view==='route'?<RouteView/>:view==='bookings'?<BookingsView/>:<BudgetView/>,[view])
+  const page=useMemo(()=>view==='overview'?<Overview goDays={()=>navigate('days')}/>:view==='days'?<DaysView/>:view==='route'?<RouteView/>:view==='bookings'?<BookingsView/>:view==='budget'?<BudgetView/>:<Toolbox/>,[view])
   return <div className="app-shell"><header className="topbar"><a className="brand" href="#/overview" onClick={()=>navigate('overview')}><span>向东</span><div><b>欧洲旅行手册</b><small>25 SEP — 05 OCT 2026</small></div></a><nav>{views.map(v=>{const Icon=v.icon;return <button className={view===v.id?'active':''} onClick={()=>navigate(v.id)} key={v.id}><Icon size={17}/>{v.label}</button>})}</nav></header><main>{page}</main><footer className="site-footer"><span>EUROPE 2026</span><p>行程数据以《欧洲旅游攻略_2026.md》为基准</p></footer><nav className="mobile-nav">{views.map(v=>{const Icon=v.icon;return <button className={view===v.id?'active':''} onClick={()=>navigate(v.id)} key={v.id}><Icon/><span>{v.label}</span></button>})}</nav></div>
 }

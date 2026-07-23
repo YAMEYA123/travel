@@ -1,0 +1,11 @@
+{
+  "name": "向东旅行｜欧洲 2026",
+  "short_name": "欧洲旅行",
+  "description": "十一日欧洲旅行行程、票务、分账和随身工具",
+  "start_url": "/travel/europe-travel-2026.html#/overview",
+  "scope": "/travel/",
+  "display": "standalone",
+  "background_color": "#edf3f5",
+  "theme_color": "#17324d",
+  "icons": [{"src":"/travel/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

@@ -28,13 +28,20 @@ export const days: TripDay[] = [
 ]
 
 export const bookings: Booking[] = [
+  {id:'b0a',date:'9月25–27日',title:'Holiday Inn Express Amsterdam - Sloterdijk',detail:'2晚，机场和中央站均可直达',price:'已订',status:'booked'},
+  {id:'b0b',date:'9月27–28日',title:'Hilton Cologne',detail:'1晚，科隆中央站旁',price:'已订',status:'booked'},
   {id:'b1',date:'9月27日',title:'IC 60403 阿姆斯特丹 → 科隆',detail:'21:01–23:45，直达自由座',price:'已购',status:'booked'},
   {id:'b2',date:'9月28日',title:'科隆 → 慕尼黑东站',detail:'18:54–23:34，2次换乘',price:'¥212/人 · 已购',status:'booked'},
   {id:'b3',date:'9月28–30日',title:'Moxy Munich Ostbahnhof',detail:'两笔连续订单，入住时关联',price:'已订',status:'booked'},
+  {id:'b3a',date:'9月30–10月3日',title:'萨尔茨堡住宿',detail:'3晚；优先火车站或老城公交直达区域',price:'待订',status:'urgent'},
+  {id:'b3b',date:'10月3–5日',title:'DoubleTree Vienna Schönbrunn',detail:'2晚，返程日步行游览美泉宫',price:'已订',status:'booked'},
   {id:'b4',date:'9月30日',title:'新天鹅堡12:30场次',detail:'持城堡套票选择Multi-Day Ticket Holder',price:'€2.50/人',status:'urgent',url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau'},
   {id:'b5',date:'出发前',title:'拜仁14天城堡套票',detail:'覆盖慕尼黑皇宫与新天鹅堡',price:'€40/人',status:'urgent',url:'https://bsv-shop.bayern.de'},
   {id:'b6',date:'9月26日',title:'安妮之家19:00',detail:'每周二开放6周后的票',price:'€16.50/人',status:'urgent',url:'https://www.annefrank.org/en/museum/tickets/'},
   {id:'b7',date:'9月27日',title:'梵高博物馆',detail:'现场不售票',price:'€25/人',status:'soon',url:'https://www.vangoghmuseum.nl/en/visit/tickets-and-opening-hours'},
+  {id:'b7a',date:'9月27日',title:'荷兰国立博物馆',detail:'建议预约12:15时段',price:'€21.50/人',status:'soon',url:'https://www.rijksmuseum.nl/en/tickets'},
+  {id:'b7b',date:'9月30日',title:'拜仁日票',detail:'两人票；工作日09:00后乘区域列车',price:'约€44/2人',status:'soon',url:'https://int.bahn.de/en/offers/regional/regional-day-ticket-bavaria'},
+  {id:'b7c',date:'10月1日',title:'萨尔茨堡卡48小时',detail:'D6早上激活，覆盖D6与D7',price:'临行前核价',status:'soon',url:'https://www.salzburg.info/en/hotels-offers/salzburg-card'},
   {id:'b8',date:'10月3日',title:'Westbahn 萨尔茨堡 → 维也纳',detail:'18:52–21:14',price:'约¥117/人',status:'soon',url:'https://westbahn.at/en/'},
   {id:'b9',date:'10月5日',title:'美泉宫09:30',detail:'旺季建议提前预约',price:'€28/人',status:'soon',url:'https://www.imperialtickets.com/en/schoenbrunn-palace'},
 ]
