@@ -1,5 +1,6 @@
-const CACHE='travel-2026-v8'
-self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(['/travel/europe-travel-2026.html','/travel/favicon.svg','/travel/leaflet/leaflet.min.css','/travel/leaflet/leaflet.min.js'])).then(()=>self.skipWaiting())))
+const CACHE='travel-2026-v9'
+const APP_ICONS=['google-maps.png','ns.png','9292.png','db-navigator.png','mvv.png','oebb.png','asfinag.png','wienmobil.png','google-translate.png','deepl.png','global-blue.ico','splitwise.png'].map(file=>`/travel/app-icons/${file}`)
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(['/travel/europe-travel-2026.html','/travel/favicon.svg','/travel/leaflet/leaflet.min.css','/travel/leaflet/leaflet.min.js',...APP_ICONS])).then(()=>self.skipWaiting())))
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())))
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET'||new URL(event.request.url).origin!==location.origin)return

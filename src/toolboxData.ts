@@ -17,7 +17,18 @@ export const packing = [
 ]
 
 export const apps = [
-  ['Google Maps','全程地图、公交与步行导航','https://maps.google.com'],['NS','荷兰火车实时班次','https://www.ns.nl/en'],['9292','荷兰综合公共交通','https://9292.nl/en'],['DB Navigator','德国铁路、站台和延误','https://int.bahn.de/en'],['MVV-App','慕尼黑市内交通','https://www.mvv-muenchen.de/en'],['ÖBB','奥地利铁路及林茨至维也纳车票','https://www.oebb.at/en/'],['ASFINAG','奥地利高速票车牌查询与路况','https://www.asfinag.at/en/'],['WienMobil','维也纳公共交通','https://www.wienerlinien.at/web/wl-en'],['Google Translate','菜单与现场沟通','https://translate.google.com'],['DeepL','德语长句翻译','https://www.deepl.com'],['Global Blue','退税进度查询','https://www.globalblue.com/'],['Splitwise','额外的多人分账备份','https://www.splitwise.com/'],
+  {name:'Google Maps',description:'全程地图、公交与步行导航',url:'https://maps.google.com',icon:'app-icons/google-maps.png',fallback:'GM'},
+  {name:'NS',description:'荷兰火车实时班次',url:'https://www.ns.nl/en',icon:'app-icons/ns.png',fallback:'NS'},
+  {name:'9292',description:'荷兰综合公共交通',url:'https://9292.nl/en',icon:'app-icons/9292.png',fallback:'92'},
+  {name:'DB Navigator',description:'德国铁路、站台和延误',url:'https://int.bahn.de/en',icon:'app-icons/db-navigator.png',fallback:'DB'},
+  {name:'MVV-App',description:'慕尼黑市内交通',url:'https://www.mvv-muenchen.de/en',icon:'app-icons/mvv.png',fallback:'MV'},
+  {name:'ÖBB',description:'奥地利铁路及林茨至维也纳车票',url:'https://www.oebb.at/en/',icon:'app-icons/oebb.png',fallback:'ÖB'},
+  {name:'ASFINAG',description:'奥地利高速票车牌查询与路况',url:'https://www.asfinag.at/en/',icon:'app-icons/asfinag.png',fallback:'AS'},
+  {name:'WienMobil',description:'维也纳公共交通',url:'https://www.wienerlinien.at/web/wl-en',icon:'app-icons/wienmobil.png',fallback:'WM'},
+  {name:'Google Translate',description:'菜单与现场沟通',url:'https://translate.google.com',icon:'app-icons/google-translate.png',fallback:'GT'},
+  {name:'DeepL',description:'德语长句翻译',url:'https://www.deepl.com',icon:'app-icons/deepl.png',fallback:'DL'},
+  {name:'Global Blue',description:'退税进度查询',url:'https://www.globalblue.com/',icon:'app-icons/global-blue.ico',fallback:'GB'},
+  {name:'Splitwise',description:'额外的多人分账备份',url:'https://www.splitwise.com/',icon:'app-icons/splitwise.png',fallback:'SW'},
 ]
 
 export const shopping = [

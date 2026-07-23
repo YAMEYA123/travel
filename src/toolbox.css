@@ -58,6 +58,10 @@
 
 .app-compact a{border-left:4px solid hsl(calc(170 + var(--app-index)*29) 45% 45%);background:linear-gradient(100deg,hsl(calc(170 + var(--app-index)*29) 45% 96%),#fffefa)}
 .app-compact a>span{background:hsl(calc(170 + var(--app-index)*29) 45% 40%);box-shadow:0 3px 0 hsl(calc(170 + var(--app-index)*29) 35% 84%)}
+.app-compact .app-icon{position:relative;overflow:hidden;background:#fff;box-shadow:0 3px 0 #dbe6e1}
+.app-icon i{font-style:normal}
+.app-icon img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px}
+.app-icon img[hidden]{display:none}
 .language-compact article>span{width:max-content;padding:4px 7px;border-radius:999px;background:#eee9f7;color:#72579b;font-weight:600}
 .language-compact article:nth-child(3n+2)>span{background:#e7f5f3;color:#267266}.language-compact article:nth-child(3n)>span{background:#fff1e8;color:#a85b39}
 .risk-compact{display:grid;gap:6px;background:transparent;border:0;box-shadow:none}.risk-compact article{border:1px solid #dce8e3;border-left:4px solid #92afa4;border-radius:12px;background:#fffefa;box-shadow:0 3px 9px #49675c0d}.risk-compact article.risk-高{border-left-color:#d95c57;background:#fff6f3}.risk-compact article.risk-中{border-left-color:#e49a4e;background:#fffaf0}
