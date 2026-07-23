@@ -137,7 +137,7 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
   .dash-side{gap:7px}
   .mini-stats button{border-radius:11px}
   .next-panel,.quick-tasks{border-radius:12px}
-  .trip-heading{height:58px}
+  .trip-heading{height:53px}
   .day-nav>div{min-width:0;width:145px}
   .day-nav>div>b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .map-list-layout{grid-template-rows:34dvh minmax(0,1fr);padding:6px;gap:6px}
