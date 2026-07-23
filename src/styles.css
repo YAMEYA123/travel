@@ -43,6 +43,8 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
 .context-bar>div>b,.context-heading h1{color:var(--ink)}
 .context-bar,.context-heading{flex:0 0 64px}
 @media(max-width:680px){.context-bar,.context-heading{flex-basis:53px}}
+.sheet-scrim{z-index:2000}
+.detail-sheet{z-index:2010}
 .context-heading>button{background:var(--forest);color:#fff;border:1px solid #256d59;box-shadow:0 3px 0 #c9ddd4}
 .segment{background:#e7f0ed;border:1px solid #d6e5e0}
 .segment button.active{color:#176b61;box-shadow:0 2px 5px #63827926}
