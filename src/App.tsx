@@ -5,6 +5,7 @@ import { getActivityGuide } from './activityGuides'
 import type { Activity, Booking, TripDay } from './types'
 import TripMap from './TripMap'
 import Toolbox from './Toolbox'
+import { createExpense, EXPENSES_CHANGED, loadExpenses, loadMembers } from './expenseStore'
 
 type View='overview'|'trip'|'bookings'|'tools';type TripMode='plan'|'day';type Filter='todo'|'all'|'booked';type BookingCategory='all'|'stay'|'sight'|'transport'
 const nav=[{id:'overview' as View,label:'总览',icon:House},{id:'trip' as View,label:'行程',icon:CalendarDays},{id:'bookings' as View,label:'预订',icon:TicketCheck},{id:'tools' as View,label:'工具',icon:Wrench}]
@@ -33,8 +34,43 @@ function TripPage(){const [mode,setMode]=useState<TripMode>('day');const [index,
 function bookingType(item:Booking){if(/Hotel|Holiday|Hilton|Moxy|住宿|DoubleTree/.test(item.title))return['住宿',BedDouble,'#7c3aed']as const;if(/租车|驾照|翻译件|自驾/.test(item.title))return['自驾',CarFront,'#087f8c']as const;if(/→|日票|Westbahn|IC |火车/.test(item.title))return['交通',TrainFront,'#2f6feb']as const;return['景点',Landmark,'#e5484d']as const}
 function bookingCategory(item:Booking):Exclude<BookingCategory,'all'>{const [type]=bookingType(item);if(type==='住宿')return'stay';if(type==='景点')return'sight';return'transport'}
 function bookingStatus(item:Booking,done:boolean){if(done)return['已完成','done']as const;if(item.status==='booked')return['已确认','booked']as const;if(item.status==='urgent')return['尽快预订','urgent']as const;return['待安排','pending']as const}
-function BookingSheet({item,onClose}:{item:Booking;onClose:()=>void}){const [type,Icon,color]=bookingType(item);return <Sheet title={item.title} onClose={onClose}><div className="sheet-type"><span className="type-icon" style={{'--type':color} as React.CSSProperties}><Icon/></span><div><span>{type} · {item.date}</span><b>{item.price}</b></div></div><p className="sheet-detail">{item.detail}</p>{item.url&&<a className="sheet-primary" href={item.url} target="_blank" rel="noreferrer"><ExternalLink/>打开官方网站</a>}</Sheet>}
-function BookingsPage(){const [filter,setFilter]=useState<Filter>('todo');const [category,setCategory]=useState<BookingCategory>('all');const [selected,setSelected]=useState<Booking>();const [done,toggle]=useStoredSet('travel-bookings-done');const statusList=bookings.filter(item=>filter==='all'||(filter==='booked'?item.status==='booked':item.status!=='booked'&&!done.has(item.id)));const list=statusList.filter(item=>category==='all'||bookingCategory(item)===category);const categories=[{id:'all' as const,label:'全部',icon:PackageCheck},{id:'stay' as const,label:'住宿',icon:BedDouble},{id:'sight' as const,label:'景点',icon:Landmark},{id:'transport' as const,label:'交通',icon:TrainFront}];return <div className="list-workspace"><header className="context-bar"><div><span>住宿 · 景点 · 交通</span><b>预订与准备</b></div><Segment value={filter} set={setFilter} items={[{id:'todo',label:'待办'},{id:'all',label:'全部'},{id:'booked',label:'已确认'}]}/></header><nav className="booking-categories" aria-label="预订分类">{categories.map(item=>{const Icon=item.icon;const count=item.id==='all'?statusList.length:statusList.filter(booking=>bookingCategory(booking)===item.id).length;return <button className={category===item.id?'active':''} aria-pressed={category===item.id} onClick={()=>setCategory(item.id)} key={item.id}><Icon/><span>{item.label}</span><b>{count}</b></button>})}</nav><div className="booking-compact">{list.map(item=>{const [type,Icon,color]=bookingType(item);const isBooked=item.status==='booked';const isDone=!isBooked&&done.has(item.id);const [status,statusTone]=bookingStatus(item,isDone);return <article className={isBooked?'is-booked':isDone?'is-done':''} key={item.id} onClick={()=>setSelected(item)}>{isBooked?<span className="booking-state confirmed" aria-label={`已确认：${item.title}`} title="订单已确认"><TicketCheck/></span>:<button className="booking-state row-check" aria-label={`${isDone?'取消完成':'标记完成'}：${item.title}`} aria-pressed={isDone} title={isDone?'取消完成':'标记完成'} onClick={event=>{event.stopPropagation();toggle(item.id)}}>{isDone?<Check/>:<Square/>}</button>}<span className="type-icon" style={{'--type':color} as React.CSSProperties}><Icon/></span><time>{item.date}</time><div className="booking-copy"><b>{item.title}</b><small><span>{type}</span>{item.detail}</small></div><div className="booking-meta"><span className={`status-pill status-${statusTone}`}>{status}</span><strong>{item.price}</strong></div><ChevronRight/></article>})}{list.length===0&&<div className="booking-empty"><PackageCheck/><b>当前分类没有项目</b><span>可以切换上方状态或分类查看其他内容</span></div>}</div>{selected&&<BookingSheet item={selected} onClose={()=>setSelected(undefined)}/>}</div>}
+function bookingExpenseCategory(item:Booking){const category=bookingCategory(item);return category==='stay'?'住宿':category==='sight'?'门票':'交通'}
+function BookingSheet({item,onClose}:{item:Booking;onClose:()=>void}){
+  const [type,Icon,color]=bookingType(item)
+  const members=loadMembers()
+  const [amount,setAmount]=useState('')
+  const [currency,setCurrency]=useState<'EUR'|'CNY'>('EUR')
+  const [payer,setPayer]=useState(members[0]||'我')
+  const [linked,setLinked]=useState(()=>loadExpenses().filter(expense=>expense.bookingId===item.id).length)
+  const [saved,setSaved]=useState(false)
+  useEffect(()=>{
+    const sync=()=>setLinked(loadExpenses().filter(expense=>expense.bookingId===item.id).length)
+    addEventListener(EXPENSES_CHANGED,sync)
+    return()=>removeEventListener(EXPENSES_CHANGED,sync)
+  },[item.id])
+  const save=()=>{
+    const value=Number(amount)
+    if(!value)return
+    createExpense({title:item.title,amount:value,currency,payer,category:bookingExpenseCategory(item),bookingId:item.id})
+    setAmount('')
+    setSaved(true)
+  }
+  const openLedger=()=>{
+    sessionStorage.setItem('travel-open-tool','expense')
+    location.hash='/tools'
+  }
+  return <Sheet title={item.title} onClose={onClose}>
+    <div className="sheet-type"><span className="type-icon" style={{'--type':color} as React.CSSProperties}><Icon/></span><div><span>{type} · {item.date}</span><b>{item.price}</b></div></div>
+    <p className="sheet-detail">{item.detail}</p>
+    <section className="booking-expense-card">
+      <header><span><CircleDollarSign/><b>创建费用分账</b></span>{linked>0&&<button onClick={openLedger}>{linked}笔已关联 <ChevronRight/></button>}</header>
+      <p>项目名称与类别已从当前预订自动带入。</p>
+      <div><label><span>金额</span><input inputMode="decimal" value={amount} onChange={event=>{setAmount(event.target.value);setSaved(false)}} placeholder="0.00"/></label><label><span>币种</span><select value={currency} onChange={event=>setCurrency(event.target.value as 'EUR'|'CNY')}><option>EUR</option><option>CNY</option></select></label><label><span>付款人</span><select value={payer} onChange={event=>setPayer(event.target.value)}>{members.map(name=><option key={name}>{name}</option>)}</select></label><button disabled={!Number(amount)} onClick={save}>{saved?'已添加':'添加到分账'}</button></div>
+    </section>
+    {item.url&&<a className="sheet-primary" href={item.url} target="_blank" rel="noreferrer"><ExternalLink/>打开官方网站</a>}
+  </Sheet>
+}
+function BookingsPage(){const [filter,setFilter]=useState<Filter>('todo');const [category,setCategory]=useState<BookingCategory>('all');const [selected,setSelected]=useState<Booking>();const [done,toggle]=useStoredSet('travel-bookings-done');useEffect(()=>{const id=sessionStorage.getItem('travel-open-booking');if(id){sessionStorage.removeItem('travel-open-booking');setFilter('all');setCategory('all');setSelected(bookings.find(item=>item.id===id))}},[]);const statusList=bookings.filter(item=>filter==='all'||(filter==='booked'?item.status==='booked':item.status!=='booked'&&!done.has(item.id)));const list=statusList.filter(item=>category==='all'||bookingCategory(item)===category);const categories=[{id:'all' as const,label:'全部',icon:PackageCheck},{id:'stay' as const,label:'住宿',icon:BedDouble},{id:'sight' as const,label:'景点',icon:Landmark},{id:'transport' as const,label:'交通',icon:TrainFront}];return <div className="list-workspace"><header className="context-bar"><div><span>住宿 · 景点 · 交通</span><b>预订与准备</b></div><Segment value={filter} set={setFilter} items={[{id:'todo',label:'待办'},{id:'all',label:'全部'},{id:'booked',label:'已确认'}]}/></header><nav className="booking-categories" aria-label="预订分类">{categories.map(item=>{const Icon=item.icon;const count=item.id==='all'?statusList.length:statusList.filter(booking=>bookingCategory(booking)===item.id).length;return <button className={category===item.id?'active':''} aria-pressed={category===item.id} onClick={()=>setCategory(item.id)} key={item.id}><Icon/><span>{item.label}</span><b>{count}</b></button>})}</nav><div className="booking-compact">{list.map(item=>{const [type,Icon,color]=bookingType(item);const isBooked=item.status==='booked';const isDone=!isBooked&&done.has(item.id);const [status,statusTone]=bookingStatus(item,isDone);return <article className={isBooked?'is-booked':isDone?'is-done':''} key={item.id} onClick={()=>setSelected(item)}>{isBooked?<span className="booking-state confirmed" aria-label={`已确认：${item.title}`} title="订单已确认"><TicketCheck/></span>:<button className="booking-state row-check" aria-label={`${isDone?'取消完成':'标记完成'}：${item.title}`} aria-pressed={isDone} title={isDone?'取消完成':'标记完成'} onClick={event=>{event.stopPropagation();toggle(item.id)}}>{isDone?<Check/>:<Square/>}</button>}<span className="type-icon" style={{'--type':color} as React.CSSProperties}><Icon/></span><time>{item.date}</time><div className="booking-copy"><b>{item.title}</b><small><span>{type}</span>{item.detail}</small></div><div className="booking-meta"><span className={`status-pill status-${statusTone}`}>{status}</span><strong>{item.price}</strong></div><ChevronRight/></article>})}{list.length===0&&<div className="booking-empty"><PackageCheck/><b>当前分类没有项目</b><span>可以切换上方状态或分类查看其他内容</span></div>}</div>{selected&&<BookingSheet item={selected} onClose={()=>setSelected(undefined)}/>}</div>}
 
 function ToolsPage(){return <Toolbox/>}
 

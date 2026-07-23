@@ -25,6 +25,9 @@
 .language-compact,.risk-compact{background:#fffefa;border-color:#dce8e3;border-radius:13px;box-shadow:0 4px 12px #49675c0d}
 .risk-compact article>span{border-radius:50%}
 .split-bill{background:#fffefa;border-color:#dce8e3;border-radius:13px}
+.expense-list article.linked-expense{border-left:3px solid var(--green);background:#f5fbf8}
+.expense-list .booking-link{display:inline-flex;align-items:center;gap:2px;margin-left:5px;padding:1px 4px;border-radius:4px;background:#e6f3ed;color:var(--green);font-size:7px;font-weight:700}
+.expense-list .booking-link svg{width:9px;height:9px}
 
 @media(max-width:680px){
   .tool-tile-grid{gap:7px;padding:7px}
