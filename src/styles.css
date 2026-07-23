@@ -225,7 +225,7 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
 .booking-expense-card>header button{border:0;background:transparent;color:var(--forest);display:flex;align-items:center;gap:2px;font-size:8px;font-weight:700}
 .booking-expense-card>header button svg{width:12px}
 .booking-expense-card>p{margin:4px 0 9px;color:var(--muted);font-size:8px}
-.booking-expense-card>div{display:grid;grid-template-columns:minmax(90px,1fr) 70px 90px auto;gap:6px}
+.booking-expense-card>div{display:grid;grid-template-columns:minmax(90px,1fr) 112px 90px auto;gap:6px}
 .booking-expense-card label{min-width:0}.booking-expense-card label>span{display:block;margin:0 0 3px 2px;color:var(--muted);font-size:7px}
 .booking-expense-card input,.booking-expense-card select{width:100%;height:36px;border:1px solid #cdded7;border-radius:8px;background:#fff;padding:0 8px;color:var(--ink);font-size:9px}
 .booking-expense-card>div>button{align-self:end;height:36px;border:0;border-radius:8px;background:var(--forest);color:#fff;padding:0 11px;font-size:9px;font-weight:700}
@@ -235,7 +235,7 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
   .segment{width:168px;flex:0 0 168px;grid-auto-columns:minmax(0,1fr)}
   .segment button{padding:0 4px}
   .booking-expense-card{margin:8px 9px;padding:9px}
-  .booking-expense-card>div{grid-template-columns:minmax(0,1fr) 66px}
+  .booking-expense-card>div{grid-template-columns:minmax(0,1fr) 112px}
   .booking-expense-card>div label:nth-child(3){grid-column:1/2}
   .booking-expense-card>div>button{grid-column:2/3}
 }
