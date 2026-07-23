@@ -41,7 +41,7 @@ src/
 └── main.tsx      # 应用入口
 ```
 
-旧版单文件仍保留为 `europe-travel-2026.html`，便于对照和回滚。生产构建会生成同名兼容入口，将旧网址跳转至新版应用。
+旧版单文件保留在 `legacy/europe-travel-2026.html`，便于对照和回滚。根目录的 `europe-travel-2026.html` 是已构建的新版应用入口，因此原网址保持不变。
 
 ## 数据与隐私
 
@@ -51,4 +51,4 @@ src/
 
 ## 部署
 
-推送到 `main` 后，`.github/workflows/deploy-pages.yml` 会构建并发布 `dist/` 到 GitHub Pages。Vite 的 `base` 已配置为 `/travel/`。
+仓库沿用 GitHub Pages 的 `main` 分支静态发布方式。发布前运行 `npm run build`，再将 `dist/index.html` 复制为根目录的 `europe-travel-2026.html`，并同步 `dist/assets/`。Vite 的 `base` 已配置为 `/travel/`。
