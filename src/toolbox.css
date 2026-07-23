@@ -125,3 +125,72 @@
   .tool-phase .tool-tile-grid>button>b{font-size:10px;align-self:end}
   .tool-phase .tool-tile-grid>button>small{font-size:7px;align-self:start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 }
+
+/* 常用 App 使用独立启动卡，不再沿用清单式横条 */
+.app-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.app-gallery article{min-height:142px;padding:13px;border:1px solid #dce8e3;border-top:4px solid hsl(calc(170 + var(--app-index)*29) 45% 45%);border-radius:15px;background:linear-gradient(145deg,hsl(calc(170 + var(--app-index)*29) 45% 96%),#fffefa 56%);box-shadow:0 4px 13px #49675c10;display:flex;flex-direction:column}
+.app-gallery header{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:10px}
+.app-gallery .app-icon{width:48px;height:48px;border-radius:13px;position:relative;overflow:hidden;display:grid;place-items:center;background:#fff;color:var(--ink);box-shadow:0 3px 9px #49675c1d;font:600 9px 'DM Mono',monospace}
+.app-gallery .app-icon img{padding:4px}
+.app-gallery header>div{min-width:0;display:flex;flex-direction:column;gap:2px}
+.app-gallery header b{font-size:13px;color:var(--ink)}
+.app-gallery header small{font-size:9px;line-height:1.45;color:var(--muted)}
+.app-gallery article>p{min-height:25px;margin:10px 0 8px;font-size:8px;line-height:1.5;color:var(--muted)}
+.app-gallery footer{margin-top:auto;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}
+.app-gallery footer a{height:35px;border-radius:9px;text-decoration:none;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.app-gallery .app-open{background:var(--forest);color:#fff;box-shadow:0 3px 0 #b9d7cc}
+.app-gallery .app-store{padding:0 9px;border:1px solid #d7e4df;background:#fff;color:var(--muted);gap:4px}
+.app-gallery .app-store svg{width:12px;height:12px}
+
+@media(max-width:680px){
+  .app-gallery{grid-template-columns:1fr;gap:7px}
+  .app-gallery article{min-height:132px;padding:11px;border-radius:13px}
+  .app-gallery header{grid-template-columns:45px minmax(0,1fr)}
+  .app-gallery .app-icon{width:45px;height:45px;border-radius:12px}
+  .app-gallery article>p{margin:8px 0 7px;min-height:auto}
+}
+
+/* 渐进展开：手机首屏只展示分组摘要，内容按需打开 */
+.accordion-stack{display:grid;grid-template-columns:1fr;gap:7px}
+.accordion-stack>section{padding:0;overflow:hidden;border:1px solid #dce8e3;border-left:4px solid hsl(calc(168 + var(--group-index,0)*27) 43% 47%);border-radius:13px;background:#fffefa;box-shadow:0 3px 10px #49675c0d}
+.accordion-head,.check-compact section>.accordion-head{width:100%;min-height:57px;margin:0;padding:7px 10px;border:0;background:linear-gradient(100deg,hsl(calc(168 + var(--group-index,0)*27) 45% 95%),#fffefa);color:var(--ink);display:grid;grid-template-columns:36px minmax(0,1fr) auto 18px;align-items:center;gap:8px;text-align:left;text-decoration:none;cursor:pointer}
+.accordion-head>i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#fff;box-shadow:0 2px 7px #46665a1b;font-style:normal;font-size:16px}
+.accordion-head>span{min-width:0;display:flex;flex-direction:column;gap:1px}
+.accordion-head>span b{font-family:'STKaiti','KaiTi','Noto Sans SC',sans-serif;font-size:14px}
+.accordion-head>span small{max-width:100%;color:var(--muted);font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.accordion-head>em{padding:4px 7px;border-radius:999px;background:#fff;color:var(--forest);font:600 8px 'DM Mono',monospace;font-style:normal;white-space:nowrap}
+.accordion-head>svg{width:16px;color:var(--muted);transition:transform .18s ease}
+.accordion-stack>section.expanded>.accordion-head>svg{transform:rotate(180deg)}
+.accordion-body{padding:0 10px 8px}
+.check-compact .accordion-body>button{width:100%;min-height:42px;margin:0;border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink);display:flex;align-items:center;gap:8px;text-align:left;padding:5px 0}
+.check-compact .accordion-body>button>span{width:22px;height:22px;border:1px solid var(--line);border-radius:50%;background:#f4f8f6;display:grid;place-items:center;flex:0 0 auto}
+.check-compact .accordion-body>button svg{width:12px}
+.check-compact .accordion-body>button b{font-size:10px;font-weight:500}
+.check-compact .accordion-body>button.done{color:var(--muted);text-decoration:line-through}
+.check-compact .accordion-body>button.done>span{background:var(--forest);color:#fff}
+.info-accordion .accordion-body p,.risk-accordion .accordion-body p{margin:0;padding:8px 2px 8px 19px;border-top:1px solid var(--line);color:var(--muted);font-size:9px;line-height:1.55;position:relative}
+.info-accordion .accordion-body p:before{content:'✦';position:absolute;left:2px;color:hsl(calc(168 + var(--group-index,0)*27) 43% 47%);font-size:7px}
+.app-groups>section{border-left-color:var(--lake)}
+.app-groups .app-gallery{padding:9px;border-top:1px solid #e2ebe7}
+.app-groups .accordion-head>span small{max-width:520px}
+.tool-filters{display:flex;gap:5px;margin:0 0 7px;overflow-x:auto;scrollbar-width:none}
+.tool-filters::-webkit-scrollbar{display:none}
+.tool-filters button{height:32px;padding:0 11px;border:1px solid #dce8e3;border-radius:999px;background:#fffefa;color:var(--muted);font-size:9px;white-space:nowrap}
+.tool-filters button.active{border-color:var(--forest);background:var(--forest-soft);color:var(--forest);font-weight:700}
+.tool-empty{padding:18px;text-align:center;color:var(--muted);font-size:9px}
+.risk-accordion>section{border-left-color:#92afa4}
+.risk-accordion>section.risk-高{border-left-color:#d95c57;background:#fff6f3}.risk-accordion>section.risk-中{border-left-color:#e49a4e;background:#fffaf0}
+.risk-accordion .accordion-head>i{width:27px;height:27px;margin-left:3px;background:#edf2f5;color:var(--muted);font-size:9px;font-weight:700}
+.risk-accordion .risk-高 .accordion-head>i{background:#fdebec;color:var(--red)}.risk-accordion .risk-中 .accordion-head>i{background:#fff0e5;color:#a84c18}
+
+@media(max-width:680px){
+  .accordion-stack{gap:5px}
+  .accordion-stack>section{border-radius:11px}
+  .accordion-head,.check-compact section>.accordion-head{min-height:52px;grid-template-columns:32px minmax(0,1fr) auto 16px;padding:6px 8px;gap:7px}
+  .accordion-head>i{width:30px;height:30px;font-size:14px}
+  .accordion-head>span b{font-size:13px}.accordion-head>span small{font-size:7px}
+  .accordion-head>em{font-size:7px;padding:3px 6px}
+  .accordion-body{padding:0 8px 6px}
+  .app-groups .app-gallery{padding:6px}
+  .tool-filters{margin-bottom:5px}
+}

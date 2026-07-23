@@ -9,6 +9,7 @@ export interface Activity {
   kind: ActivityKind
   transport?: string
   cost?: string
+  payment?: string
   booked?: boolean
   important?: boolean
 }
