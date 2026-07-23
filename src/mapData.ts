@@ -1,0 +1,20 @@
+export type MapMode='walk'|'train'|'metro'|'tram'|'bus'|'boat'|'sight'|'food'|'hotel'
+export type MapPoint={activityId:string;lat:number;lng:number;label:string;mode:MapMode}
+export type DayMap={center:[number,number];zoom:number;hotel?:{lat:number;lng:number;label:string};points:MapPoint[]}
+const p=(activityId:string,lat:number,lng:number,label:string,mode:MapMode):MapPoint=>({activityId,lat,lng,label,mode})
+
+export const dayMaps:Record<string,DayMap>={
+ d0:{center:[52.35,4.82],zoom:11,hotel:{lat:52.3886,lng:4.8344,label:'Holiday Inn Express Sloterdijk'},points:[p('d0-1',52.3105,4.7683,'史基浦机场','train'),p('d0-2',52.3886,4.8344,'Sloterdijk','train'),p('d0-3',52.3886,4.8344,'酒店','hotel')]},
+ d1:{center:[52.56,5.50],zoom:9,hotel:{lat:52.3886,lng:4.8344,label:'Holiday Inn Express Sloterdijk'},points:[p('d1-1',52.3791,4.9003,'阿姆斯特丹中央站','train'),p('d1-2',52.7345,6.0760,'羊角村','sight'),p('d1-3',52.3886,4.8344,'返回酒店','train'),p('d1-4',52.3670,4.8872,'九街','walk'),p('d1-5',52.3752,4.8840,'安妮之家','sight')]},
+ d2:{center:[52.36,4.89],zoom:13,hotel:{lat:50.9434,lng:6.9590,label:'Hilton Cologne'},points:[p('d2-1',52.3584,4.8811,'梵高博物馆','sight'),p('d2-2',52.3600,4.8852,'国立博物馆','walk'),p('d2-3',52.3737,4.8796,'Jordaan与九街','walk'),p('d2-4',52.3791,4.9003,'阿姆斯特丹中央站','walk'),p('d2-5',52.3791,4.9003,'IC 60403发车','train'),p('d2-6',50.9434,6.9590,'Hilton Cologne','hotel')]},
+ d3:{center:[50.94,6.96],zoom:14,hotel:{lat:48.1270,lng:11.6053,label:'Moxy Munich Ostbahnhof'},points:[p('d3-1',50.9413,6.9583,'科隆大教堂','sight'),p('d3-2',50.9419,6.9659,'霍亨索伦大桥','walk'),p('d3-3',50.9360,6.9600,'老城与莱茵河畔','walk'),p('d3-4',50.9429,6.9579,'科隆中央站','walk'),p('d3-5',50.9429,6.9579,'科隆→慕尼黑','train'),p('d3-6',48.1270,11.6053,'Moxy','hotel')]},
+ d4:{center:[48.137,11.573],zoom:13,hotel:{lat:48.1270,lng:11.6053,label:'Moxy Munich Ostbahnhof'},points:[p('d4-1',48.1270,11.6053,'从酒店出发','metro'),p('d4-2',48.1374,11.5755,'玛利亚广场','sight'),p('d4-3',48.1351,11.5762,'维克图阿连市场','food'),p('d4-4',48.1411,11.5797,'慕尼黑皇宫','sight'),p('d4-5',48.1437,11.5872,'Eisbach冲浪','walk'),p('d4-6',48.1376,11.5799,'霍夫啤酒屋','food'),p('d4-7',48.1316,11.5497,'Oktoberfest','metro')]},
+ d5:{center:[47.85,11.10],zoom:8,hotel:{lat:47.8010,lng:13.0455,label:'萨尔茨堡酒店'},points:[p('d5-1',48.1402,11.5585,'慕尼黑中央站寄存','metro'),p('d5-2',48.1402,11.5585,'慕尼黑→菲森','train'),p('d5-3',47.5576,10.7498,'新天鹅堡','sight'),p('d5-4',47.5579,10.7508,'玛丽安桥与菲森','walk'),p('d5-5',47.5710,10.7013,'菲森→慕尼黑','train'),p('d5-6',48.1402,11.5585,'慕尼黑→萨尔茨堡','train')]},
+ d6:{center:[47.801,13.045],zoom:14,hotel:{lat:47.8010,lng:13.0455,label:'萨尔茨堡酒店'},points:[p('d6-1',47.8010,13.0455,'激活萨尔茨堡卡','hotel'),p('d6-2',47.8005,13.0437,'莫扎特出生地','walk'),p('d6-3',47.8063,13.0435,'莫扎特居所','walk'),p('d6-4',47.7953,13.0472,'霍亨萨尔茨堡要塞','sight'),p('d6-5',47.7987,13.0445,'茨威格中心','walk'),p('d6-6',47.8054,13.0438,'米拉贝尔花园','walk')]},
+ d7:{center:[47.69,13.35],zoom:10,hotel:{lat:47.8010,lng:13.0455,label:'萨尔茨堡酒店'},points:[p('d7-1',47.8127,13.0451,'萨尔茨堡出发','train'),p('d7-2',47.7116,13.6215,'巴德伊舍','sight'),p('d7-3',47.7116,13.6215,'前往哈尔施塔特','train'),p('d7-4',47.5620,13.6490,'哈尔施塔特','boat'),p('d7-5',47.5623,13.6493,'返回萨尔茨堡','train')]},
+ d8:{center:[47.82,13.18],zoom:10,hotel:{lat:48.1822,lng:16.3283,label:'DoubleTree Vienna Schönbrunn'},points:[p('d8-1',47.8127,13.0451,'萨尔茨堡→蒙德湖','bus'),p('d8-2',47.8565,13.3495,'蒙德湖教堂','sight'),p('d8-3',47.8127,13.0451,'返回萨尔茨堡','bus'),p('d8-4',47.8127,13.0451,'Westbahn→维也纳','train')]},
+ d9:{center:[48.203,16.369],zoom:13,hotel:{lat:48.1822,lng:16.3283,label:'DoubleTree Vienna Schönbrunn'},points:[p('d9-1',48.1914,16.3808,'美景宫上宫','sight'),p('d9-2',48.2101,16.3651,'Café Central','food'),p('d9-3',48.2036,16.3611,'艺术史博物馆','sight'),p('d9-4',48.2085,16.3731,'格拉本与圣史蒂芬','walk')]},
+ d10:{center:[48.15,16.43],zoom:11,points:[p('d10-1',48.1845,16.3122,'美泉宫','sight'),p('d10-2',48.1822,16.3283,'返回酒店','walk'),p('d10-3',48.1822,16.3283,'前往机场','train'),p('d10-4',48.1103,16.5697,'维也纳机场','train')]},
+}
+
+export const modeColors:Record<MapMode,string>={walk:'#22a06b',train:'#2f6feb',metro:'#8250df',tram:'#bf8700',bus:'#e16f24',boat:'#0891b2',sight:'#e5484d',food:'#bf8700',hotel:'#7c3aed'}
