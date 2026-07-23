@@ -171,6 +171,11 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
 .plan-day-activity>em{font-style:normal;font-size:8px;color:#8a621e;background:#fff5dc;border-radius:999px;padding:3px 6px;white-space:nowrap}
 
 @media(max-width:680px){
+  .trip-heading{display:grid;grid-template-columns:minmax(0,1fr) 168px;gap:6px}
+  .trip-heading .day-nav{min-width:0;gap:3px}
+  .trip-heading .day-nav>div{min-width:0}
+  .trip-heading .day-nav>div>b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .trip-heading .day-nav>button{width:28px;min-width:28px;padding:0}
   .plan-overview{padding:5px;gap:5px}
   .plan-overview-bar{min-height:43px;padding:5px 8px}
   .plan-overview-bar span{max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
