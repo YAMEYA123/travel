@@ -5,7 +5,7 @@ import { getActivityGuide } from './activityGuides'
 import type { Activity, Booking, TripDay } from './types'
 import TripMap from './TripMap'
 import Toolbox from './Toolbox'
-import { CURRENCY_OPTIONS, createExpense, EXPENSES_CHANGED, isPointCurrency, loadExpenses, loadMembers, type ExpenseCurrency } from './expenseStore'
+import { CURRENCY_OPTIONS, createExpense, EXPENSES_CHANGED, isPointCurrency, loadExpenses, loadMembers, SPLIT_PAYER, type ExpenseCurrency } from './expenseStore'
 
 type View='overview'|'trip'|'bookings'|'tools';type TripMode='plan'|'day';type Filter='todo'|'all'|'booked';type BookingCategory='all'|'stay'|'sight'|'transport'
 const nav=[{id:'overview' as View,label:'总览',icon:House},{id:'trip' as View,label:'行程',icon:CalendarDays},{id:'bookings' as View,label:'预订',icon:TicketCheck},{id:'tools' as View,label:'工具',icon:Wrench}]
@@ -65,7 +65,7 @@ function BookingSheet({item,onClose}:{item:Booking;onClose:()=>void}){
     <section className="booking-expense-card">
       <header><span><CircleDollarSign/><b>创建费用分账</b></span>{linked>0&&<button onClick={openLedger}>{linked}笔已关联 <ChevronRight/></button>}</header>
       <p>项目名称与类别已从当前预订自动带入。</p>
-      <div><label><span>{isPointCurrency(currency)?'积分数量':'金额'}</span><input inputMode="decimal" value={amount} onChange={event=>{setAmount(event.target.value);setSaved(false)}} placeholder={isPointCurrency(currency)?'输入积分':'0.00'}/></label><label><span>币种/积分</span><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select></label><label><span>付款人</span><select value={payer} onChange={event=>setPayer(event.target.value)}>{members.map(name=><option key={name}>{name}</option>)}</select></label><button disabled={!Number(amount)} onClick={save}>{saved?'已添加':'添加到分账'}</button></div>
+      <div><label><span>{isPointCurrency(currency)?'积分数量':'金额'}</span><input inputMode="decimal" value={amount} onChange={event=>{setAmount(event.target.value);setSaved(false)}} placeholder={isPointCurrency(currency)?'输入积分':'0.00'}/></label><label><span>币种/积分</span><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select></label><label><span>付款人</span><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>{SPLIT_PAYER}</option>{members.map(name=><option key={name}>{name}</option>)}</select></label><button disabled={!Number(amount)} onClick={save}>{saved?'已添加':'添加到分账'}</button></div>
     </section>
     {item.url&&<a className="sheet-primary" href={item.url} target="_blank" rel="noreferrer"><ExternalLink/>打开官方网站</a>}
   </Sheet>

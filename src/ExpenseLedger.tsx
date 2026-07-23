@@ -12,6 +12,7 @@ import {
   loadMembers,
   MEMBERS_KEY,
   saveExpenses,
+  SPLIT_PAYER,
   type Expense,
   type ExpenseCurrency,
 } from './expenseStore'
@@ -39,8 +40,13 @@ export default function ExpenseLedger(){
     amount:expenses.filter(expense=>expense.currency===option.value).reduce((sum,expense)=>sum+expense.amount,0),
   })).filter(item=>item.amount>0),[expenses])
   const balances=useMemo(()=>members.map(name=>{
-    const paid=expenses.filter(expense=>expense.payer===name).reduce((sum,expense)=>sum+cashToEUR(expense.amount,expense.currency),0)
-    return{name,value:paid-cashTotal/Math.max(members.length,1)}
+    const paid=expenses.reduce((sum,expense)=>{
+      const amountInEUR=cashToEUR(expense.amount,expense.currency)
+      if(expense.payer===name)return sum+amountInEUR
+      if(expense.payer===SPLIT_PAYER)return sum+amountInEUR/2
+      return sum
+    },0)
+    return{name,paid,value:paid-cashTotal/Math.max(members.length,1)}
   }),[members,expenses,cashTotal])
 
   const addExpense=()=>{
@@ -77,9 +83,9 @@ export default function ExpenseLedger(){
     <div className="section-heading"><div><p className="eyebrow">LOCAL LEDGER</p><h2>两人分账</h2></div><button className="ghost" onClick={exportData}><Download size={16}/>导出备份</button></div>
     <p className="privacy-note">记录只保存在当前浏览器。现金按 €1≈¥7.8、€1≈$1.16 估算结算；酒店积分单独累计，不参与现金均分。</p>
     <div className="member-strip"><Users size={18}/>{members.map(name=><span key={name}>{name}</span>)}<input value={member} onChange={event=>setMember(event.target.value)} placeholder="新增成员"/><button onClick={addMember}><Plus size={15}/></button></div>
-    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><select value={payer} onChange={event=>setPayer(event.target.value)}>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
-    <div className="balance-row">{balances.map(balance=><article key={balance.name}><span>{balance.name}</span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>
+    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>{SPLIT_PAYER}</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
+    <div className="balance-row">{balances.map(balance=><article key={balance.name}><span><b>{balance.name}</b><small>个人现金支出 €{balance.paid.toFixed(2)}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>
     {pointTotals.length>0&&<div className="points-row">{pointTotals.map(item=><article key={item.value}><span>{item.label}</span><b>{Math.round(item.amount).toLocaleString('zh-CN')}</b></article>)}</div>}
-    <div className="expense-list">{expenses.length===0?<div className="empty">旅途中记下第一笔共同消费，系统会自动均分。</div>:expenses.map(expense=><article className={`${expense.bookingId?'linked-expense ':''}${isPointCurrency(expense.currency)?'points-expense':''}`} key={expense.id}><time>{expense.date.slice(5)}</time><span className="category">{expense.category}</span><div><b>{expense.title}</b><small>{expense.payer} 支付{expense.bookingId&&<button className="booking-link" onClick={()=>openBooking(expense.bookingId!)}><Link2/>关联预订</button>}</small></div><strong>{formatExpenseAmount(expense.amount,expense.currency)}</strong><button onClick={()=>removeExpense(expense.id)} aria-label="删除"><Trash2 size={15}/></button></article>)}</div>
+    <div className="expense-list">{expenses.length===0?<div className="empty">旅途中记下第一笔共同消费，系统会自动均分。</div>:expenses.map(expense=><article className={`${expense.bookingId?'linked-expense ':''}${isPointCurrency(expense.currency)?'points-expense':''}`} key={expense.id}><time>{expense.date.slice(5)}</time><span className="category">{expense.category}</span><div><b>{expense.title}</b><small>{expense.payer===SPLIT_PAYER?`各自支付 · 每人 ${formatExpenseAmount(expense.amount/2,expense.currency)}`:`${expense.payer} 支付`}{expense.bookingId&&<button className="booking-link" onClick={()=>openBooking(expense.bookingId!)}><Link2/>关联预订</button>}</small></div><strong>{formatExpenseAmount(expense.amount,expense.currency)}</strong><button onClick={()=>removeExpense(expense.id)} aria-label="删除"><Trash2 size={15}/></button></article>)}</div>
   </section>
 }

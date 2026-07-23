@@ -20,6 +20,7 @@ export const CURRENCY_OPTIONS:{value:ExpenseCurrency;label:string}[]=[
   {value:'HILTON',label:'希尔顿积分'},
 ]
 export const POINT_CURRENCIES:ExpenseCurrency[]=['IHG','MARRIOTT','HILTON']
+export const SPLIT_PAYER='各自支付（总额均分）'
 export const isPointCurrency=(currency:ExpenseCurrency)=>POINT_CURRENCIES.includes(currency)
 export const cashToEUR=(amount:number,currency:ExpenseCurrency)=>{
   if(currency==='EUR')return amount
