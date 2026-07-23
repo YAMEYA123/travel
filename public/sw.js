@@ -1,4 +1,4 @@
-const CACHE='travel-2026-v7'
+const CACHE='travel-2026-v8'
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(['/travel/europe-travel-2026.html','/travel/favicon.svg','/travel/leaflet/leaflet.min.css','/travel/leaflet/leaflet.min.js'])).then(()=>self.skipWaiting())))
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())))
 self.addEventListener('fetch',event=>{

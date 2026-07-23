@@ -1,6 +1,6 @@
 import type { Booking, TripDay } from './types'
 
-const a = (id:string,time:string,title:string,detail:string,kind:'sight'|'train'|'food'|'hotel'|'note'='sight',extra={}) => ({id,time,title,detail,kind,...extra})
+const a = (id:string,time:string,title:string,detail:string,kind:'sight'|'train'|'food'|'hotel'|'note'|'drive'='sight',extra={}) => ({id,time,title,detail,kind,...extra})
 
 export const days: TripDay[] = [
   {id:'d0',day:0,date:'9月25日',weekday:'周五',city:'阿姆斯特丹',country:'NL',title:'抵达阿姆斯特丹',hotel:'Holiday Inn Express Amsterdam - Sloterdijk',activities:[
@@ -15,14 +15,14 @@ export const days: TripDay[] = [
     a('d4-1','09:30','从酒店出发','前一晚较晚抵达，今天不早起','note'),a('d4-2','11:00','玛利亚广场报时钟','顺路看圣母教堂','sight',{important:true}),a('d4-3','12:00','维克图阿连市场','白香肠与椒盐卷饼','food'),a('d4-4','13:00–16:00','慕尼黑皇宫与珍宝馆','14天城堡套票包含','sight',{cost:'套票含',important:true}),a('d4-5','16:15','英国花园 Eisbach','观看城市冲浪'),a('d4-6','17:15','霍夫啤酒屋','晚饭后返回酒店换装','food'),a('d4-7','20:30','Oktoberfest','无预约优先尝试相对冷门帐篷','sight',{important:true})]},
   {id:'d5',day:5,date:'9月30日',weekday:'周三',city:'新天鹅堡 → 萨尔茨堡',country:'DE',title:'城堡日与跨城转场',hotel:'萨尔茨堡酒店（待预订）',note:'早晨退房后把行李寄存在慕尼黑中央站；拜仁日票不含Railjet/ICE。',activities:[
     a('d5-1','08:15','退房并寄存行李','中央站寄存后赶09:11区域列车','note',{cost:'€5–8',important:true}),a('d5-2','09:11','慕尼黑 → 菲森','拜仁日票工作日09:00后有效','train',{cost:'€44/2人'}),a('d5-3','12:30','新天鹅堡','选择Multi-Day Ticket Holder预约','sight',{cost:'€2.50预约费',important:true}),a('d5-4','14:00','玛丽安桥与菲森','16:00前返回车站'),a('d5-5','16:00','菲森 → 慕尼黑','约18:00抵达，取行李','train'),a('d5-6','19:00后','慕尼黑 → 萨尔茨堡','仅乘RE等区域列车，班次临近确认','train',{important:true,cost:'拜仁日票含'})]},
-  {id:'d6',day:6,date:'10月1日',weekday:'周四',city:'萨尔茨堡',country:'AT',title:'老城、莫扎特与要塞',hotel:'萨尔茨堡酒店',activities:[
-    a('d6-1','09:00','激活萨尔茨堡卡','48小时覆盖D6与D7','note'),a('d6-2','09:30','莫扎特出生地','格特雷德街，预留45分钟'),a('d6-3','10:30','莫扎特居所','步行前往，预留45分钟'),a('d6-4','11:30','霍亨萨尔茨堡要塞','缆车及要塞约1.5小时','sight',{important:true}),a('d6-5','14:00','茨威格中心','开放窗口短，午饭需简洁','sight',{cost:'€5',important:true}),a('d6-6','16:15','米拉贝尔花园','傍晚散步') ]},
-  {id:'d7',day:7,date:'10月2日',weekday:'周五',city:'巴德伊舍 · 哈尔施塔特',country:'AT',title:'湖区一日游',hotel:'萨尔茨堡酒店',activities:[
-    a('d7-1','08:00','萨尔茨堡 → 巴德伊舍','区域交通约1小时','train'),a('d7-2','09:30','皇帝别墅 / Zauner','内部参观与咖啡二选一，避免赶车'),a('d7-3','10:30','前往哈尔施塔特','火车加渡轮','train'),a('d7-4','11:15–15:00','哈尔施塔特','老城、湖畔与可选观景台','sight',{important:true}),a('d7-5','15:00','返回萨尔茨堡','约17:30抵达','train')]},
-  {id:'d8',day:8,date:'10月3日',weekday:'周六',city:'蒙德湖 → 维也纳',country:'AT',title:'湖畔半日与Westbahn',hotel:'DoubleTree Vienna Schönbrunn',activities:[
-    a('d8-1','09:00','萨尔茨堡 → 蒙德湖','Postbus 140约50分钟','train'),a('d8-2','10:00','蒙德湖教堂与湖畔','《音乐之声》婚礼教堂'),a('d8-3','13:00','返回萨尔茨堡','取行李并留出候车时间','train'),a('d8-4','18:52','Westbahn → Wien Hütteldorf','21:14抵达，之后U4两站','train',{booked:false,important:true,cost:'约¥117/人'})]},
-  {id:'d9',day:9,date:'10月4日',weekday:'周日',city:'维也纳',country:'AT',title:'艺术与老城',hotel:'DoubleTree Vienna Schönbrunn',activities:[
-    a('d9-1','10:00','美景宫上宫','克里姆特《吻》，预留2小时','sight',{cost:'€16',important:true}),a('d9-2','12:30','Café Central','从美景宫搭公共交通约25分钟','food'),a('d9-3','14:30','艺术史博物馆','周日开放，预留3小时','sight',{cost:'€22',important:true}),a('d9-4','18:00','格拉本与圣史蒂芬大教堂','晚餐后可选歌剧院站票')]},
+  {id:'d6',day:6,date:'10月1日',weekday:'周四',city:'萨尔茨堡 → 沃尔夫冈湖',country:'AT',title:'老城半日与自驾启程',hotel:'沃尔夫冈湖住宿（待预订）',note:'取车时核验驾照翻译件、保险、轮胎和高速票；今天以适应车辆为主。',activities:[
+    a('d6-1','08:30–10:15','霍亨萨尔茨堡要塞','开门后优先进入，缆车与要塞约1.5小时','sight',{important:true}),a('d6-2','10:30–12:15','莫扎特出生地与老城','格特雷德街、粮食胡同和简洁午餐','sight'),a('d6-3','14:00','萨尔茨堡取车','检查车况、保险、Vignette与异地还车规则','drive',{important:true,cost:'待报价'}),a('d6-4','15:00–16:10','蒙德湖','教堂与湖滨短停；停车规则以现场为准','drive'),a('d6-5','16:40–17:30','圣吉尔根','沃尔夫冈湖西岸散步','drive'),a('d6-6','18:00','圣沃尔夫冈入住','晚餐和湖畔休息，不安排夜间山路','hotel')]},
+  {id:'d7',day:7,date:'10月2日',weekday:'周五',city:'哈尔施塔特 · 戈绍湖',country:'AT',title:'早到哈尔施塔特与湖畔轻徒步',hotel:'戈绍或巴德戈伊瑟恩住宿（待预订）',note:'哈尔施塔特古城禁车且P1/P2不能预约，07:15出发、目标08:15前进入停车场。',activities:[
+    a('d7-1','07:15','沃尔夫冈湖出发','约1小时车程；低温或雾天放慢速度','drive',{important:true}),a('d7-2','08:15','哈尔施塔特P1/P2停车','看电子余位；P1步行中心约20分钟、P2约15分钟','drive',{cost:'7–12小时€15'}),a('d7-3','08:30–12:30','哈尔施塔特老城与湖畔','市场广场、骨屋和经典机位；盐矿不作为刚性主线','sight',{important:true}),a('d7-4','13:15–16:00','前戈绍湖','停车场车牌识别缴费，湖畔轻徒步约1.5小时','drive'),a('d7-5','16:30','入住戈绍/巴德戈伊瑟恩','戈绍湖停车场禁止过夜，返回住宿休息','hotel')]},
+  {id:'d8',day:8,date:'10月3日',weekday:'周六',city:'奥塞湖区 → 格蒙登',country:'AT',title:'秋色双湖与特劳恩湖',hotel:'格蒙登住宿（待预订）',note:'阿尔陶斯盐矿仅作为雨天替代；不要与双湖、格蒙登同时强塞。',activities:[
+    a('d8-1','08:30','戈绍出发','约1小时到阿尔陶斯湖','drive'),a('d8-2','09:30–11:30','阿尔陶斯湖','优先Kurhaus P1或Seeklause P3，湖畔散步','sight'),a('d8-3','12:00–13:45','格伦德尔湖','湖畔午餐；停车费以现场为准','sight'),a('d8-4','14:00–15:30','前往特劳恩湖','经主要公路前往特劳恩基兴','drive'),a('d8-5','16:00–18:00','格蒙登与奥尔特城堡','湖畔散步后入住，避免摸黑赶路','sight')]},
+  {id:'d9',day:9,date:'10月4日',weekday:'周日',city:'格蒙登 → 林茨 → 维也纳',country:'AT',title:'周日异地还车与维也纳半日',hotel:'DoubleTree Vienna Schönbrunn',note:'林茨周日门店营业或非营业还车必须取得租车公司书面确认；预留60–90分钟加油验车。',activities:[
+    a('d9-1','08:30','格蒙登湖畔早餐','09:30前离开，不临时增加远距离景点','food'),a('d9-2','10:45–11:45','林茨加油并还车','拍摄车况、油表与还车凭证','drive',{important:true}),a('d9-3','12:30左右','林茨 → 维也纳','具体Railjet/Westbahn班次待租车落定后购买','train',{important:true,cost:'待购'}),a('d9-4','14:00左右','抵达维也纳','先入住或寄存行李','hotel'),a('d9-5','15:00–18:00','艺术史博物馆（可选）','周日开放；若抵达晚则直接改老城','sight',{cost:'€22'}),a('d9-6','18:15','格拉本与圣史蒂芬大教堂','晚餐后返回酒店','sight')]},
   {id:'d10',day:10,date:'10月5日',weekday:'周一',city:'维也纳 → 机场',country:'AT',title:'美泉宫与返程',hotel:'今日离开',activities:[
     a('d10-1','09:30','美泉宫','酒店步行可达，预留2.5小时','sight',{cost:'€28',important:true}),a('d10-2','13:30','返回酒店取行李','不再带行李绕行市中心','note'),a('d10-3','15:00','前往VIE机场','目标16:00前抵达','train',{important:true}),a('d10-4','19:00','起飞离开欧洲','旅程结束','train')]},
 ]
@@ -33,16 +33,21 @@ export const bookings: Booking[] = [
   {id:'b1',date:'9月27日',title:'IC 60403 阿姆斯特丹 → 科隆',detail:'21:01–23:45，直达自由座',price:'已购',status:'booked'},
   {id:'b2',date:'9月28日',title:'科隆 → 慕尼黑东站',detail:'18:54–23:34，2次换乘',price:'¥212/人 · 已购',status:'booked'},
   {id:'b3',date:'9月28–30日',title:'Moxy Munich Ostbahnhof',detail:'两笔连续订单，入住时关联',price:'已订',status:'booked'},
-  {id:'b3a',date:'9月30–10月3日',title:'萨尔茨堡住宿',detail:'3晚；优先火车站或老城公交直达区域',price:'待订',status:'urgent'},
-  {id:'b3b',date:'10月3–5日',title:'DoubleTree Vienna Schönbrunn',detail:'2晚，返程日步行游览美泉宫',price:'已订',status:'booked'},
+  {id:'b3a',date:'9月30–10月1日',title:'萨尔茨堡住宿',detail:'1晚；次日下午取车前退房并带走行李',price:'待订',status:'urgent'},
+  {id:'b3c',date:'10月1–2日',title:'沃尔夫冈湖住宿',detail:'优先圣吉尔根或圣沃尔夫冈，含停车位',price:'待订',status:'urgent'},
+  {id:'b3d',date:'10月2–3日',title:'戈绍/巴德戈伊瑟恩住宿',detail:'戈绍湖停车场禁止过夜，住宿必须有停车位',price:'待订',status:'urgent'},
+  {id:'b3e',date:'10月3–4日',title:'格蒙登住宿',detail:'优先湖畔或次日便于驶向林茨的区域',price:'待订',status:'urgent'},
+  {id:'b3b',date:'原10月3–5日',title:'DoubleTree Vienna Schönbrunn',detail:'自驾方案需改为10月4日入住；先确认原订单可改期或取消',price:'日期待调整',status:'urgent'},
   {id:'b4',date:'9月30日',title:'新天鹅堡12:30场次',detail:'持城堡套票选择Multi-Day Ticket Holder',price:'€2.50/人',status:'urgent',url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau'},
   {id:'b5',date:'出发前',title:'拜仁14天城堡套票',detail:'覆盖慕尼黑皇宫与新天鹅堡',price:'€40/人',status:'urgent',url:'https://bsv-shop.bayern.de'},
   {id:'b6',date:'9月26日',title:'安妮之家19:00',detail:'每周二开放6周后的票',price:'€16.50/人',status:'urgent',url:'https://www.annefrank.org/en/museum/tickets/'},
   {id:'b7',date:'9月27日',title:'梵高博物馆',detail:'现场不售票',price:'€25/人',status:'soon',url:'https://www.vangoghmuseum.nl/en/visit/tickets-and-opening-hours'},
   {id:'b7a',date:'9月27日',title:'荷兰国立博物馆',detail:'建议预约12:15时段',price:'€21.50/人',status:'soon',url:'https://www.rijksmuseum.nl/en/tickets'},
   {id:'b7b',date:'9月30日',title:'拜仁日票',detail:'两人票；工作日09:00后乘区域列车',price:'约€44/2人',status:'soon',url:'https://int.bahn.de/en/offers/regional/regional-day-ticket-bavaria'},
-  {id:'b7c',date:'10月1日',title:'萨尔茨堡卡48小时',detail:'D6早上激活，覆盖D6与D7',price:'临行前核价',status:'soon',url:'https://www.salzburg.info/en/hotels-offers/salzburg-card'},
-  {id:'b8',date:'10月3日',title:'Westbahn 萨尔茨堡 → 维也纳',detail:'18:52–21:14',price:'约¥117/人',status:'soon',url:'https://westbahn.at/en/'},
+  {id:'b7c',date:'10月1日',title:'萨尔茨堡卡24小时（可选）',detail:'仅半日市区，先核算要塞与莫扎特出生地单买价格',price:'可选',status:'optional',url:'https://www.salzburg.info/en/hotels-offers/salzburg-card'},
+  {id:'b8a',date:'10月1–4日',title:'湖区异地还车租车',detail:'萨尔茨堡取、林茨还；自动挡、全险、停车与高速票需确认',price:'待报价',status:'urgent'},
+  {id:'b8b',date:'出发前',title:'中国驾照与认可翻译件',detail:'原件同行；先取得租车公司对具体翻译形式的书面确认',price:'待办理',status:'urgent'},
+  {id:'b8',date:'10月4日',title:'林茨 → 维也纳火车',detail:'还车时段确认后再购票，目标中午出发',price:'待购',status:'soon',url:'https://www.oebb.at/en/'},
   {id:'b9',date:'10月5日',title:'美泉宫09:30',detail:'旺季建议提前预约',price:'€28/人',status:'soon',url:'https://www.imperialtickets.com/en/schoenbrunn-palace'},
 ]
 
@@ -50,6 +55,6 @@ export const route = [
   {city:'阿姆斯特丹',code:'AMS',date:'9/25–27',country:'NL'},
   {city:'科隆',code:'CGN',date:'9/27–28',country:'DE'},
   {city:'慕尼黑',code:'MUC',date:'9/28–30',country:'DE'},
-  {city:'萨尔茨堡',code:'SZG',date:'9/30–10/3',country:'AT'},
-  {city:'维也纳',code:'VIE',date:'10/3–5',country:'AT'},
+  {city:'萨尔茨堡·湖区',code:'SZG',date:'9/30–10/4',country:'AT'},
+  {city:'维也纳',code:'VIE',date:'10/4–5',country:'AT'},
 ] as const
