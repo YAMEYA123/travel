@@ -196,3 +196,40 @@
   .app-groups .app-gallery{padding:6px}
   .tool-filters{margin-bottom:5px}
 }
+
+/* 常用 App：旅行贴纸式启动器，整张图标卡即主操作 */
+.app-launcher{display:grid;gap:10px}
+.app-launcher>aside{min-height:46px;padding:7px 10px;border:1px dashed #c9ded6;border-radius:13px;background:#f8fcfa;display:flex;align-items:center;gap:9px;color:var(--forest)}
+.app-launcher>aside>span{width:28px;height:28px;border-radius:50%;background:#e5f4ee;display:grid;place-items:center;flex:0 0 auto}
+.app-launcher>aside p{margin:0;display:flex;flex-direction:column}.app-launcher>aside b{font-size:10px}.app-launcher>aside small{margin-top:1px;color:var(--muted);font-size:8px}
+.app-launcher>section{padding:0 9px 9px;border:1px solid #dce8e3;border-radius:16px;background:#fffefa;box-shadow:0 4px 13px #49675c0d;overflow:hidden}
+.app-launcher>section>header{min-height:47px;margin:0 -9px 8px;padding:6px 10px;background:linear-gradient(100deg,hsl(calc(170 + var(--category-index)*36) 43% 95%),#fffefa);display:flex;align-items:center;gap:8px}
+.app-launcher>section>header>i{width:31px;height:31px;border-radius:50%;background:#fff;display:grid;place-items:center;font-style:normal;box-shadow:0 2px 7px #46665a17}
+.app-launcher>section>header>div{display:flex;flex-direction:column}.app-launcher>section>header b{font-family:'STKaiti','KaiTi','Noto Sans SC',sans-serif;font-size:14px}.app-launcher>section>header small{font-size:7px;color:var(--muted)}
+.app-icon-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.app-icon-grid>article{min-width:0;padding:7px 5px 5px;border:1px solid #e1ebe7;border-radius:14px;background:linear-gradient(155deg,hsl(calc(168 + var(--app-index)*27) 43% 96%),#fff 66%);text-align:center;position:relative;box-shadow:0 3px 8px #46665a0b}
+.app-icon-grid>article:before{content:'';position:absolute;top:-3px;left:50%;width:22px;height:7px;background:#f4cf796e;transform:translateX(-50%) rotate(calc((var(--app-index) - 2)*1deg));border-radius:1px}
+.app-tile-main{min-width:0;color:var(--ink);text-decoration:none;display:flex;flex-direction:column;align-items:center}
+.app-tile-main .app-icon{width:54px;height:54px;margin-bottom:6px;border-radius:15px;position:relative;overflow:hidden;display:grid;place-items:center;background:#fff;color:var(--forest);box-shadow:0 4px 10px #49675c20,0 2px 0 hsl(calc(168 + var(--app-index)*27) 35% 82%);font:700 10px 'DM Mono',monospace;transition:transform .16s ease}
+.app-tile-main:active .app-icon{transform:scale(.94)}
+.app-tile-main b{max-width:100%;font-size:10px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-tile-main small{height:24px;margin-top:2px;color:var(--muted);font-size:7px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.app-download{display:block;margin-top:4px;padding-top:4px;border-top:1px dashed #dfe9e5;color:#82968e;text-decoration:none;font-size:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-download:focus-visible,.app-tile-main:focus-visible{border-radius:8px}
+
+@media(max-width:680px){
+  .app-launcher{gap:7px}
+  .app-launcher>aside{min-height:42px;padding:6px 8px}
+  .app-launcher>section{padding:0 7px 7px;border-radius:14px}
+  .app-launcher>section>header{min-height:43px;margin:0 -7px 6px;padding:5px 8px}
+  .app-icon-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .app-icon-grid>article{padding:7px 4px 4px;border-radius:12px}
+  .app-tile-main .app-icon{width:50px;height:50px;border-radius:14px}
+  .app-tile-main b{font-size:9px}
+  .app-tile-main small{height:22px;font-size:6.5px}
+  .app-download{font-size:6px}
+}
+
+@media(max-width:350px){
+  .app-icon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
