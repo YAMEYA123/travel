@@ -7,5 +7,9 @@
   "display": "standalone",
   "background_color": "#edf3f5",
   "theme_color": "#17324d",
-  "icons": [{"src":"/travel/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "icons": [
+    {"src":"/travel/icons/travel-journal.svg","sizes":"any","type":"image/svg+xml","purpose":"any"},
+    {"src":"/travel/icons/app-icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"/travel/icons/app-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
 }
