@@ -76,3 +76,16 @@
   .check-compact section>button{min-height:40px;font-size:10px}
   .check-compact section>button>b{font-size:10px}
 }
+
+.language-compact article{min-height:62px;grid-template-columns:72px minmax(0,1fr) 36px}
+.language-compact article>span{font-size:8px;white-space:nowrap}
+.language-compact article>div{min-width:0;gap:2px}
+.language-compact article>div>b{font-size:11px}
+.language-compact article>div>small{display:flex;align-items:baseline;gap:5px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.language-compact article>div>small>i{flex:0 0 31px;padding:1px 3px;border-radius:4px;background:#edf5f1;color:var(--forest);font-style:normal;font-size:7px;text-align:center}
+
+@media(max-width:680px){
+  .language-compact article{min-height:65px;grid-template-columns:63px minmax(0,1fr) 34px;padding:5px 6px}
+  .language-compact article>div>b{font-size:11px}
+  .language-compact article>div>small{font-size:8px}
+}
