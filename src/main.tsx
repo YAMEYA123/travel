@@ -7,5 +7,10 @@ import './toolbox.css'
 createRoot(document.getElementById('root')!).render(<StrictMode><App /></StrictMode>)
 
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  addEventListener('load', () => navigator.serviceWorker.register('/travel/sw.js'))
+  addEventListener('load', () => {
+    void navigator.serviceWorker
+      .register('/travel/sw.js', { updateViaCache: 'none' })
+      .then(registration => registration.update())
+      .catch(() => undefined)
+  })
 }
