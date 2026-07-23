@@ -4,3 +4,31 @@
 /* Tool details own the remaining app-shell height and handle touch scrolling. */
 .tool-panel{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 @media(max-width:680px){.tool-workspace{height:100%}}
+
+/* 清爽旅行手账：工具页保持高密度，只在入口和状态上使用手账语言 */
+.tool-tile-grid{gap:10px;padding:12px}
+.tool-tile-grid>button{border-color:#dbe8e3;border-radius:15px;background:#fffefa;box-shadow:0 4px 14px #46665a12;position:relative;overflow:hidden}
+.tool-tile-grid>button:after{content:'';position:absolute;right:-12px;top:-12px;width:38px;height:38px;border:1px dashed color-mix(in srgb,var(--tool,#55b8c5) 38%,transparent);border-radius:50%}
+.tool-tile-grid>button>span{border-radius:50%;box-shadow:0 3px 0 color-mix(in srgb,var(--tool) 18%,#fff)}
+.tool-tile-grid b{color:var(--ink)}
+.tool-glance{background:linear-gradient(120deg,#276f61,#408f79);border:1px solid #2e7564;border-radius:15px;box-shadow:0 5px 16px #46665a1f;position:relative;overflow:hidden}
+.tool-glance:after{content:'SALZBURG · 2026';position:absolute;right:8px;bottom:4px;color:#ffffff30;font:600 7px 'DM Mono',monospace;letter-spacing:.08em;transform:rotate(-5deg)}
+.tool-panel{padding:10px}
+.budget-mini{gap:8px}.budget-mini article{background:#fffefa;border-color:#dce8e3;border-radius:12px;box-shadow:0 3px 9px #49675c0d}
+.budget-mini article:nth-child(1){background:#eaf6f7}.budget-mini article:nth-child(2){background:#fff2e9}.budget-mini article:nth-child(3){background:#eaf4ee}.budget-mini article:nth-child(4){background:#fff8df}
+.info-compact,.check-compact{gap:9px}
+.info-compact article,.check-compact section{background:#fffefa;border-color:#dce8e3;border-radius:13px;box-shadow:0 3px 10px #49675c0d}
+.info-compact h3,.check-compact header{font-family:'STKaiti','KaiTi','Noto Sans SC',sans-serif;font-size:14px;color:var(--ink)}
+.check-compact section>button>span{border-radius:50%}.check-compact section>button.done>span{background:var(--forest)}
+.app-compact{gap:8px}.app-compact a{background:#fffefa;border-color:#dce8e3;border-radius:12px;box-shadow:0 3px 10px #49675c0d}.app-compact a>span{border-radius:50%;background:var(--forest)}
+.tool-search{background:#fffefa;border-color:#dce8e3;border-radius:12px}
+.language-compact,.risk-compact{background:#fffefa;border-color:#dce8e3;border-radius:13px;box-shadow:0 4px 12px #49675c0d}
+.risk-compact article>span{border-radius:50%}
+.split-bill{background:#fffefa;border-color:#dce8e3;border-radius:13px}
+
+@media(max-width:680px){
+  .tool-tile-grid{gap:7px;padding:7px}
+  .tool-tile-grid>button{border-radius:12px}
+  .tool-glance{margin:0 7px;border-radius:12px}
+  .tool-panel{padding:6px}
+}
