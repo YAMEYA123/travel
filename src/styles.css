@@ -150,3 +150,40 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
   .booking-compact{margin:4px;padding:2px}
   .booking-compact article{border-radius:10px}
 }
+
+.plan-overview{flex:1;min-height:0;display:flex;flex-direction:column;padding:8px;gap:7px}
+.plan-overview-bar{flex:0 0 auto;min-height:48px;padding:6px 10px;border:1px solid #dbe8e3;border-radius:12px;background:#fffefa;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.plan-overview-bar>div{min-width:0}.plan-overview-bar b{display:block;font-size:12px}.plan-overview-bar span{display:block;font-size:8px;color:var(--muted);margin-top:2px}
+.plan-overview-bar>button{height:32px;padding:0 10px;border:1px solid #cfe0d8;border-radius:9px;background:#edf7f2;color:var(--forest);font-size:9px;font-weight:700;white-space:nowrap}
+.plan-overview .compact-plan{flex:1;min-height:0;margin:0;overflow:auto}
+.compact-plan>section{border-bottom:1px solid #e2ebe7;background:#fffefa}
+.compact-plan>section.expanded{background:#fbf7ec}
+.plan-row{min-height:57px;display:grid;grid-template-columns:minmax(0,1fr) 62px;align-items:stretch}
+.plan-toggle{min-width:0;border:0;background:transparent;color:var(--ink);display:grid;grid-template-columns:34px 70px minmax(0,1fr) auto 18px;align-items:center;gap:7px;padding:0 8px 0 10px;text-align:left}
+.plan-toggle:hover{background:#f1f8f4}.plan-toggle>svg{width:15px;color:var(--muted);transition:transform .18s ease}.expanded .plan-toggle>svg{transform:rotate(180deg);color:var(--forest)}
+.plan-copy{min-width:0}.plan-copy b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.plan-copy small{display:block;font-size:8px;color:var(--muted)}
+.plan-open{margin:9px 8px 9px 0;border:1px solid #cfe0d8;border-radius:8px;background:#fff;color:var(--forest);display:flex;align-items:center;justify-content:center;gap:2px;font-size:9px;font-weight:700}.plan-open svg{width:13px}
+.plan-day-detail{margin:0 8px 8px 44px;border:1px solid #dce8e3;border-radius:11px;background:#fff;overflow:hidden}
+.plan-day-meta{padding:7px 9px;background:#f1f8f4;display:flex;gap:12px;flex-wrap:wrap}.plan-day-meta>span{display:flex;align-items:center;gap:4px;font-size:8px;color:#526b62}.plan-day-meta svg{width:13px;height:13px}.plan-day-meta .plan-day-note{color:#9b541f}
+.plan-day-activity{min-height:45px;padding:4px 8px;display:grid;grid-template-columns:22px 28px 67px minmax(0,1fr) auto;align-items:center;gap:6px;border-top:1px solid #e8eeeb}
+.plan-day-activity>span{width:20px;height:20px;border-radius:50%;background:#edf4f1;color:var(--forest);display:grid;place-items:center;font:600 8px 'DM Mono'}
+.plan-day-activity time{font:500 8px 'DM Mono';color:#356c87}.plan-day-activity>div{min-width:0}.plan-day-activity b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.plan-day-activity small{display:block;font-size:8px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plan-day-activity>em{font-style:normal;font-size:8px;color:#8a621e;background:#fff5dc;border-radius:999px;padding:3px 6px;white-space:nowrap}
+
+@media(max-width:680px){
+  .plan-overview{padding:5px;gap:5px}
+  .plan-overview-bar{min-height:43px;padding:5px 8px}
+  .plan-overview-bar span{max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .plan-overview .compact-plan{margin:0}
+  .plan-row{min-height:53px;grid-template-columns:minmax(0,1fr) 52px}
+  .plan-toggle{grid-template-columns:34px 55px minmax(0,1fr) 16px;gap:5px;padding:0 5px}
+  .plan-toggle .density{display:none}
+  .plan-open{margin:8px 6px 8px 0;font-size:8px}
+  .plan-day-detail{margin:0 5px 6px 34px}
+  .plan-day-meta{padding:6px 7px;gap:6px;display:grid}
+  .plan-day-meta>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .plan-day-activity{min-height:42px;padding:3px 6px;grid-template-columns:20px 25px 54px minmax(0,1fr);gap:5px}
+  .plan-day-activity .type-icon{width:25px;height:25px}
+  .plan-day-activity>em{display:none}
+  .plan-day-activity small{font-size:7px}
+}
