@@ -8,8 +8,8 @@ import Toolbox from './Toolbox'
 
 type View='overview'|'trip'|'bookings'|'tools';type TripMode='plan'|'day';type Filter='todo'|'all'|'booked';type BookingCategory='all'|'stay'|'sight'|'transport'
 const nav=[{id:'overview' as View,label:'总览',icon:House},{id:'trip' as View,label:'行程',icon:CalendarDays},{id:'bookings' as View,label:'预订',icon:TicketCheck},{id:'tools' as View,label:'工具',icon:Wrench}]
-const colors={train:'#2f6feb',drive:'#087f8c',sight:'#e5484d',food:'#bf8700',hotel:'#7c3aed',note:'#e16f24'}
-const icons={train:TrainFront,drive:CarFront,sight:Landmark,food:Utensils,hotel:BedDouble,note:AlertTriangle}
+const colors={train:'#2f6feb',bus:'#e16f24',drive:'#087f8c',sight:'#e5484d',food:'#bf8700',hotel:'#7c3aed',note:'#e16f24'}
+const icons={train:TrainFront,bus:Bus,drive:CarFront,sight:Landmark,food:Utensils,hotel:BedDouble,note:AlertTriangle}
 const guide=['舒缓','紧凑','紧凑','紧凑','适中','紧凑','适中','适中','适中','适中','舒缓']
 
 function useStoredSet(key:string){const [set,setSet]=useState<Set<string>>(()=>{try{return new Set(JSON.parse(localStorage.getItem(key)||'[]'))}catch{return new Set()}});useEffect(()=>localStorage.setItem(key,JSON.stringify([...set])),[key,set]);return[set,(id:string)=>setSet(old=>{const next=new Set(old);next.has(id)?next.delete(id):next.add(id);return next})]as const}

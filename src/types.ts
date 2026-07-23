@@ -1,5 +1,5 @@
 export type Country = 'NL' | 'DE' | 'AT'
-export type ActivityKind = 'sight' | 'train' | 'drive' | 'food' | 'hotel' | 'note'
+export type ActivityKind = 'sight' | 'train' | 'bus' | 'drive' | 'food' | 'hotel' | 'note'
 
 export interface Activity {
   id: string
