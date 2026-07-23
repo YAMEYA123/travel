@@ -184,6 +184,14 @@
 .risk-accordion>section.risk-高{border-left-color:#d95c57;background:#fff6f3}.risk-accordion>section.risk-中{border-left-color:#e49a4e;background:#fffaf0}
 .risk-accordion .accordion-head>i{width:27px;height:27px;margin-left:3px;background:#edf2f5;color:var(--muted);font-size:9px;font-weight:700}
 .risk-accordion .risk-高 .accordion-head>i{background:#fdebec;color:var(--red)}.risk-accordion .risk-中 .accordion-head>i{background:#fff0e5;color:#a84c18}
+.risk-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.risk-cards>article{min-width:0;padding:10px;border:1px solid #dce8e3;border-left:4px solid #8da79d;border-radius:12px;background:#f8fbf9;box-shadow:0 3px 9px #49675c0d;display:grid;grid-template-columns:31px minmax(0,1fr);gap:9px;align-items:start}
+.risk-cards>article.risk-高{border-left-color:#d95c57;background:#fff6f3}.risk-cards>article.risk-中{border-left-color:#e49a4e;background:#fffaf0}
+.risk-cards>article>span{display:flex;flex-direction:column;align-items:center;gap:5px}
+.risk-cards>article>span i{width:28px;height:28px;border-radius:50%;background:#e9f0ed;color:#5f796f;display:grid;place-items:center;font-style:normal;font-size:9px;font-weight:800}
+.risk-cards>article.risk-高>span i{background:#fde7e7;color:#b93f42}.risk-cards>article.risk-中>span i{background:#ffeedc;color:#a95d21}
+.risk-cards>article>span em{color:#9aacA5;font:600 7px 'DM Mono',monospace;font-style:normal}
+.risk-cards>article>div{min-width:0}.risk-cards b{display:block;color:var(--ink);font-size:11px;line-height:1.4}.risk-cards p{margin:4px 0 0;color:#5c7169;font-size:8px;line-height:1.6}
 
 @media(max-width:680px){
   .accordion-stack{gap:5px}
@@ -195,6 +203,10 @@
   .accordion-body{padding:0 8px 6px}
   .app-groups .app-gallery{padding:6px}
   .tool-filters{margin-bottom:5px}
+  .risk-cards{grid-template-columns:1fr;gap:5px}
+  .risk-cards>article{padding:8px;grid-template-columns:29px minmax(0,1fr);gap:8px}
+  .risk-cards>article>span i{width:26px;height:26px}
+  .risk-cards b{font-size:10px}.risk-cards p{font-size:8px;margin-top:3px}
 }
 
 /* 常用 App：旅行贴纸式启动器，整张图标卡即主操作 */
