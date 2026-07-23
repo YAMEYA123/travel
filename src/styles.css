@@ -187,3 +187,8 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
   .plan-day-activity>em{display:none}
   .plan-day-activity small{font-size:7px}
 }
+
+@media(max-width:680px){
+  .side-nav{display:none}
+  .app-main{height:100dvh}
+}
