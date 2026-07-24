@@ -28,6 +28,17 @@ export const cashToEUR=(amount:number,currency:ExpenseCurrency)=>{
   if(currency==='USD')return amount/1.16
   return 0
 }
+const POINT_USD_VALUE:Partial<Record<ExpenseCurrency,number>>={
+  IHG:0.005,
+  MARRIOTT:0.009,
+  HILTON:0.005,
+}
+export const expenseValueToCNY=(amount:number,currency:ExpenseCurrency)=>{
+  if(currency==='CNY')return amount
+  if(currency==='EUR')return amount*7.8
+  if(currency==='USD')return amount/1.16*7.8
+  return amount*(POINT_USD_VALUE[currency]||0)/1.16*7.8
+}
 export const formatExpenseAmount=(amount:number,currency:ExpenseCurrency)=>{
   if(isPointCurrency(currency))return`${Math.round(amount).toLocaleString('zh-CN')} 积分`
   const symbol=currency==='EUR'?'€':currency==='USD'?'$':'¥'
