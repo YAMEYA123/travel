@@ -5,7 +5,7 @@ import { getActivityGuide } from './activityGuides'
 import type { Activity, Booking, TripDay } from './types'
 import TripMap from './TripMap'
 import Toolbox from './Toolbox'
-import { CURRENCY_OPTIONS, createExpense, EXPENSES_CHANGED, expenseValueToCNY, isPointCurrency, loadExpenses, loadMembers, SPLIT_PAYER, type Expense, type ExpenseCurrency } from './expenseStore'
+import { CURRENCY_OPTIONS, createExpense, EXCHANGE_RATES_CHANGED, EXPENSES_CHANGED, expenseValueToCNY, isPointCurrency, loadExchangeRates, loadExpenses, loadMembers, SPLIT_PAYER, type ExchangeRates, type Expense, type ExpenseCurrency } from './expenseStore'
 
 type View='overview'|'trip'|'bookings'|'tools';type TripMode='plan'|'day';type Filter='todo'|'all'|'booked';type BookingCategory='all'|'stay'|'sight'|'transport'
 const nav=[{id:'overview' as View,label:'总览',icon:House},{id:'trip' as View,label:'行程',icon:CalendarDays},{id:'bookings' as View,label:'预订',icon:TicketCheck},{id:'tools' as View,label:'工具',icon:Wrench}]
@@ -29,12 +29,15 @@ function Dashboard({go}:{go:(view:View)=>void}){
   const urgent=bookings.filter(item=>item.status==='urgent').length
   const booked=bookings.filter(item=>item.status==='booked').length
   const [expenses,setExpenses]=useState<Expense[]>(loadExpenses)
+  const [rates,setRates]=useState<ExchangeRates>(loadExchangeRates)
   useEffect(()=>{
     const sync=(event:Event)=>setExpenses((event as CustomEvent<Expense[]>).detail||loadExpenses())
+    const syncRates=(event:Event)=>setRates((event as CustomEvent<ExchangeRates>).detail||loadExchangeRates())
     addEventListener(EXPENSES_CHANGED,sync)
-    return()=>removeEventListener(EXPENSES_CHANGED,sync)
+    addEventListener(EXCHANGE_RATES_CHANGED,syncRates)
+    return()=>{removeEventListener(EXPENSES_CHANGED,sync);removeEventListener(EXCHANGE_RATES_CHANGED,syncRates)}
   },[])
-  const spent=expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expense.amount,expense.currency),0)
+  const spent=expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expense.amount,expense.currency,rates),0)
   const spentLabel=Math.round(spent).toLocaleString('zh-CN')
   const openExpenses=()=>{
     sessionStorage.setItem('travel-open-tool','expense')

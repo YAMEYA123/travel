@@ -1,18 +1,23 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Download, Link2, Plus, Trash2, Users } from 'lucide-react'
+import { Download, Link2, Plus, RotateCcw, Settings2, Trash2, Users } from 'lucide-react'
 import {
   cashToEUR,
   CURRENCY_OPTIONS,
   createExpense,
+  DEFAULT_EXCHANGE_RATES,
   EXPENSES_CHANGED,
   EXPENSES_KEY,
+  expenseValueToCNY,
   formatExpenseAmount,
   isPointCurrency,
+  loadExchangeRates,
   loadExpenses,
   loadMembers,
   MEMBERS_KEY,
   saveExpenses,
+  saveExchangeRates,
   SPLIT_PAYER,
+  type ExchangeRates,
   type Expense,
   type ExpenseCurrency,
 } from './expenseStore'
@@ -26,6 +31,9 @@ export default function ExpenseLedger(){
   const [payer,setPayer]=useState(members[0]||'我')
   const [currency,setCurrency]=useState<ExpenseCurrency>('EUR')
   const [category,setCategory]=useState('餐饮')
+  const [rates,setRates]=useState<ExchangeRates>(loadExchangeRates)
+  const [rateDraft,setRateDraft]=useState({eurToCny:String(rates.eurToCny),usdToCny:String(Number(rates.usdToCny.toFixed(4)))})
+  const [ratesSaved,setRatesSaved]=useState(false)
 
   useEffect(()=>localStorage.setItem(MEMBERS_KEY,JSON.stringify(members)),[members])
   useEffect(()=>{
@@ -34,7 +42,10 @@ export default function ExpenseLedger(){
     return()=>removeEventListener(EXPENSES_CHANGED,sync)
   },[])
 
-  const cashTotal=useMemo(()=>expenses.reduce((sum,expense)=>sum+cashToEUR(expense.amount,expense.currency),0),[expenses])
+  const cashTotal=useMemo(()=>expenses.reduce((sum,expense)=>sum+cashToEUR(expense.amount,expense.currency,rates),0),[expenses,rates])
+  const totalValueCNY=useMemo(()=>expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expense.amount,expense.currency,rates),0),[expenses,rates])
+  const pointValueCNY=useMemo(()=>expenses.filter(expense=>isPointCurrency(expense.currency)).reduce((sum,expense)=>sum+expenseValueToCNY(expense.amount,expense.currency,rates),0),[expenses,rates])
+  const cashValueCNY=totalValueCNY-pointValueCNY
   const pointSettlements=useMemo(()=>CURRENCY_OPTIONS.filter(option=>isPointCurrency(option.value)).map(option=>{
     const pointExpenses=expenses.filter(expense=>expense.currency===option.value)
     const total=pointExpenses.reduce((sum,expense)=>sum+expense.amount,0)
@@ -53,13 +64,29 @@ export default function ExpenseLedger(){
   }).filter(item=>item.total>0),[expenses,members])
   const balances=useMemo(()=>members.map(name=>{
     const paid=expenses.reduce((sum,expense)=>{
-      const amountInEUR=cashToEUR(expense.amount,expense.currency)
+      const amountInEUR=cashToEUR(expense.amount,expense.currency,rates)
       if(expense.payer===name)return sum+amountInEUR
       if(expense.payer===SPLIT_PAYER)return sum+amountInEUR/2
       return sum
     },0)
     return{name,paid,value:paid-cashTotal/Math.max(members.length,1)}
-  }),[members,expenses,cashTotal])
+  }),[members,expenses,cashTotal,rates])
+
+  const applyRates=()=>{
+    const eur=Number(rateDraft.eurToCny)
+    const usd=Number(rateDraft.usdToCny)
+    const next={eurToCny:eur>0?eur:DEFAULT_EXCHANGE_RATES.eurToCny,usdToCny:usd>0?usd:DEFAULT_EXCHANGE_RATES.usdToCny}
+    setRates(next)
+    setRateDraft({eurToCny:String(next.eurToCny),usdToCny:String(Number(next.usdToCny.toFixed(4)))})
+    saveExchangeRates(next)
+    setRatesSaved(true)
+  }
+  const resetRates=()=>{
+    setRates(DEFAULT_EXCHANGE_RATES)
+    setRateDraft({eurToCny:String(DEFAULT_EXCHANGE_RATES.eurToCny),usdToCny:String(Number(DEFAULT_EXCHANGE_RATES.usdToCny.toFixed(4)))})
+    saveExchangeRates(DEFAULT_EXCHANGE_RATES)
+    setRatesSaved(true)
+  }
 
   const addExpense=()=>{
     const value=Number(amount)
@@ -93,7 +120,15 @@ export default function ExpenseLedger(){
 
   return <section className="split-bill">
     <div className="section-heading"><div><p className="eyebrow">LOCAL LEDGER</p><h2>两人分账</h2></div><button className="ghost" onClick={exportData}><Download size={16}/>导出备份</button></div>
-    <p className="privacy-note">记录只保存在当前浏览器。现金按 €1≈¥7.8、€1≈$1.16 估算结算；IHG、万豪和希尔顿积分分别作为独立单位均分并计算应收应付。</p>
+    <section className="expense-overview" aria-label="总花销">
+      <div className="expense-total"><small>当前总花销估值</small><strong>¥{Math.round(totalValueCNY).toLocaleString('zh-CN')}</strong><span>{expenses.length} 笔记录 · 含积分估值</span></div>
+      <div className="expense-breakdown"><article><span>现金支出</span><b>¥{Math.round(cashValueCNY).toLocaleString('zh-CN')}</b><small>约 €{cashTotal.toFixed(2)}</small></article><article><span>积分估值</span><b>¥{Math.round(pointValueCNY).toLocaleString('zh-CN')}</b><small>按当前设定比例</small></article></div>
+    </section>
+    <details className="rate-settings">
+      <summary><span><Settings2/><b>汇率设置</b></span><small>€1=¥{rates.eurToCny.toFixed(2)} · $1=¥{rates.usdToCny.toFixed(2)}</small></summary>
+      <div><label><span>1 欧元兑人民币</span><input inputMode="decimal" value={rateDraft.eurToCny} onChange={event=>{setRateDraft(current=>({...current,eurToCny:event.target.value}));setRatesSaved(false)}} placeholder={String(DEFAULT_EXCHANGE_RATES.eurToCny)}/></label><label><span>1 美元兑人民币</span><input inputMode="decimal" value={rateDraft.usdToCny} onChange={event=>{setRateDraft(current=>({...current,usdToCny:event.target.value}));setRatesSaved(false)}} placeholder={DEFAULT_EXCHANGE_RATES.usdToCny.toFixed(4)}/></label><button className="rate-reset" onClick={resetRates}><RotateCcw/>恢复默认</button><button className="rate-save" onClick={applyRates}>{ratesSaved?'已应用':'应用汇率'}</button></div>
+    </details>
+    <p className="privacy-note">记录和自定义汇率只保存在当前浏览器；未设置或输入无效时自动使用默认汇率。IHG、万豪和希尔顿积分仍分别作为独立单位均分并计算应收应付。</p>
     <div className="member-strip"><Users size={18}/>{members.map(name=><span key={name}>{name}</span>)}<input value={member} onChange={event=>setMember(event.target.value)} placeholder="新增成员"/><button onClick={addMember}><Plus size={15}/></button></div>
     <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>{SPLIT_PAYER}</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
     <div className="balance-row">{balances.map(balance=><article key={balance.name}><span><b>{balance.name}</b><small>个人现金支出 €{balance.paid.toFixed(2)}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>

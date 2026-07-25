@@ -25,6 +25,16 @@
 .language-compact,.risk-compact{background:#fffefa;border-color:#dce8e3;border-radius:13px;box-shadow:0 4px 12px #49675c0d}
 .risk-compact article>span{border-radius:50%}
 .split-bill{background:#fffefa;border-color:#dce8e3;border-radius:13px}
+.expense-overview{position:relative;display:grid;grid-template-columns:minmax(150px,.85fr) 1.15fr;gap:1px;margin:9px 0 7px;overflow:hidden;border:1px solid #b8d8cb;border-radius:11px;background:#b8d8cb}
+.expense-overview:before,.expense-overview:after{content:"";position:absolute;left:calc(42.5% - 6px);z-index:2;width:12px;height:12px;border-radius:50%;background:#fffefa}
+.expense-overview:before{top:-7px}.expense-overview:after{bottom:-7px}
+.expense-total{min-width:0;padding:12px 13px;background:linear-gradient(135deg,#1d6f5a,#2d8b70);color:#fff;display:flex;flex-direction:column;justify-content:center}
+.expense-total small{font-size:8px;letter-spacing:.08em;color:#cfe8df}.expense-total strong{margin:2px 0;font:700 23px 'DM Mono';letter-spacing:-.04em}.expense-total span{font-size:7px;color:#dcefe8}
+.expense-breakdown{display:grid;grid-template-columns:1fr 1fr;background:#f5fbf8}
+.expense-breakdown article{min-width:0;padding:10px;display:flex;flex-direction:column;justify-content:center}.expense-breakdown article+article{border-left:1px dashed #b8d8cb}.expense-breakdown span{font-size:8px;color:var(--muted)}.expense-breakdown b{margin:2px 0;font:600 13px 'DM Mono';color:var(--ink)}.expense-breakdown small{font-size:7px;color:var(--muted)}
+.rate-settings{margin:7px 0;border:1px solid #d8e5e0;border-radius:9px;background:#f8fbfa}
+.rate-settings summary{min-height:36px;padding:6px 9px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none}.rate-settings summary::-webkit-details-marker{display:none}.rate-settings summary>span{display:flex;align-items:center;gap:5px}.rate-settings summary svg{width:14px;color:var(--green)}.rate-settings summary b{font-size:9px}.rate-settings summary small{font:500 8px 'DM Mono';color:var(--muted)}
+.rate-settings>div{display:grid;grid-template-columns:1fr 1fr auto auto;gap:6px;padding:8px;border-top:1px dashed #c8d9d2}.rate-settings label span{display:block;margin:0 0 3px 2px;font-size:7px;color:var(--muted)}.rate-settings input{width:100%;height:34px;border:1px solid var(--line);border-radius:7px;background:#fff;padding:0 8px;font:500 9px 'DM Mono'}.rate-settings button{align-self:end;height:34px;border-radius:7px;padding:0 9px;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:3px}.rate-settings button svg{width:12px}.rate-reset{border:1px solid var(--line);background:#fff;color:var(--muted)}.rate-save{border:0;background:var(--forest);color:#fff}
 .expense-list article.linked-expense{border-left:3px solid var(--green);background:#f5fbf8}
 .expense-list .booking-link{display:inline-flex;align-items:center;gap:2px;margin-left:5px;padding:1px 4px;border-radius:4px;background:#e6f3ed;color:var(--green);font-size:7px;font-weight:700}
 .expense-list .booking-link svg{width:9px;height:9px}
@@ -33,7 +43,7 @@
 .expense-form{grid-template-columns:1.2fr .6fr 1fr 1.15fr .7fr auto}
 .balance-row article>span{display:flex;flex-direction:column;gap:2px}.balance-row article>span>b{font-size:9px}.balance-row article>span>small{font-size:7px;color:var(--muted)}
 
-@media(max-width:680px){.points-row{grid-template-columns:1fr}.points-row article{min-height:34px}.points-settlement>header{align-items:flex-start;flex-direction:column;gap:1px}.points-settlement>div{grid-template-columns:1fr}.points-settlement article>header{min-height:34px}.points-settlement article>p{min-height:36px}}
+@media(max-width:680px){.expense-overview{grid-template-columns:1fr}.expense-overview:before,.expense-overview:after{display:none}.expense-total{padding:11px 12px}.expense-total strong{font-size:21px}.expense-breakdown article{padding:8px 10px}.rate-settings>div{grid-template-columns:1fr 1fr}.rate-settings button{width:100%}.points-row{grid-template-columns:1fr}.points-row article{min-height:34px}.points-settlement>header{align-items:flex-start;flex-direction:column;gap:1px}.points-settlement>div{grid-template-columns:1fr}.points-settlement article>header{min-height:34px}.points-settlement article>p{min-height:36px}}
 
 @media(max-width:680px){
   .tool-tile-grid{gap:7px;padding:7px}

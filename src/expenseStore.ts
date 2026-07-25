@@ -1,4 +1,5 @@
 export type ExpenseCurrency='EUR'|'CNY'|'USD'|'IHG'|'MARRIOTT'|'HILTON'
+export type ExchangeRates={eurToCny:number;usdToCny:number}
 
 export type Expense={
   id:string
@@ -21,11 +22,27 @@ export const CURRENCY_OPTIONS:{value:ExpenseCurrency;label:string}[]=[
 ]
 export const POINT_CURRENCIES:ExpenseCurrency[]=['IHG','MARRIOTT','HILTON']
 export const SPLIT_PAYER='各自支付（总额均分）'
+export const EXCHANGE_RATES_KEY='travel-exchange-rates'
+export const EXCHANGE_RATES_CHANGED='travel-exchange-rates-changed'
+export const DEFAULT_EXCHANGE_RATES:ExchangeRates={eurToCny:7.8,usdToCny:7.8/1.16}
+export const loadExchangeRates=():ExchangeRates=>{
+  try{
+    const stored=JSON.parse(localStorage.getItem(EXCHANGE_RATES_KEY)||'{}') as Partial<ExchangeRates>
+    return{
+      eurToCny:Number(stored.eurToCny)>0?Number(stored.eurToCny):DEFAULT_EXCHANGE_RATES.eurToCny,
+      usdToCny:Number(stored.usdToCny)>0?Number(stored.usdToCny):DEFAULT_EXCHANGE_RATES.usdToCny,
+    }
+  }catch{return DEFAULT_EXCHANGE_RATES}
+}
+export const saveExchangeRates=(rates:ExchangeRates)=>{
+  localStorage.setItem(EXCHANGE_RATES_KEY,JSON.stringify(rates))
+  window.dispatchEvent(new CustomEvent(EXCHANGE_RATES_CHANGED,{detail:rates}))
+}
 export const isPointCurrency=(currency:ExpenseCurrency)=>POINT_CURRENCIES.includes(currency)
-export const cashToEUR=(amount:number,currency:ExpenseCurrency)=>{
+export const cashToEUR=(amount:number,currency:ExpenseCurrency,rates=loadExchangeRates())=>{
   if(currency==='EUR')return amount
-  if(currency==='CNY')return amount/7.8
-  if(currency==='USD')return amount/1.16
+  if(currency==='CNY')return amount/rates.eurToCny
+  if(currency==='USD')return amount*rates.usdToCny/rates.eurToCny
   return 0
 }
 const POINT_USD_VALUE:Partial<Record<ExpenseCurrency,number>>={
@@ -33,11 +50,11 @@ const POINT_USD_VALUE:Partial<Record<ExpenseCurrency,number>>={
   MARRIOTT:0.009,
   HILTON:0.005,
 }
-export const expenseValueToCNY=(amount:number,currency:ExpenseCurrency)=>{
+export const expenseValueToCNY=(amount:number,currency:ExpenseCurrency,rates=loadExchangeRates())=>{
   if(currency==='CNY')return amount
-  if(currency==='EUR')return amount*7.8
-  if(currency==='USD')return amount/1.16*7.8
-  return amount*(POINT_USD_VALUE[currency]||0)/1.16*7.8
+  if(currency==='EUR')return amount*rates.eurToCny
+  if(currency==='USD')return amount*rates.usdToCny
+  return amount*(POINT_USD_VALUE[currency]||0)*rates.usdToCny
 }
 export const formatExpenseAmount=(amount:number,currency:ExpenseCurrency)=>{
   if(isPointCurrency(currency))return`${Math.round(amount).toLocaleString('zh-CN')} 积分`
