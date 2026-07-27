@@ -28,7 +28,7 @@ export const days: TripDay[] = [
 ]
 
 export const bookings: Booking[] = [
-  {id:'b0a',date:'9月25–26日',title:'Holiday Inn Express Amsterdam - Sloterdijk',detail:'第1晚订单；机场和中央站均可直达',price:'已订',status:'booked'},
+  {id:'b0a',date:'9月25–26日',title:'Holiday Inn Express Amsterdam - Sloterdijk',detail:'第1晚独立订单；38,000 IHG积分兑换，机场和中央站均可直达',price:'38,000 IHG积分',status:'booked'},
   {id:'b0a2',date:'9月26–27日',title:'Holiday Inn Express Amsterdam - Sloterdijk',detail:'第2晚独立订单；请前台关联前一晚，尽量原房续住',price:'已订',status:'booked'},
   {id:'b0b',date:'9月27–28日',title:'Hilton Cologne',detail:'1晚，科隆中央站旁',price:'已订',status:'booked'},
   {id:'b1',date:'9月27日',title:'IC 60403 阿姆斯特丹 → 科隆',detail:'21:01–23:45，直达自由座',price:'已购',status:'booked'},
