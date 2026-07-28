@@ -4,13 +4,13 @@ export const quickInfo = [
   {title:'支付与现金',items:['银行卡/Apple Pay覆盖度高，仍备€100–150现金','荷兰部分小店偏好本地借记卡，先看Visa/Mastercard标识','德国啤酒屋、市场及储物柜可能需要现金','奥地利餐厅结账时主动告知小费后的总金额']},
   {title:'小费习惯',items:['荷兰餐厅服务好可给5–10%，非强制','德国餐厅通常凑整或给5–10%','奥地利餐厅约5–10%，报总额而非把零钱留桌上','酒店行李员：€1–2/件']},
   {title:'网络与插座',items:['三国均使用欧标Type C/F，电压230V','中国两脚扁插通常需要转换头','建议购买欧盟通用eSIM，提前下载离线地图','跨城列车Wi-Fi不稳定，车票截图离线保存']},
-  {title:'奥地利自驾',items:['随车携带中国驾照原件及租车公司书面认可的德语翻译件','取车时拍摄全车、轮胎、油表并核对保险自付额','用ASFINAG按车牌核验高速票，租车已含时不要重复购买','哈尔施塔特古城禁车，P1/P2不可预约，目标08:15前进入','戈绍湖停车场车牌识别缴费且禁止过夜','10月湖区可能雨雾早霜，避免摸黑走山路']},
+  {title:'奥地利无车湖区',items:['萨尔茨堡连续住3晚，大件行李不随一日游移动','圣吉尔根优先乘150/150X路公交，出发前核对当天班次','哈尔施塔特火车站在湖对岸，需衔接约15分钟渡轮','一日游只带轻便日包；两只26寸箱留在酒店或车站寄存','萨尔茨堡→维也纳优先直达Railjet，提前订座并确认行李架','10月湖区可能雨雾早霜，低能见度时缩短湖畔停留']},
   {title:'安全与健康',items:['中央站、地铁和热门景点注意手机与钱包','护照原件贴身，云端另存证件与保单副本','随身备止泻、感冒、胃药及个人常用药','饮用水通常安全；餐厅自来水不一定免费']},
   {title:'退税',items:['满足单店最低消费后向商户索取退税单','离开欧盟时在维也纳机场先海关验货盖章','托运行李中的退税商品要在托运前办理海关','再到Global Blue或Planet柜台退款']},
 ]
 
 export const packing = [
-  {group:'证件与票据',items:['护照及申根签证','旅行保险英文保单','机票、火车票离线截图','酒店确认单','中国驾照原件及认可德语翻译件','主驾驶实体信用卡','银行卡2张分开放','少量欧元现金']},
+  {group:'证件与票据',items:['护照及申根签证','旅行保险英文保单','机票、火车票离线截图','酒店确认单','哈尔施塔特火车与渡轮时刻截图','银行卡2张分开放','少量欧元现金']},
   {group:'衣物',items:['防水轻薄外套','针织衫/抓绒中层','长裤2–3条','舒适防滑步行鞋','轻便手套与薄围巾','折叠伞']},
   {group:'电子设备',items:['手机与充电线','欧标转换插头','充电宝（随身携带）','eSIM/漫游方案','耳机','备用数据线']},
   {group:'随身小包',items:['纸巾与湿巾','水杯','常用药','创可贴','小袋零食','酒店名片/地址截图']},
@@ -22,7 +22,7 @@ export const apps = [
   {name:'9292',category:'地图与交通',description:'荷兰综合公共交通',url:'https://9292.nl/en',ios:'https://apps.apple.com/app/9292-travel-planner-e-ticket/id556557690',android:'https://play.google.com/store/apps/details?id=nl.negentwee',icon:'app-icons/9292.png',fallback:'92'},
   {name:'DB Navigator',category:'地图与交通',description:'德国铁路、站台和延误',url:'https://int.bahn.de/en',iosScheme:'https://www.bahn.de/buchung/start',ios:'https://apps.apple.com/app/db-navigator/id343555245',android:'https://play.google.com/store/apps/details?id=de.hafas.android.db',icon:'app-icons/db-navigator.png',fallback:'DB'},
   {name:'MVV-App',category:'地图与交通',description:'慕尼黑市内交通',url:'https://www.mvv-muenchen.de/en',ios:'https://apps.apple.com/app/mvv-app/id388686726',android:'https://play.google.com/store/apps/details?id=com.mdv.companion',icon:'app-icons/mvv.png',fallback:'MV'},
-  {name:'ÖBB',category:'地图与交通',description:'奥地利铁路及林茨至维也纳车票',url:'https://www.oebb.at/en/',ios:'https://apps.apple.com/app/%C3%B6bb-tickets/id1041401604',android:'https://play.google.com/store/apps/details?id=at.oebb.ts',icon:'app-icons/oebb.png',fallback:'ÖB'},
+  {name:'ÖBB',category:'地图与交通',description:'奥地利铁路、哈尔施塔特与维也纳车票',url:'https://www.oebb.at/en/',ios:'https://apps.apple.com/app/%C3%B6bb-tickets/id1041401604',android:'https://play.google.com/store/apps/details?id=at.oebb.ts',icon:'app-icons/oebb.png',fallback:'ÖB'},
   {name:'ASFINAG',category:'地图与交通',description:'奥地利高速票车牌查询与路况',url:'https://www.asfinag.at/en/',ios:'https://apps.apple.com/app/asfinag/id453459323',android:'https://play.google.com/store/apps/details?id=at.asfinag.unterwegs',icon:'app-icons/asfinag.png',fallback:'AS'},
   {name:'WienMobil',category:'地图与交通',description:'维也纳公共交通',url:'https://www.wienerlinien.at/web/wl-en',ios:'https://apps.apple.com/app/wienmobil/id1107918142',android:'https://play.google.com/store/apps/details?id=at.wienerlinien.wienmobillab',icon:'app-icons/wienmobil.png',fallback:'WM'},
   {name:'Google Translate',category:'语言沟通',description:'菜单与现场沟通',url:'https://translate.google.com',ios:'https://apps.apple.com/app/google-translate/id414706506',android:'https://play.google.com/store/apps/details?id=com.google.android.apps.translate',icon:'app-icons/google-translate.png',fallback:'GT'},
@@ -127,7 +127,7 @@ export const glossary = [
 
 export const risks = [
   ['高','新天鹅堡时段必须预约','持14天套票仍需选择Multi-Day Ticket Holder并支付预约费。'],['高','9/28科隆至慕尼黑换乘2次','当天持续查看DB App；前序延误时保留原票并按DB指引改乘。'],['高','9/30行李必须寄存在慕尼黑Hbf','不要留在Moxy，否则新天鹅堡返程后无法顺路赶萨尔茨堡。'],['中','D1羊角村接安妮之家','返程延误就取消九街，安妮之家预约优先。'],['中','D2取行李到发车缓冲有限','19:50开始返回中央站，最迟20:15取到行李。'],['中','慕尼黑至萨尔茨堡票种限制','拜仁日票只覆盖区域列车，不含Railjet和ICE。'],['中','Moxy两晚是两个订单','首次入住时请前台关联，尽量原房续住。'],
-  ['高','中国驾照材料必须书面确认','携带中国驾照原件；订车前让租车公司书面接受具体德语翻译件。'],['高','10/4周日林茨异地还车','门店营业、钥匙箱、验车和异地还车必须写入订单或邮件确认。'],['中','哈尔施塔特停车不可预约','古城禁车，P1/P2看电子余位，10/2目标08:15前抵达。'],['中','湖区雨雾与早霜','每日查天气；低能见度时取消湖畔徒步和山路支线，不夜间赶路。'],['中','高速票按车牌核验','取车时用ASFINAG确认Vignette有效，已有时不要重复购买。'],['中','哈尔施塔特盐矿复开时间','2026夏季计划重开但日期未锁定，只作为可选项，临行复核。'],['低','连续三晚更换住宿','每天退房前清点行李，不把护照、药品和电子设备留车内。'],['低','维也纳返程日不要再绕市区','13:30取行李，15:00直接前往机场。'],
+  ['高','湖区公交与渡轮衔接','150/150X和Hallstatt渡轮班次需在出发前复核，错过一班就压缩弹性活动。'],['高','26寸行李不随一日游移动','萨尔茨堡连续住3晚；若酒店不能寄存，改用萨尔茨堡Hbf储物柜。'],['中','Hallstatt Bahnhof不在古城','火车到站后必须衔接约15分钟渡轮，返程至少预留一班船的缓冲。'],['中','萨尔茨堡→维也纳直达车票','提前订座并确认行李架，避免带大箱换乘区域列车。'],['中','湖区雨雾与早霜','每日查天气；低能见度时缩短湖畔散步，优先按原路返回。'],['中','哈尔施塔特盐矿复开时间','2026夏季计划重开但日期未锁定，只作为可选项，临行复核。'],['低','连续多日同酒店','每天只整理随身日包，护照、药品和电子设备不要交给寄存柜。'],['低','维也纳返程日不要再绕市区','13:30取行李，15:00直接前往机场。'],
 ]
 
 export const visaGroups = [
