@@ -34,6 +34,7 @@ button,a,input{touch-action:manipulation}button:focus-visible,a:focus-visible,in
 <style>
 /* Mobile-first pass: expose the next action before secondary detail. */
 .flight-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px;padding:12px 14px;background:#123a35;color:#fff;border:0;box-shadow:var(--shadow)}
+.day.is-hidden,.day[hidden]{display:none!important}
 .flight-leg{display:flex;flex-direction:column;gap:2px;min-width:0}.flight-leg small{color:#b8d8c6;font-size:.7rem;font-weight:800;letter-spacing:.08em}.flight-leg strong{font-size:.92rem;white-space:nowrap}.flight-leg span{font-size:.76rem;color:#d4e8dc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.flight-leg.return{border-left:1px solid #ffffff3d;padding-left:12px}
 .day-switch{display:flex;gap:8px;margin:0 0 14px}.day-switch button{flex:1;min-height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--muted);font-weight:800}.day-switch button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 4px 12px #176b5630}.day-switch small{display:block;font-size:.68rem;font-weight:600;opacity:.8}
 .map-card-collapsed .real-map,.map-card-collapsed .map-legend{display:none}.map-toggle{display:flex;width:100%;align-items:center;justify-content:space-between;min-height:44px;margin:8px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#f5faf5;color:var(--green);font-weight:800}.map-toggle span{font-size:.76rem;color:var(--muted)}.map-card-collapsed h2{margin-top:0}
