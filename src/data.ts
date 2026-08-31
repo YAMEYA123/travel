@@ -38,7 +38,7 @@ export const bookings: Booking[] = [
   {id:'b3a',date:'9月30日–10月1日',title:'萨尔茨堡住宿',detail:'抵达萨尔茨堡后的住宿；确认可提前寄存两只26寸行李箱',price:'待订',status:'urgent'},
   {id:'b3c',date:'10月1日',title:'Weisser Bär Hotel und Wirtshaus',detail:'圣沃尔夫冈住宿；地址：5360 St. Wolfgang im Salzkammergut；Agoda订单',price:'已订',status:'booked'},
   {id:'b3d',date:'10月2日',title:'Hotel Garni Sandwirt',detail:'巴德伊舍住宿；地址：4820 Bad Ischl；靠近车站，方便次日携箱转乘ÖBB',price:'已订',status:'booked'},
-  {id:'b3b',date:'10月4–5日',title:'DoubleTree Vienna Schönbrunn',detail:'2晚连续住宿；10月4日抵达后入住，避免当天拖箱游览',price:'日期待调整',status:'urgent'},
+  {id:'b3b',date:'10月4–5日',title:'DoubleTree Vienna Schönbrunn',detail:'维也纳美泉宫希尔顿逸林；10月4日晚入住，10月5日退房，靠近美泉宫',price:'已订',status:'booked'},
   {id:'b4',date:'9月30日',title:'新天鹅堡12:30场次',detail:'持城堡套票选择Multi-Day Ticket Holder',price:'€2.50/人',status:'urgent',url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau'},
   {id:'b5',date:'出发前',title:'拜仁14天城堡套票',detail:'覆盖慕尼黑皇宫与新天鹅堡',price:'€40/人',status:'urgent',url:'https://bsv-shop.bayern.de'},
   {id:'b6',date:'9月26日',title:'安妮之家19:00',detail:'每周二开放6周后的票',price:'€16.50/人',status:'urgent',url:'https://www.annefrank.org/en/museum/tickets/'},
