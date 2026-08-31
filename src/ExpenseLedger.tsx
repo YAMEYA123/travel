@@ -17,6 +17,7 @@ import {
   saveExpenses,
   saveExchangeRates,
   SPLIT_PAYER,
+  expenseTotal,
   type ExchangeRates,
   type Expense,
   type ExpenseCurrency,
@@ -42,20 +43,20 @@ export default function ExpenseLedger(){
     return()=>removeEventListener(EXPENSES_CHANGED,sync)
   },[])
 
-  const cashTotal=useMemo(()=>expenses.reduce((sum,expense)=>sum+cashToEUR(expense.amount,expense.currency,rates),0),[expenses,rates])
-  const totalValueCNY=useMemo(()=>expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expense.amount,expense.currency,rates),0),[expenses,rates])
-  const pointValueCNY=useMemo(()=>expenses.filter(expense=>isPointCurrency(expense.currency)).reduce((sum,expense)=>sum+expenseValueToCNY(expense.amount,expense.currency,rates),0),[expenses,rates])
+  const cashTotal=useMemo(()=>expenses.reduce((sum,expense)=>sum+cashToEUR(expenseTotal(expense.amount,expense.payer,members.length),expense.currency,rates),0),[expenses,rates,members.length])
+  const totalValueCNY=useMemo(()=>expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length),expense.currency,rates),0),[expenses,rates,members.length])
+  const pointValueCNY=useMemo(()=>expenses.filter(expense=>isPointCurrency(expense.currency)).reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length),expense.currency,rates),0),[expenses,rates,members.length])
   const cashValueCNY=totalValueCNY-pointValueCNY
   const pointSettlements=useMemo(()=>CURRENCY_OPTIONS.filter(option=>isPointCurrency(option.value)).map(option=>{
     const pointExpenses=expenses.filter(expense=>expense.currency===option.value)
-    const total=pointExpenses.reduce((sum,expense)=>sum+expense.amount,0)
+    const total=pointExpenses.reduce((sum,expense)=>sum+expenseTotal(expense.amount,expense.payer,members.length),0)
     return{
       ...option,
       total,
       balances:members.map(name=>{
         const paid=pointExpenses.reduce((sum,expense)=>{
           if(expense.payer===name)return sum+expense.amount
-          if(expense.payer===SPLIT_PAYER)return sum+expense.amount/2
+          if(expense.payer===SPLIT_PAYER)return sum+expense.amount
           return sum
         },0)
         return{name,paid,value:paid-total/Math.max(members.length,1)}
@@ -66,7 +67,7 @@ export default function ExpenseLedger(){
     const paid=expenses.reduce((sum,expense)=>{
       const amountInEUR=cashToEUR(expense.amount,expense.currency,rates)
       if(expense.payer===name)return sum+amountInEUR
-      if(expense.payer===SPLIT_PAYER)return sum+amountInEUR/2
+      if(expense.payer===SPLIT_PAYER)return sum+amountInEUR
       return sum
     },0)
     return{name,paid,value:paid-cashTotal/Math.max(members.length,1)}
@@ -133,6 +134,6 @@ export default function ExpenseLedger(){
     <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>{SPLIT_PAYER}</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
     <div className="balance-row">{balances.map(balance=><article key={balance.name}><span><b>{balance.name}</b><small>个人现金支出 €{balance.paid.toFixed(2)}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>
     {pointSettlements.length>0&&<section className="points-settlement"><header><b>积分分账</b><small>不同酒店积分分别结算，不互相换算</small></header><div>{pointSettlements.map(item=><article key={item.value}><header><span>{item.label}</span><b>共 {Math.round(item.total).toLocaleString('zh-CN')}</b></header>{item.balances.map(balance=><p key={balance.name}><span><b>{balance.name}</b><small>已付 {Math.round(balance.paid).toLocaleString('zh-CN')}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} {Math.round(Math.abs(balance.value)).toLocaleString('zh-CN')}</strong></p>)}</article>)}</div></section>}
-    <div className="expense-list">{expenses.length===0?<div className="empty">旅途中记下第一笔共同消费，系统会自动均分。</div>:expenses.map(expense=><article className={`${expense.bookingId?'linked-expense ':''}${isPointCurrency(expense.currency)?'points-expense':''}`} key={expense.id}><time>{expense.date.slice(5)}</time><span className="category">{expense.category}</span><div><b>{expense.title}</b><small>{expense.payer===SPLIT_PAYER?`各自支付 · 每人 ${formatExpenseAmount(expense.amount/2,expense.currency)}`:`${expense.payer} 支付`}{expense.bookingId&&<button className="booking-link" onClick={()=>openBooking(expense.bookingId!)}><Link2/>关联预订</button>}</small></div><strong>{formatExpenseAmount(expense.amount,expense.currency)}</strong><button onClick={()=>removeExpense(expense.id)} aria-label="删除"><Trash2 size={15}/></button></article>)}</div>
+    <div className="expense-list">{expenses.length===0?<div className="empty">旅途中记下第一笔共同消费，系统会自动均分。</div>:expenses.map(expense=><article className={`${expense.bookingId?'linked-expense ':''}${isPointCurrency(expense.currency)?'points-expense':''}`} key={expense.id}><time>{expense.date.slice(5)}</time><span className="category">{expense.category}</span><div><b>{expense.title}</b><small>{expense.payer===SPLIT_PAYER?`各自支付 · 每人 ${formatExpenseAmount(expense.amount,expense.currency)}`:`${expense.payer} 支付`}{expense.bookingId&&<button className="booking-link" onClick={()=>openBooking(expense.bookingId!)}><Link2/>关联预订</button>}</small></div><strong>{formatExpenseAmount(expenseTotal(expense.amount,expense.payer,members.length),expense.currency)}</strong><button onClick={()=>removeExpense(expense.id)} aria-label="删除"><Trash2 size={15}/></button></article>)}</div>
   </section>
 }

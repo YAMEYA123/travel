@@ -22,6 +22,8 @@ export const CURRENCY_OPTIONS:{value:ExpenseCurrency;label:string}[]=[
 ]
 export const POINT_CURRENCIES:ExpenseCurrency[]=['IHG','MARRIOTT','HILTON']
 export const SPLIT_PAYER='各自支付（总额均分）'
+/** 各自支付时，记录的 amount 是单人金额；其它付款人记录的是整笔金额。 */
+export const expenseTotal=(amount:number,payer:string,memberCount:number)=>payer===SPLIT_PAYER?amount*Math.max(memberCount,1):amount
 export const EXCHANGE_RATES_KEY='travel-exchange-rates'
 export const EXCHANGE_RATES_CHANGED='travel-exchange-rates-changed'
 export const DEFAULT_EXCHANGE_RATES:ExchangeRates={eurToCny:7.8,usdToCny:7.8/1.16}
