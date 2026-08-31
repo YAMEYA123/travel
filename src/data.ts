@@ -1,6 +1,6 @@
 import type { Booking, TripDay } from './types'
 
-const a = (id:string,time:string,title:string,detail:string,kind:'sight'|'train'|'bus'|'food'|'hotel'|'note'|'drive'='sight',extra={}) => ({id,time,title,detail,kind,...extra})
+const a = (id:string,time:string,title:string,detail:string,kind:'sight'|'train'|'bus'|'boat'|'walk'|'food'|'hotel'|'note'|'drive'='sight',extra={}) => ({id,time,title,detail,kind,...extra})
 
 export const days: TripDay[] = [
   {id:'d0',day:0,date:'9月25日',weekday:'周五',city:'阿姆斯特丹',country:'NL',title:'抵达阿姆斯特丹',hotel:'Holiday Inn Express Amsterdam - Sloterdijk',activities:[
