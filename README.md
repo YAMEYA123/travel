@@ -60,8 +60,8 @@
 - 9月28–30日：Moxy Munich Ostbahnhof，共2晚；两笔连续订单
 - 9月29日：D4 09:30早餐、10:15从酒店出发；19:30从霍夫啤酒屋直接抵达啤酒节，不折返酒店，22:15错峰返程
 - 9月30日：入住萨尔茨堡假日酒店，作为湖区公共交通转场起点
-- 10月1日：完整游览萨尔茨堡后，约15:15乘150/150X前往St. Gilgen，再乘船到St. Wolfgang，入住 Weisser Bär Hotel und Wirtshaus（5360 St. Wolfgang im Salzkammergut）
-- 10月2日：早上乘SchafbergBahn高山小火车并短游圣沃尔夫冈，随后转场巴德伊舍，寄存行李后经Gosaumühle前往哈尔施塔特；晚间回Hotel Garni Sandwirt（4820 Bad Ischl）入住
+- 10月1日：完整游览萨尔茨堡后，约15:15乘150/150X前往St. Gilgen，再乘船到St. Wolfgang，入住 Hotel Weisser Bär（Markt 88，5360 St. Wolfgang im Salzkammergut）
+- 10月2日：早上乘SchafbergBahn高山小火车并短游圣沃尔夫冈，随后转场巴德伊舍，寄存行李后经Gosaumühle前往哈尔施塔特；晚间入住 Hotel & Hostel Sandwirt（Eglmoosgasse 4，4820 Bad Ischl）
 - 10月3日：上午从巴德伊舍前往戈绍湖，约09:30–13:00游览并午餐，下午返程取行李，17:31乘已购IC 1119直达维也纳西站（20:15抵达），入住维也纳美泉宫希尔顿逸林
 - 10月3–5日：维也纳连续住2晚，10月4日安排完整市区游览
 - 10月5日：09:30–12:00美泉宫，15:00离开酒店、16:00到机场，为19:00航班保留3小时
