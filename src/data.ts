@@ -50,9 +50,9 @@ export const bookings: Booking[] = [
   {id:'b7c',date:'10月1日',title:'萨尔茨堡卡24小时（可选）',detail:'仅市区首日，先核算要塞与莫扎特出生地单买价格',price:'可选',status:'optional',url:'https://www.salzburg.info/en/hotels-offers/salzburg-card'},
   {id:'b8',date:'10月4日',title:'巴德伊舍 → 维也纳火车',detail:'经Attnang-Puchheim换乘；提前订座，确认两只26寸箱的行李架位置',price:'待购',status:'soon',url:'https://www.oebb.at/en/'},
   {id:'b9',date:'10月5日',title:'美泉宫09:30',detail:'旺季建议提前预约',price:'€28/人',status:'soon',url:'https://www.imperialtickets.com/en/schoenbrunn-palace'},
-  {id:'b11',date:'10月4日 19:30',title:'Igor Levit · 贝多芬（推荐）',detail:'Musikverein金色大厅；最适合当前行程，10月4日白天游览后直接赴音乐会',price:'以官方票价为准',status:'soon',url:'https://shop.musikverein.at/list/events?lang=en'},
-  {id:'b12',date:'10月4日 19:30（备选）',title:'Il Giardino Armonico',detail:'Musikverein Brahms-Saal；古乐/室内乐方向备选，与Igor Levit二选一',price:'以官方票价为准',status:'optional',url:'https://shop.musikverein.at/list/events?lang=en'},
-  {id:'b13',date:'10月4日 11:00（备选）',title:'维也纳爱乐 · Riccardo Muti · Bruckner',detail:'Musikverein金色大厅；与原定美泉宫上午时段冲突，除非改动白天行程，否则不优先',price:'以官方票价为准',status:'optional',url:'https://shop.musikverein.at/list/events?lang=en'},
+  {id:'b11',date:'10月4日 19:30',title:'Igor Levit · 贝多芬（已售罄）',detail:'Musikverein金色大厅；官方购票页当前显示该场次已售罄，可继续留意退票',price:'已售罄',status:'optional',url:'https://shop.musikverein.at/selection/event/seat?choiceSelectionDone=true&lang=de&perfId=10229704057301&productId=10229703994579'},
+  {id:'b12',date:'10月4日 19:30（已售罄）',title:'Il Giardino Armonico',detail:'Musikverein Brahms-Saal；官方购票页当前显示已售罄，可继续留意退票',price:'已售罄',status:'optional',url:'https://shop.musikverein.at/selection/event/date?lang=de&productId=10229703994580'},
+  {id:'b13',date:'10月4日 11:00（仍可购）',title:'维也纳爱乐 · Riccardo Muti · Bruckner',detail:'Musikverein金色大厅；第2/3/4/7类及站票仍可选，约€12起；但会与美泉宫上午时段冲突',price:'约€12起',status:'soon',url:'https://shop.musikverein.at/selection/event/seat?lang=en&perfId=10229710705233&productId=10229710236903&table=1'},
 ]
 
 export const route = [
