@@ -1,5 +1,6 @@
-const CACHE='travel-2026-v10'
-const ENTRY='/travel/europe-travel-2026.html'
+const CACHE='travel-2026-v11'
+const ENTRY='/travel/'
+const LEGACY_ENTRY='/travel/europe-travel-2026.html'
 const APP_ICONS=['google-maps.png','ns.png','9292.png','db-navigator.png','mvv.png','oebb.png','asfinag.png','wienmobil.png','google-translate.png','deepl.png','global-blue.ico','splitwise.png'].map(file=>`/travel/app-icons/${file}`)
 
 async function precache(){
@@ -19,11 +20,11 @@ self.addEventListener('fetch',event=>{
   const url=new URL(event.request.url)
   if(url.origin!==location.origin)return
 
-  if(event.request.mode==='navigate'||url.pathname===ENTRY){
+  if(event.request.mode==='navigate'||url.pathname===ENTRY||url.pathname===LEGACY_ENTRY){
     event.respondWith(fetch(event.request).then(response=>{
-      if(response.ok)caches.open(CACHE).then(cache=>cache.put(ENTRY,response.clone()))
+      if(response.ok)caches.open(CACHE).then(cache=>cache.put(url.pathname===LEGACY_ENTRY?LEGACY_ENTRY:ENTRY,response.clone()))
       return response
-    }).catch(()=>caches.match(ENTRY)))
+    }).catch(()=>caches.match(url.pathname===LEGACY_ENTRY?LEGACY_ENTRY:ENTRY).then(cached=>cached||caches.match(ENTRY))))
     return
   }
 
