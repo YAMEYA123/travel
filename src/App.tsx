@@ -81,6 +81,7 @@ function BookingSheet({item,onClose}:{item:Booking;onClose:()=>void}){
   return <Sheet title={item.title} onClose={onClose}>
     <div className="sheet-type"><span className="type-icon" style={{'--type':color} as React.CSSProperties}><Icon/></span><div><span>{type} · {item.date}</span><b>{item.price}</b></div></div>
     <p className="sheet-detail">{item.detail}</p>
+    {item.ticketImages&&<section className="ticket-gallery"><header><TicketCheck/><b>电子票根</b><span>点击图片查看大图</span></header><div>{item.ticketImages.map(image=><a href={image} target="_blank" rel="noreferrer" key={image}><img src={image} alt={`${item.title}电子票根`}/></a>)}</div><small>入场时请同时准备票根二维码和对应的实体卡/证件。</small></section>}
     <section className="booking-expense-card">
       <header><span><CircleDollarSign/><b>创建费用分账</b></span>{linked>0&&<button onClick={openLedger}>{linked}笔已关联 <ChevronRight/></button>}</header>
       <p>项目名称与类别已从当前预订自动带入。</p>

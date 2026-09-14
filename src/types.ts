@@ -35,4 +35,5 @@ export interface Booking {
   price: string
   status: 'booked' | 'urgent' | 'soon' | 'optional'
   url?: string
+  ticketImages?: string[]
 }
