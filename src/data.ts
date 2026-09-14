@@ -27,6 +27,10 @@ export const days: TripDay[] = [
     a('d10-0','08:30','退房并寄存行李','轻装步行去美泉宫','hotel'),a('d10-1','09:30–12:00','美泉宫','酒店步行可达，按预约时段入场','sight',{cost:'€28',important:true}),a('d10-1a','12:00–13:00','午餐','在酒店或美泉宫附近简餐','food'),a('d10-2','13:30','返回酒店取行李','不再带行李绕行市中心','note'),a('d10-3','15:00','前往VIE机场','目标16:00前抵达','train',{important:true}),a('d10-4','16:00','抵达维也纳机场','预留3小时办理值机、安检和退税','train',{important:true}),a('d10-5','19:00','起飞离开欧洲','旅程结束','train')]},
 ]
 
+// Keep the displayed map/plan wording aligned with the current hotel bookings.
+days.find(day=>day.id==='d3')?.activities.find(item=>item.id==='d3-0') && (days.find(day=>day.id==='d3')!.activities.find(item=>item.id==='d3-0')!.detail='行李留在ibis Köln am Dom，轻装游览')
+days.find(day=>day.id==='d3')?.activities.find(item=>item.id==='d3-4') && (days.find(day=>day.id==='d3')!.activities.find(item=>item.id==='d3-4')!.detail='回ibis Köln am Dom取寄存行李')
+
 export const bookings: Booking[] = [
   {id:'b0a',date:'9月25–26日',title:'Holiday Inn Express Amsterdam - Sloterdijk',detail:'第1晚独立订单；38,000 IHG积分兑换，机场和中央站均可直达',price:'38,000 IHG积分',status:'booked'},
   {id:'b0a2',date:'9月26–27日',title:'Holiday Inn Express Amsterdam - Sloterdijk',detail:'第2晚独立订单；请前台关联前一晚，尽量原房续住',price:'已订',status:'booked'},
@@ -42,13 +46,12 @@ export const bookings: Booking[] = [
   {id:'b10',date:'10月3日',title:'IC 1119 巴德伊舍 → 维也纳西站',detail:'17:31出发，20:15抵达 Wien Westbahnhof；直达，ÖBB车次',price:'已出票',status:'booked'},
   {id:'b4',date:'9月29日 13:50',title:'新天鹅堡13:50英文场次',detail:'先游览玛丽安桥，再参加13:50英文导览；持城堡套票选择Multi-Day Ticket Holder，提前到票务中心',price:'€2.50/人',status:'urgent',url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau'},
   {id:'b5',date:'出发前',title:'拜仁14天城堡套票',detail:'覆盖慕尼黑皇宫与新天鹅堡',price:'€40/人',status:'urgent',url:'https://bsv-shop.bayern.de'},
-  {id:'b6',date:'9月26日',title:'安妮之家19:00',detail:'每周二开放6周后的票',price:'€16.50/人',status:'urgent',url:'https://www.annefrank.org/en/museum/tickets/'},
+  {id:'b6',date:'9月26日 19:00',title:'安妮之家19:00',detail:'只能在线预约指定日期和时间；Museumkaart也需单独预约并支付预约费，提前15分钟到入口，不能现场购票',price:'€16.50/人',status:'urgent',url:'https://www.annefrank.org/en/museum/tickets/'},
   {id:'b7',date:'9月27日 09:00',title:'梵高博物馆（已预约）',detail:'两张Museumkaart票；09:00入场，票号772199259592913857、774173791825613554；票面提示预约时间后30分钟内可入场',price:'€0 · 已预约',status:'booked',url:'https://www.vangoghmuseum.nl/en/visit/tickets-and-opening-hours'},
   {id:'b7a',date:'9月27日 14:00–15:00',title:'荷兰国立博物馆（已预约）',detail:'两张Dutch Museum Card票；14:00–15:00入场窗口，票据条码3289017640584、3289017640585',price:'€0 · 已预约',status:'booked',url:'https://www.rijksmuseum.nl/en/tickets'},
   {id:'b7d',date:'9月26日 16:30前到达（弹性）',title:'伦勃朗故居',detail:'2026年9月周六10:00–18:00；16:00–18:00为低峰时段，建议提前预约timeslot。Museumkaart可免费入场，但也建议预约。只有羊角村返程准点才执行，不影响19:00安妮之家',price:'€19.50/人（低峰） · Museumkaart免费',status:'soon',url:'https://www.rembrandthuis.nl/en/plan-your-visit/visitor-information/opening-hours-fees/'},
-  {id:'b7b',date:'9月29日',title:'拜仁日票',detail:'两人票；用于慕尼黑东站 → 菲森及符合条件的区域列车回程，工作日09:00后生效',price:'约€44/2人',status:'soon',url:'https://int.bahn.de/en/offers/regional/regional-day-ticket-bavaria'},
+  {id:'b7b',date:'9月29日',title:'拜仁日票',detail:'两人票；主要用于09:14慕尼黑东站 → 菲森的区域列车。回程优先FlexBus，不把FlexBus误计入拜仁日票；工作日09:00后生效',price:'约€44/2人',status:'soon',url:'https://int.bahn.de/en/offers/regional/regional-day-ticket-bavaria'},
   {id:'b7c',date:'10月1日',title:'萨尔茨堡卡24小时（可选）',detail:'仅市区首日，先核算要塞与莫扎特出生地单买价格',price:'可选',status:'optional',url:'https://www.salzburg.info/en/hotels-offers/salzburg-card'},
-  {id:'b8',date:'10月4日',title:'巴德伊舍 → 维也纳火车',detail:'经Attnang-Puchheim换乘；提前订座，确认两只26寸箱的行李架位置',price:'待购',status:'soon',url:'https://www.oebb.at/en/'},
   {id:'b9',date:'10月5日',title:'美泉宫09:30',detail:'旺季建议提前预约',price:'€28/人',status:'soon',url:'https://www.imperialtickets.com/en/schoenbrunn-palace'},
   {id:'b14',date:'10月4日',title:'美景宫上宫',detail:'建议预约上午入场时段；重点参观克里姆特《吻》及主要展厅',price:'以官方票价为准',status:'soon',url:'https://www.belvedere.at/en/tickets'},
   {id:'b11',date:'10月4日 19:30',title:'Igor Levit · 贝多芬（已售罄）',detail:'Musikverein金色大厅；官方购票页当前显示该场次已售罄，可继续留意退票',price:'已售罄',status:'optional',url:'https://shop.musikverein.at/selection/event/seat?choiceSelectionDone=true&lang=de&perfId=10229704057301&productId=10229703994579'},
