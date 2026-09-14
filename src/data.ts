@@ -39,7 +39,7 @@ export const bookings: Booking[] = [
   {id:'b2',date:'9月28日',title:'科隆 → 慕尼黑东站',detail:'18:54–23:34，2次换乘',price:'¥212/人 · 已购',status:'booked'},
   {id:'b3',date:'9月28–29日',title:'Moxy Munich Ostbahnhof',detail:'第1晚独立订单；深夜抵达，提前确认保留房间',price:'已订',status:'booked'},
   {id:'b3m2',date:'9月29–30日',title:'Moxy Munich Ostbahnhof',detail:'第2晚独立订单；首次入住时关联前一晚，尽量原房续住',price:'已订',status:'booked'},
-  {id:'b3a',date:'9月30日–10月1日',title:'Holiday Inn Salzburg City',detail:'萨尔茨堡假日酒店；确认可提前寄存两只26寸行李箱',price:'待订',status:'urgent'},
+  {id:'b3a',date:'9月30日–10月1日',title:'Holiday Inn Salzburg City',detail:'1晚、2间Standard Single；确认号 #20924100；使用积分兑换；地址：Sterneckstrasse 21, Salzburg 5020, Österreich',price:'已确认 · IHG积分',status:'booked'},
   {id:'b3c',date:'10月1–2日',title:'Hotel Weisser Bär',detail:'1晚；10月1日15:00后入住、10月2日11:00前退房；地址：Markt 88, 5360 St. Wolfgang im Salzkammergut, Österreich；Agoda订单',price:'已订',status:'booked'},
   {id:'b3d',date:'10月2–3日',title:'Hotel & Hostel Sandwirt',detail:'1晚；10月2日17:00–21:00入住、10月3日07:30–10:30退房；地址：Eglmoosgasse 4, 4820 Bad Ischl, Österreich；Booking.com订单',price:'已订',status:'booked'},
   {id:'b3b',date:'10月3–5日',title:'DoubleTree Vienna Schönbrunn',detail:'维也纳美泉宫希尔顿逸林；10月3日晚入住，10月5日退房，靠近美泉宫',price:'已订',status:'booked'},
