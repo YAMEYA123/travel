@@ -31,6 +31,23 @@ export const days: TripDay[] = [
 days.find(day=>day.id==='d3')?.activities.find(item=>item.id==='d3-0') && (days.find(day=>day.id==='d3')!.activities.find(item=>item.id==='d3-0')!.detail='行李留在ibis Köln am Dom，轻装游览')
 days.find(day=>day.id==='d3')?.activities.find(item=>item.id==='d3-4') && (days.find(day=>day.id==='d3')!.activities.find(item=>item.id==='d3-4')!.detail='回ibis Köln am Dom取寄存行李')
 
+// 9/26羊角村采用组合票：火车 + 70路公交 + 1小时游船；不再把当天写成现场租船和不确定早班车。
+const giethoornDay = days.find(day=>day.id==='d1')
+if (giethoornDay) {
+  giethoornDay.title = '羊角村组合票一日游、购Museumkaart与安妮之家'
+  giethoornDay.note = '使用Discover Holland组合票：荷兰火车往返Steenwijk、RRReis 70路公交往返羊角村，并含1小时游船。周六全天可用；游船通常11:00–15:00，早上不必为了不存在的固定9:30班次赶路。返程仍要给伦勃朗故居购卡和安妮之家16:30–16:45预约留足缓冲。'
+  const update = (id:string, values:Record<string, unknown>) => {
+    const item = giethoornDay.activities.find(activity=>activity.id===id)
+    if (item) Object.assign(item, values)
+  }
+  update('d1-1', {time:'约07:00', detail:'阿姆斯特丹 → Steenwijk；组合票含荷兰火车往返，具体早班车以NS当天查询为准', cost:'组合票已含', important:true})
+  update('d1-1a', {time:'约08:30', detail:'Steenwijk → 羊角村；乘RRReis 70路并刷组合票，不要误上270路', payment:'组合票含70路；不要用OVpay重复付费'})
+  update('d1-2', {time:'09:00–10:45', title:'羊角村村落与水道', detail:'先步行看主水道、木桥和茅草屋；组合票游船窗口通常11:00–15:00，不把行程写成现场租船', important:true})
+  update('d1-2a', {time:'11:00–12:00', title:'羊角村1小时游船', detail:'使用组合票内的1小时游船；提前到码头确认班次，船票不等于可随时无限乘坐', kind:'boat', important:true})
+  update('d1-2b', {time:'12:00–12:30', detail:'羊角村简餐；游船结束后立即准备返程', important:true})
+  update('d1-3', {time:'12:30–14:00', detail:'羊角村 → Steenwijk → 阿姆斯特丹；组合票含70路和荷兰火车，目标14:00左右回市区，为购Museumkaart预留时间', payment:'组合票含公交与火车；按票面/当天NS班次衔接', important:true})
+}
+
 export const bookings: Booking[] = [
   {id:'b0a',date:'9月25–26日',title:'Holiday Inn Express Amsterdam - Sloterdijk',detail:'第1晚独立订单；38,000 IHG积分兑换，机场和中央站均可直达',price:'38,000 IHG积分',status:'booked'},
   {id:'b0a2',date:'9月26–27日',title:'Holiday Inn Express Amsterdam - Sloterdijk',detail:'第2晚独立订单；请前台关联前一晚，尽量原房续住',price:'已订',status:'booked'},
@@ -46,6 +63,7 @@ export const bookings: Booking[] = [
   {id:'b10',date:'10月3日',title:'IC 1119 巴德伊舍 → 维也纳西站',detail:'17:31出发，20:15抵达 Wien Westbahnhof；直达，ÖBB车次',price:'已出票',status:'booked'},
   {id:'b4',date:'9月29日 13:50',title:'新天鹅堡13:50英文场次',detail:'先游览玛丽安桥，再参加13:50英文导览；持城堡套票选择Multi-Day Ticket Holder，提前到票务中心',price:'€2.50/人',status:'urgent',url:'https://www.hohenschwangau.de/en/tours-tickets/official-tickets-neuschwanstein-hohenschwangau'},
   {id:'b5',date:'出发前',title:'拜仁14天城堡套票',detail:'覆盖慕尼黑皇宫与新天鹅堡',price:'€40/人',status:'urgent',url:'https://bsv-shop.bayern.de'},
+  {id:'b5a',date:'9月26日',title:'羊角村火车 + 70路公交 + 游船组合票',detail:'Discover Holland组合票；含荷兰火车往返Steenwijk、RRReis 70路公交往返羊角村和1小时游船。周六全天可用，游船通常11:00–15:00；以结算页最终价格和票面规则为准',price:'约€52–53/人',status:'soon',url:'https://www.discoverholland.com/daytrip/129/giethoorn'},
   {id:'b6',date:'9月26日 16:30–16:45',title:'安妮之家（已预约）',detail:'使用Museumkaart；预约窗口16:30–16:45，预约费€1；建议16:15前抵达入口，早到或迟到可能无法按普通开放时间入场，不能现场购票',price:'Museumkaart · €1预约费',status:'booked',url:'https://www.annefrank.org/en/museum/tickets/'},
   {id:'b7',date:'9月27日 09:00',title:'梵高博物馆（已预约）',detail:'两张Museumkaart票；09:00入场，票号772199259592913857、774173791825613554；票面提示预约时间后30分钟内可入场',price:'€0 · 已预约',status:'booked',url:'https://www.vangoghmuseum.nl/en/visit/tickets-and-opening-hours'},
   {id:'b7a',date:'9月27日 14:00–15:00',title:'荷兰国立博物馆（已预约）',detail:'两张Dutch Museum Card票；14:00–15:00入场窗口，票据条码3289017640584、3289017640585',price:'€0 · 已预约',status:'booked',url:'https://www.rijksmuseum.nl/en/tickets'},
