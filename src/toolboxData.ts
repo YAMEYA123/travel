@@ -26,7 +26,19 @@ export const packing = [
   {group:'随身小包',items:['纸巾与湿巾','水杯','常用药','创可贴','小袋零食','酒店名片/地址截图']},
 ]
 
-export const apps = [
+export type AppEntry = {
+  name:string
+  category:string
+  description:string
+  url:string
+  ios?:string
+  android?:string
+  iosScheme?:string
+  icon:string
+  fallback:string
+}
+
+export const apps:AppEntry[] = [
   {name:'Google Maps',category:'地图与交通',description:'全程地图、公交与步行导航',url:'https://www.google.com/maps/?api=1',iosScheme:'comgooglemaps://',ios:'https://apps.apple.com/app/google-maps/id585027354',android:'https://play.google.com/store/apps/details?id=com.google.android.apps.maps',icon:'app-icons/google-maps.png',fallback:'GM'},
   {name:'NS',category:'地图与交通',description:'荷兰火车实时班次',url:'https://www.ns.nl/en',ios:'https://apps.apple.com/app/ns-travel-planner/id370362301',android:'https://play.google.com/store/apps/details?id=nl.ns.android.activity',icon:'app-icons/ns.png',fallback:'NS'},
   {name:'9292',category:'地图与交通',description:'荷兰综合公共交通',url:'https://9292.nl/en',ios:'https://apps.apple.com/app/9292-travel-planner-e-ticket/id556557690',android:'https://play.google.com/store/apps/details?id=nl.negentwee',icon:'app-icons/9292.png',fallback:'92'},
@@ -39,6 +51,7 @@ export const apps = [
   {name:'DeepL',category:'语言沟通',description:'德语长句翻译',url:'https://www.deepl.com',ios:'https://apps.apple.com/app/deepl-translate/id1552407475',android:'https://play.google.com/store/apps/details?id=com.deepl.mobiletranslator',icon:'app-icons/deepl.png',fallback:'DL'},
   {name:'Global Blue',category:'旅行服务',description:'退税进度查询',url:'https://www.globalblue.com/',ios:'https://apps.apple.com/app/global-blue-shop-tax-free/id693120896',android:'https://play.google.com/store/apps/details?id=com.buuuk.globalblue',icon:'app-icons/global-blue.ico',fallback:'GB'},
   {name:'Splitwise',category:'旅行服务',description:'额外的多人分账备份',url:'https://www.splitwise.com/',ios:'https://apps.apple.com/app/splitwise/id458023433',android:'https://play.google.com/store/apps/details?id=com.Splitwise.SplitwiseMobile',icon:'app-icons/splitwise.png',fallback:'SW'},
+  {name:'Museumkaart',category:'荷兰票务',description:'购买、激活与使用荷兰博物馆卡',url:'https://www.museumkaart.nl/',icon:'app-icons/museumkaart.png',fallback:'MK'},
 ]
 
 export const shopping = [
