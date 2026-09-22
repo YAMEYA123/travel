@@ -135,6 +135,8 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
 .mobile-nav button.active:before{content:'';position:absolute;top:5px;width:20px;border-top:3px solid var(--coral);border-radius:50%}
 .mobile-nav button{position:relative}
 
+.booking-priorities{display:flex;gap:6px;flex-wrap:wrap;padding:0 8px 8px}.booking-priorities button{border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;padding:5px 9px;font-size:10px;cursor:pointer}.booking-priorities button b{margin-left:4px;font:500 10px 'DM Mono'}.booking-priorities button.active{background:#edf2f5;color:var(--ink);border-color:#b9c8d0}.booking-priorities button.active.priority-P0{background:#fff0e5;color:#a84c18;border-color:#f0b99a}.booking-priorities button.active.priority-P1{background:#fff8df;color:#886000;border-color:#e5c66b}.booking-priorities button.active.priority-P2{background:#eaf2ff;color:#285b9c;border-color:#a9c6ed}.booking-priorities button.active.priority-P3{background:#f2f0ff;color:#5b4a9b;border-color:#c9c0ee}.priority-pill{padding:3px 6px;border-radius:6px;font:700 9px 'DM Mono';white-space:nowrap}.priority-P0{background:#fff0e5;color:#a84c18}.priority-P1{background:#fff8df;color:#886000}.priority-P2{background:#eaf2ff;color:#285b9c}.priority-P3{background:#f2f0ff;color:#5b4a9b}
+
 @media(max-width:680px){
   .side-nav{background:#fffaf0;border-bottom:1px solid #dce8e2}
   .app-logo>svg{box-shadow:none}
