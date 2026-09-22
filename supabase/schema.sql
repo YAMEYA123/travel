@@ -15,6 +15,8 @@ drop policy if exists "members read membership" on public.trip_members;
 create policy "members read membership" on public.trip_members for select to authenticated using (public.is_trip_member(trip_id) or user_id=auth.uid());
 drop policy if exists "users join trips" on public.trip_members;
 create policy "users join trips" on public.trip_members for insert to authenticated with check (user_id=auth.uid());
+create or replace function public.join_trip(requested_code text, display_name text default '旅伴') returns public.trip_books language plpgsql security definer set search_path = public as $$ declare target public.trip_books; begin select * into target from public.trip_books where invite_code=upper(trim(requested_code)); if target.id is null then raise exception '邀请码无效'; end if; insert into public.trip_members(trip_id,user_id,display_name) values(target.id,auth.uid(),coalesce(nullif(trim(display_name),''),'旅伴')) on conflict (trip_id,user_id) do update set display_name=excluded.display_name; return target; end; $$;
+grant execute on function public.join_trip(text,text) to authenticated;
 drop policy if exists "members read expenses" on public.shared_expenses;
 create policy "members read expenses" on public.shared_expenses for select to authenticated using (public.is_trip_member(trip_id));
 drop policy if exists "members add expenses" on public.shared_expenses;
