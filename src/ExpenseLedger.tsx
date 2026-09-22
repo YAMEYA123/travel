@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Download, Link2, Plus, RotateCcw, Settings2, Trash2, Users } from 'lucide-react'
+import { Download, FileImage, Link2, Plus, RotateCcw, Settings2, Trash2, Upload, Users, X } from 'lucide-react'
 import {
   cashToEUR,
   CURRENCY_OPTIONS,
@@ -13,6 +13,10 @@ import {
   loadExchangeRates,
   loadExpenses,
   loadMembers,
+  hydrateExpenses,
+  loadReceipt,
+  removeReceipt,
+  saveReceipt,
   MEMBERS_KEY,
   saveExpenses,
   saveExchangeRates,
@@ -35,9 +39,12 @@ export default function ExpenseLedger(){
   const [rates,setRates]=useState<ExchangeRates>(loadExchangeRates)
   const [rateDraft,setRateDraft]=useState({eurToCny:String(rates.eurToCny),usdToCny:String(Number(rates.usdToCny.toFixed(4)))})
   const [ratesSaved,setRatesSaved]=useState(false)
+  const [receiptError,setReceiptError]=useState('')
+  const [receiptBusy,setReceiptBusy]=useState<string|null>(null)
 
   useEffect(()=>localStorage.setItem(MEMBERS_KEY,JSON.stringify(members)),[members])
   useEffect(()=>{
+    void hydrateExpenses()
     const sync=(event:Event)=>setExpenses((event as CustomEvent<Expense[]>).detail||loadExpenses())
     addEventListener(EXPENSES_CHANGED,sync)
     return()=>removeEventListener(EXPENSES_CHANGED,sync)
@@ -100,6 +107,33 @@ export default function ExpenseLedger(){
     const next=expenses.filter(item=>item.id!==id)
     setExpenses(next)
     saveExpenses(next)
+    void removeReceipt(id)
+  }
+  const attachReceipt=async(expense:Expense,file:File)=>{
+    setReceiptError('')
+    if(!['image/jpeg','image/png','image/webp','application/pdf'].includes(file.type)){setReceiptError('仅支持 JPG、PNG、WebP 或 PDF 票据');return}
+    if(file.size>8*1024*1024){setReceiptError('票据文件不能超过 8MB');return}
+    setReceiptBusy(expense.id)
+    try{
+      await saveReceipt(expense.id,file)
+      const next=expenses.map(item=>item.id===expense.id?{...item,receiptName:file.name,receiptType:file.type,receiptSize:file.size}:item)
+      setExpenses(next);saveExpenses(next)
+    }catch{setReceiptError('票据保存失败，请检查浏览器是否允许本地存储')}
+    finally{setReceiptBusy(null)}
+  }
+  const openReceipt=async(expense:Expense)=>{
+    try{
+      const receipt=await loadReceipt(expense.id)
+      if(!receipt){setReceiptError('找不到这张票据，可能已清理浏览器数据');return}
+      const url=URL.createObjectURL(receipt.blob)
+      const anchor=document.createElement('a');anchor.href=url;anchor.download=receipt.name;anchor.target='_blank';anchor.click()
+      setTimeout(()=>URL.revokeObjectURL(url),1000)
+    }catch{setReceiptError('票据读取失败')}
+  }
+  const detachReceipt=async(expense:Expense)=>{
+    await removeReceipt(expense.id)
+    const next=expenses.map(item=>item.id===expense.id?(({receiptName,receiptType,receiptSize,...rest})=>rest)(item):item)
+    setExpenses(next);saveExpenses(next)
   }
   const addMember=()=>{
     const name=member.trim()
@@ -129,11 +163,12 @@ export default function ExpenseLedger(){
       <summary><span><Settings2/><b>汇率设置</b></span><small>€1=¥{rates.eurToCny.toFixed(2)} · $1=¥{rates.usdToCny.toFixed(2)}</small></summary>
       <div><label><span>1 欧元兑人民币</span><input inputMode="decimal" value={rateDraft.eurToCny} onChange={event=>{setRateDraft(current=>({...current,eurToCny:event.target.value}));setRatesSaved(false)}} placeholder={String(DEFAULT_EXCHANGE_RATES.eurToCny)}/></label><label><span>1 美元兑人民币</span><input inputMode="decimal" value={rateDraft.usdToCny} onChange={event=>{setRateDraft(current=>({...current,usdToCny:event.target.value}));setRatesSaved(false)}} placeholder={DEFAULT_EXCHANGE_RATES.usdToCny.toFixed(4)}/></label><button className="rate-reset" onClick={resetRates}><RotateCcw/>恢复默认</button><button className="rate-save" onClick={applyRates}>{ratesSaved?'已应用':'应用汇率'}</button></div>
     </details>
-    <p className="privacy-note">记录和自定义汇率只保存在当前浏览器；未设置或输入无效时自动使用默认汇率。IHG、万豪和希尔顿积分仍分别作为独立单位均分并计算应收应付。</p>
+    <p className="privacy-note">账目和票据只保存在当前浏览器的本地数据库，不会上传到 GitHub 或第三方服务器。建议定期导出账目备份；清理浏览器站点数据会删除本地票据。</p>
     <div className="member-strip"><Users size={18}/>{members.map(name=><span key={name}>{name}</span>)}<input value={member} onChange={event=>setMember(event.target.value)} placeholder="新增成员"/><button onClick={addMember}><Plus size={15}/></button></div>
     <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>{SPLIT_PAYER}</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
     <div className="balance-row">{balances.map(balance=><article key={balance.name}><span><b>{balance.name}</b><small>个人现金支出 €{balance.paid.toFixed(2)}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>
     {pointSettlements.length>0&&<section className="points-settlement"><header><b>积分分账</b><small>不同酒店积分分别结算，不互相换算</small></header><div>{pointSettlements.map(item=><article key={item.value}><header><span>{item.label}</span><b>共 {Math.round(item.total).toLocaleString('zh-CN')}</b></header>{item.balances.map(balance=><p key={balance.name}><span><b>{balance.name}</b><small>已付 {Math.round(balance.paid).toLocaleString('zh-CN')}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} {Math.round(Math.abs(balance.value)).toLocaleString('zh-CN')}</strong></p>)}</article>)}</div></section>}
-    <div className="expense-list">{expenses.length===0?<div className="empty">旅途中记下第一笔共同消费，系统会自动均分。</div>:expenses.map(expense=><article className={`${expense.bookingId?'linked-expense ':''}${isPointCurrency(expense.currency)?'points-expense':''}`} key={expense.id}><time>{expense.date.slice(5)}</time><span className="category">{expense.category}</span><div><b>{expense.title}</b><small>{expense.payer===SPLIT_PAYER?`各自支付 · 每人 ${formatExpenseAmount(expense.amount,expense.currency)}`:`${expense.payer} 支付`}{expense.bookingId&&<button className="booking-link" onClick={()=>openBooking(expense.bookingId!)}><Link2/>关联预订</button>}</small></div><strong>{formatExpenseAmount(expenseTotal(expense.amount,expense.payer,members.length),expense.currency)}</strong><button onClick={()=>removeExpense(expense.id)} aria-label="删除"><Trash2 size={15}/></button></article>)}</div>
+    {receiptError&&<p className="receipt-error" role="alert">{receiptError}<button onClick={()=>setReceiptError('')} aria-label="关闭"><X size={14}/></button></p>}
+    <div className="expense-list">{expenses.length===0?<div className="empty">旅途中记下第一笔共同消费，系统会自动均分。</div>:expenses.map(expense=><article className={`${expense.bookingId?'linked-expense ':''}${isPointCurrency(expense.currency)?'points-expense':''}`} key={expense.id}><time>{expense.date.slice(5)}</time><span className="category">{expense.category}</span><div><b>{expense.title}</b><small>{expense.payer===SPLIT_PAYER?`各自支付 · 每人 ${formatExpenseAmount(expense.amount,expense.currency)}`:`${expense.payer} 支付`}{expense.bookingId&&<button className="booking-link" onClick={()=>openBooking(expense.bookingId!)}><Link2/>关联预订</button>}</small><span className="receipt-actions">{expense.receiptName?<><button className="receipt-link" onClick={()=>void openReceipt(expense)}><FileImage size={13}/>查看票据</button><button className="receipt-remove" onClick={()=>void detachReceipt(expense)} aria-label="移除票据"><X size={13}/></button></>:<label className="receipt-link"><Upload size={13}/>{receiptBusy===expense.id?'保存中':'上传票据'}<input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={event=>{const file=event.target.files?.[0];if(file)void attachReceipt(expense,file);event.currentTarget.value=''}} hidden/></label>}</span></div><strong>{formatExpenseAmount(expenseTotal(expense.amount,expense.payer,members.length),expense.currency)}</strong><button onClick={()=>removeExpense(expense.id)} aria-label="删除"><Trash2 size={15}/></button></article>)}</div>
   </section>
 }

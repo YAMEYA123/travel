@@ -10,6 +10,9 @@ export type Expense={
   payer:string
   category:string
   bookingId?:string
+  receiptName?:string
+  receiptType?:string
+  receiptSize?:number
 }
 
 export const CURRENCY_OPTIONS:{value:ExpenseCurrency;label:string}[]=[
@@ -77,7 +80,89 @@ export const loadMembers=()=>loadStored<string[]>(MEMBERS_KEY,['我','同伴'])
 
 export const saveExpenses=(expenses:Expense[])=>{
   localStorage.setItem(EXPENSES_KEY,JSON.stringify(expenses))
+  void persistExpenses(expenses)
   window.dispatchEvent(new CustomEvent(EXPENSES_CHANGED,{detail:expenses}))
+}
+
+const DB_NAME='travel-journal-local'
+const DB_VERSION=1
+const EXPENSE_STORE='expenses'
+const RECEIPT_STORE='receipts'
+type ReceiptRecord={id:string;blob:Blob;name:string;type:string;size:number}
+
+const openJournalDB=()=>new Promise<IDBDatabase>((resolve,reject)=>{
+  if(!('indexedDB' in window)){reject(new Error('IndexedDB unavailable'));return}
+  const request=indexedDB.open(DB_NAME,DB_VERSION)
+  request.onupgradeneeded=()=>{
+    const db=request.result
+    if(!db.objectStoreNames.contains(EXPENSE_STORE))db.createObjectStore(EXPENSE_STORE,{keyPath:'id'})
+    if(!db.objectStoreNames.contains(RECEIPT_STORE))db.createObjectStore(RECEIPT_STORE,{keyPath:'id'})
+  }
+  request.onsuccess=()=>resolve(request.result)
+  request.onerror=()=>reject(request.error||new Error('IndexedDB open failed'))
+})
+
+export const persistExpenses=async(expenses:Expense[])=>{
+  try{
+    const db=await openJournalDB()
+    await new Promise<void>((resolve,reject)=>{
+      const transaction=db.transaction(EXPENSE_STORE,'readwrite')
+      const store=transaction.objectStore(EXPENSE_STORE)
+      expenses.forEach(expense=>store.put(expense))
+      transaction.oncomplete=()=>resolve()
+      transaction.onerror=()=>reject(transaction.error)
+    })
+    db.close()
+  }catch{/* localStorage remains the compatibility fallback */}
+}
+
+export const hydrateExpenses=async()=>{
+  try{
+    const db=await openJournalDB()
+    const items=await new Promise<Expense[]>((resolve,reject)=>{
+      const request=db.transaction(EXPENSE_STORE,'readonly').objectStore(EXPENSE_STORE).getAll()
+      request.onsuccess=()=>resolve((request.result as Expense[]).sort((a,b)=>b.date.localeCompare(a.date)))
+      request.onerror=()=>reject(request.error)
+    })
+    db.close()
+    if(items.length){localStorage.setItem(EXPENSES_KEY,JSON.stringify(items));window.dispatchEvent(new CustomEvent(EXPENSES_CHANGED,{detail:items}))}
+    return items
+  }catch{return loadExpenses()}
+}
+
+export const saveReceipt=async(id:string,file:File)=>{
+  const db=await openJournalDB()
+  await new Promise<void>((resolve,reject)=>{
+    const transaction=db.transaction(RECEIPT_STORE,'readwrite')
+    transaction.objectStore(RECEIPT_STORE).put({id,blob:file,name:file.name,type:file.type,size:file.size} satisfies ReceiptRecord)
+    transaction.oncomplete=()=>resolve()
+    transaction.onerror=()=>reject(transaction.error)
+  })
+  db.close()
+}
+
+export const loadReceipt=async(id:string)=>{
+  const db=await openJournalDB()
+  const receipt=await new Promise<ReceiptRecord|undefined>((resolve,reject)=>{
+    const request=db.transaction(RECEIPT_STORE,'readonly').objectStore(RECEIPT_STORE).get(id)
+    request.onsuccess=()=>resolve(request.result as ReceiptRecord|undefined)
+    request.onerror=()=>reject(request.error)
+  })
+  db.close()
+  return receipt
+}
+
+export const removeReceipt=async(id:string)=>{
+  try{
+    const db=await openJournalDB()
+    await new Promise<void>((resolve,reject)=>{
+      const transaction=db.transaction(RECEIPT_STORE,'readwrite')
+      transaction.objectStore(RECEIPT_STORE).delete(id)
+      transaction.oncomplete=()=>resolve()
+      transaction.onerror=()=>reject(transaction.error)
+    })
+    db.close()
+  }catch{/* best effort cleanup */}
 }
 
 export const createExpense=(expense:Omit<Expense,'id'|'date'>)=>{

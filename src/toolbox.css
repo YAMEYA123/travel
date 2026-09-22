@@ -256,3 +256,4 @@
 @media(max-width:350px){
   .app-icon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+.receipt-actions{display:flex;align-items:center;gap:4px;margin-top:3px}.receipt-link{display:inline-flex;align-items:center;gap:3px;width:max-content;color:var(--blue);font-size:8px;cursor:pointer}.receipt-remove{padding:0!important;color:var(--muted);width:16px;height:16px}.receipt-error{display:flex;align-items:center;gap:5px;border:1px solid #f1c4c4;background:#fff4f4;color:var(--red);border-radius:6px;padding:6px 8px;font-size:8px}.receipt-error button{margin-left:auto;border:0;background:transparent;color:inherit}.receipt-error svg{width:13px}
