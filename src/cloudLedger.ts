@@ -11,7 +11,8 @@ const saveCloudTrip=(tripId:string,inviteCode:string)=>{localStorage.setItem(TRI
 
 export const cloudSignIn=async(email:string)=>{
   if(!supabase)throw new Error('未配置 Supabase')
-  const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname}})
+  const redirect=import.meta.env.VITE_SUPABASE_REDIRECT_URL||new URL('/travel/',location.origin).toString()
+  const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:redirect}})
   if(error)throw error
 }
 export const cloudSignOut=async()=>{if(supabase)await supabase.auth.signOut()}
