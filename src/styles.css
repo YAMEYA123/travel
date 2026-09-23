@@ -81,6 +81,12 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
 .day-nav>div>span{font-size:8px;letter-spacing:.08em;color:var(--theme,#71878d)}
 .day-nav>div>b{font-family:'STKaiti','KaiTi','Noto Sans SC',sans-serif;font-size:16px}
 .day-nav>button{color:var(--theme,#267da1)}
+.day-title{min-width:180px!important}
+.daily-weather{min-width:142px!important;width:auto!important;margin-left:3px;padding:5px 9px;border-left:1px solid var(--line);display:flex;align-items:center;gap:7px;color:var(--theme,#267da1)}
+.daily-weather .weather-icon{font-size:19px;line-height:1}
+.daily-weather>div{min-width:0!important;width:auto!important}
+.daily-weather b{display:block;font:600 10px 'DM Mono';white-space:nowrap}
+.daily-weather small{display:block;margin-top:2px;color:var(--muted);font-size:8px;white-space:nowrap}
 .map-list-layout{gap:10px;padding:10px}
 .trip-map-shell{background:#dceae5;border-color:#d4e3dd;border-radius:16px;box-shadow:0 5px 16px #41625616}
 .map-actions button{border-color:#d6e2dd;border-radius:10px;box-shadow:0 3px 9px #31534920}
@@ -196,6 +202,11 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
   .trip-heading .day-nav>div{min-width:0}
   .trip-heading .day-nav>div>b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .trip-heading .day-nav>button{width:28px;min-width:28px;padding:0}
+  .trip-heading .day-title{width:112px;min-width:112px!important}
+  .trip-heading .daily-weather{min-width:0!important;flex:1;margin-left:0;padding:4px 5px;border-left:0;border-radius:8px;background:var(--theme-soft,#eef7f4);gap:4px}
+  .trip-heading .daily-weather .weather-icon{font-size:16px}
+  .trip-heading .daily-weather b{font-size:9px}
+  .trip-heading .daily-weather small{font-size:7px;overflow:hidden;text-overflow:ellipsis;max-width:70px}
   .plan-overview{padding:5px;gap:5px}
   .plan-overview-bar{min-height:43px;padding:5px 8px}
   .plan-overview-bar span{max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
