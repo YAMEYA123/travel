@@ -20,11 +20,9 @@ export const cloudSession=async()=>supabase?(await supabase.auth.getSession()).d
 export const createCloudTrip=async(name='欧洲旅行 2026')=>{
   if(!supabase)throw new Error('未配置 Supabase')
   const session=await cloudSession();if(!session)throw new Error('请先登录')
-  const code=Math.random().toString(36).slice(2,8).toUpperCase()
-  const {data,error}=await supabase.from('trip_books').insert({name,invite_code:code,created_by:session.user.id}).select('id,invite_code').single()
+  const {data,error}=await supabase.rpc('create_trip',{trip_name:name,display_name:session.user.email?.split('@')[0]||'我'}).single() as {data:{id:string;invite_code:string}|null;error:{message:string}|null}
   if(error)throw error
-  const member=await supabase.from('trip_members').insert({trip_id:data.id,user_id:session.user.id,display_name:session.user.email?.split('@')[0]||'我'})
-  if(member.error)throw member.error
+  if(!data)throw new Error('创建账本没有返回数据，请确认补充 SQL 已执行')
   saveCloudTrip(data.id,data.invite_code);return data
 }
 export const joinCloudTrip=async(code:string,name='旅伴')=>{

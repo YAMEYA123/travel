@@ -175,8 +175,9 @@ export default function ExpenseLedger(){
   }
   useEffect(()=>{if(!loginCooldown)return;const timer=window.setInterval(()=>setLoginCooldown(value=>Math.max(0,value-1)),1000);return()=>window.clearInterval(timer)},[loginCooldown])
   const sendLogin=async()=>{if(loginCooldown)return;try{await cloudSignIn(cloudEmail.trim());setLoginCooldown(60);setCloudMessage('登录链接已发送到邮箱，请查收并在同一浏览器打开')}catch(error){const message=error instanceof Error?error.message:'';if(/rate limit|too many|over_email_send/i.test(message)){setLoginCooldown(60);setCloudMessage('Supabase 邮件发送限流了，请先等待一段时间，不要重复点击；也可稍后再试。')}else setCloudMessage(message||'登录失败')}}
-  const makeTrip=async()=>{try{const trip=await createCloudTrip(tripName||'欧洲旅行 2026');setTripCode(trip.invite_code);setCloudMessage(`旅行账本已创建，邀请码：${trip.invite_code}`)}catch(error){setCloudMessage(error instanceof Error?error.message:'创建失败')}}
-  const joinTrip=async()=>{try{const trip=await joinCloudTrip(tripCode);setTripCode(trip.invite_code);setCloudMessage('已加入共享账本，正在同步费用')}catch(error){setCloudMessage(error instanceof Error?error.message:'加入失败')}}
+  const describeCloudError=(error:unknown,fallback:string)=>{if(error instanceof Error&&error.message)return`${fallback}：${error.message}`;return fallback}
+  const makeTrip=async()=>{try{const trip=await createCloudTrip(tripName||'欧洲旅行 2026') as {invite_code:string};setTripCode(trip.invite_code);setCloudMessage(`旅行账本已创建，邀请码：${trip.invite_code}`)}catch(error){setCloudMessage(describeCloudError(error,'创建失败'))}}
+  const joinTrip=async()=>{try{const trip=await joinCloudTrip(tripCode);setTripCode(trip.invite_code);setCloudMessage('已加入共享账本，正在同步费用')}catch(error){setCloudMessage(describeCloudError(error,'加入失败'))}}
 
   return <section className="split-bill">
     <div className="section-heading"><div><p className="eyebrow">LOCAL LEDGER</p><h2>两人分账</h2></div><button className="ghost" onClick={exportData}><Download size={16}/>导出备份</button></div>
