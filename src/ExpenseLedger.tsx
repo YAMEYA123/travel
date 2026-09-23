@@ -26,7 +26,7 @@ import {
   type Expense,
   type ExpenseCurrency,
 } from './expenseStore'
-import { cloudSession, cloudSignIn, cloudSignOut, createCloudTrip, deleteCloudExpense, joinCloudTrip, loadCloudTrip, pullCloudExpenses, pushCloudExpense } from './cloudLedger'
+import { cloudPasswordSignIn, cloudSession, cloudSignOut, deleteCloudExpense, ensurePrivateTrip, loadCloudTrip, pullCloudExpenses, pushCloudExpense } from './cloudLedger'
 import { supabase, supabaseConfigured } from './supabaseClient'
 
 export default function ExpenseLedger(){
@@ -44,11 +44,9 @@ export default function ExpenseLedger(){
   const [receiptError,setReceiptError]=useState('')
   const [receiptBusy,setReceiptBusy]=useState<string|null>(null)
   const [cloudEmail,setCloudEmail]=useState('')
+  const [cloudPassword,setCloudPassword]=useState('')
   const [cloudMessage,setCloudMessage]=useState('')
   const [cloudSessionEmail,setCloudSessionEmail]=useState<string|null>(null)
-  const [tripCode,setTripCode]=useState(loadCloudTrip().inviteCode||'')
-  const [tripName,setTripName]=useState('')
-  const [loginCooldown,setLoginCooldown]=useState(0)
 
   useEffect(()=>localStorage.setItem(MEMBERS_KEY,JSON.stringify(members)),[members])
   useEffect(()=>{
@@ -59,8 +57,9 @@ export default function ExpenseLedger(){
   },[])
   useEffect(()=>{
     if(!supabase)return
-    void cloudSession().then(session=>setCloudSessionEmail(session?.user.email||null))
-    const {data}=supabase.auth.onAuthStateChange((_event,session)=>setCloudSessionEmail(session?.user.email||null))
+    const syncSession=(session:{user?:{email?:string}|null}|null)=>{setCloudSessionEmail(session?.user?.email||null);if(session)void ensurePrivateTrip().catch(error=>setCloudMessage(describeCloudError(error,'私有账本初始化失败')))}
+    void cloudSession().then(syncSession)
+    const {data}=supabase.auth.onAuthStateChange((_event,session)=>syncSession(session))
     return()=>data.subscription.unsubscribe()
   },[])
   useEffect(()=>{
@@ -173,11 +172,8 @@ export default function ExpenseLedger(){
     anchor.click()
     URL.revokeObjectURL(url)
   }
-  useEffect(()=>{if(!loginCooldown)return;const timer=window.setInterval(()=>setLoginCooldown(value=>Math.max(0,value-1)),1000);return()=>window.clearInterval(timer)},[loginCooldown])
-  const sendLogin=async()=>{if(loginCooldown)return;try{await cloudSignIn(cloudEmail.trim());setLoginCooldown(60);setCloudMessage('登录链接已发送到邮箱，请查收并在同一浏览器打开')}catch(error){const message=error instanceof Error?error.message:'';if(/rate limit|too many|over_email_send/i.test(message)){setLoginCooldown(60);setCloudMessage('Supabase 邮件发送限流了，请先等待一段时间，不要重复点击；也可稍后再试。')}else setCloudMessage(message||'登录失败')}}
   const describeCloudError=(error:unknown,fallback:string)=>{if(error instanceof Error&&error.message)return`${fallback}：${error.message}`;return fallback}
-  const makeTrip=async()=>{try{const trip=await createCloudTrip(tripName||'欧洲旅行 2026') as {invite_code:string};setTripCode(trip.invite_code);setCloudMessage(`旅行账本已创建，邀请码：${trip.invite_code}`)}catch(error){setCloudMessage(describeCloudError(error,'创建失败'))}}
-  const joinTrip=async()=>{try{const trip=await joinCloudTrip(tripCode);setTripCode(trip.invite_code);setCloudMessage('已加入共享账本，正在同步费用')}catch(error){setCloudMessage(describeCloudError(error,'加入失败'))}}
+  const sendLogin=async()=>{try{await cloudPasswordSignIn(cloudEmail.trim(),cloudPassword);setCloudMessage('登录成功，正在同步私有账本')}catch(error){setCloudMessage(describeCloudError(error,'登录失败'))}}
 
   return <section className="split-bill">
     <div className="section-heading"><div><p className="eyebrow">LOCAL LEDGER</p><h2>两人分账</h2></div><button className="ghost" onClick={exportData}><Download size={16}/>导出备份</button></div>
@@ -189,7 +185,7 @@ export default function ExpenseLedger(){
       <summary><span><Settings2/><b>汇率设置</b></span><small>€1=¥{rates.eurToCny.toFixed(2)} · $1=¥{rates.usdToCny.toFixed(2)}</small></summary>
       <div><label><span>1 欧元兑人民币</span><input inputMode="decimal" value={rateDraft.eurToCny} onChange={event=>{setRateDraft(current=>({...current,eurToCny:event.target.value}));setRatesSaved(false)}} placeholder={String(DEFAULT_EXCHANGE_RATES.eurToCny)}/></label><label><span>1 美元兑人民币</span><input inputMode="decimal" value={rateDraft.usdToCny} onChange={event=>{setRateDraft(current=>({...current,usdToCny:event.target.value}));setRatesSaved(false)}} placeholder={DEFAULT_EXCHANGE_RATES.usdToCny.toFixed(4)}/></label><button className="rate-reset" onClick={resetRates}><RotateCcw/>恢复默认</button><button className="rate-save" onClick={applyRates}>{ratesSaved?'已应用':'应用汇率'}</button></div>
     </details>
-    <section className="cloud-ledger"><header><b>共享账本</b><span>{supabaseConfigured?'Supabase 云同步':'尚未配置云同步'}</span></header>{!supabaseConfigured?<p>当前仍使用本机保存。</p>:!cloudSessionEmail?<div className="cloud-row"><input value={cloudEmail} onChange={event=>setCloudEmail(event.target.value)} placeholder="邮箱地址" type="email"/><button disabled={loginCooldown>0} onClick={()=>void sendLogin()}>{loginCooldown?`${loginCooldown}秒后可重发`:'发送登录链接'}</button></div>:<><p>已登录：{cloudSessionEmail}</p><div className="cloud-row"><input value={tripName} onChange={event=>setTripName(event.target.value)} placeholder="新账本名称（可选）"/><button onClick={()=>void makeTrip()}>创建账本</button></div><div className="cloud-row"><input value={tripCode} onChange={event=>setTripCode(event.target.value.toUpperCase())} placeholder="旅伴提供的邀请码"/><button onClick={()=>void joinTrip()}>加入账本</button><button className="cloud-secondary" onClick={()=>void cloudSignOut()}>退出</button></div></>}{cloudMessage&&<small>{cloudMessage}</small>}</section>
+    <section className="cloud-ledger"><header><b>共享账本</b><span>{supabaseConfigured?'Supabase 云同步':'尚未配置云同步'}</span></header>{!supabaseConfigured?<p>当前仍使用本机保存。</p>:!cloudSessionEmail?<div className="cloud-row"><input value={cloudEmail} onChange={event=>setCloudEmail(event.target.value)} placeholder="邮箱地址" type="email"/><input value={cloudPassword} onChange={event=>setCloudPassword(event.target.value)} placeholder="密码" type="password"/><button onClick={()=>void sendLogin()}>登录</button></div>:<><p>已登录：{cloudSessionEmail} · 私有账本</p><div className="cloud-row"><button className="cloud-secondary" onClick={()=>void cloudSignOut()}>退出登录</button></div></>}{cloudMessage&&<small>{cloudMessage}</small>}</section>
     <p className="privacy-note">未加入共享账本前，账目和票据只保存在当前浏览器；加入后账目同步到 Supabase，票据文件仍需后续绑定私有 Storage。建议定期导出账目备份。</p>
     <div className="member-strip"><Users size={18}/>{members.map(name=><span key={name}>{name}</span>)}<input value={member} onChange={event=>setMember(event.target.value)} placeholder="新增成员"/><button onClick={addMember}><Plus size={15}/></button></div>
     <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>{SPLIT_PAYER}</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>

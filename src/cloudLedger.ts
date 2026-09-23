@@ -15,8 +15,20 @@ export const cloudSignIn=async(email:string)=>{
   const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:redirect}})
   if(error)throw error
 }
+export const cloudPasswordSignIn=async(email:string,password:string)=>{
+  if(!supabase)throw new Error('未配置 Supabase')
+  const {error}=await supabase.auth.signInWithPassword({email,password})
+  if(error)throw error
+}
 export const cloudSignOut=async()=>{if(supabase)await supabase.auth.signOut()}
 export const cloudSession=async()=>supabase?(await supabase.auth.getSession()).data.session:null
+export const ensurePrivateTrip=async()=>{
+  if(!supabase)throw new Error('未配置 Supabase')
+  const {data,error}=await supabase.rpc('ensure_private_trip').single() as {data:{id:string;invite_code:string}|null;error:{message:string}|null}
+  if(error)throw error
+  if(!data)throw new Error('没有返回私有账本，请确认补充 SQL 已执行')
+  saveCloudTrip(data.id,data.invite_code);return data
+}
 export const createCloudTrip=async(name='欧洲旅行 2026')=>{
   if(!supabase)throw new Error('未配置 Supabase')
   const session=await cloudSession();if(!session)throw new Error('请先登录')
