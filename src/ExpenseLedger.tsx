@@ -175,7 +175,7 @@ export default function ExpenseLedger(){
     anchor.click()
     URL.revokeObjectURL(url)
   }
-  const describeCloudError=(error:unknown,fallback:string)=>{if(error instanceof Error&&error.message)return`${fallback}：${error.message}`;return fallback}
+  const describeCloudError=(error:unknown,fallback:string)=>{if(error instanceof Error&&error.message)return`${fallback}：${error.message}`;if(error&&typeof error==='object'){const value=error as {message?:unknown;code?:unknown;details?:unknown;hint?:unknown};const parts=[value.message,value.code&&`代码 ${value.code}`,value.details,value.hint].filter(item=>typeof item==='string'&&item);if(parts.length)return`${fallback}：${parts.join(' · ')}`}return fallback}
   const sendLogin=async()=>{try{await cloudPasswordSignIn(cloudEmail.trim(),cloudPassword);setCloudMessage('登录成功，正在同步私有账本')}catch(error){setCloudMessage(describeCloudError(error,'登录失败'))}}
 
   return <section className="split-bill">
