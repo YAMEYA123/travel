@@ -58,6 +58,11 @@ export const pushCloudExpense=async(expense:Expense)=>{
   const {error}=await supabase.from('shared_expenses').upsert(toRow(expense,tripId,session.user.id))
   if(error)throw error
 }
+export const pushCloudExpenses=async(expenses:Expense[])=>{
+  const failed:{id:string;title:string;message:string}[]=[]
+  for(const expense of expenses){try{await pushCloudExpense(expense)}catch(error){failed.push({id:expense.id,title:expense.title,message:error instanceof Error?error.message:String((error as {message?:unknown})?.message||error)})}}
+  return{uploaded:expenses.length-failed.length,failed}
+}
 export const deleteCloudExpense=async(id:string)=>{
   if(!supabase)return
   const {error}=await supabase.from('shared_expenses').delete().eq('id',id)
