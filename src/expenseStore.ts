@@ -8,6 +8,7 @@ export type Expense={
   amount:number
   currency:ExpenseCurrency
   payer:string
+  consumers?:string[]
   category:string
   bookingId?:string
   receiptName?:string
@@ -25,6 +26,9 @@ export const CURRENCY_OPTIONS:{value:ExpenseCurrency;label:string}[]=[
 ]
 export const POINT_CURRENCIES:ExpenseCurrency[]=['IHG','MARRIOTT','HILTON']
 export const SPLIT_PAYER='各自支付（总额均分）'
+export const FIXED_MEMBERS=['周女士','徐女士'] as const
+export const normalizeMemberName=(name:string)=>name==='我'?'周女士':name==='同伴'?'徐女士':name
+export const expenseConsumers=(expense:Pick<Expense,'consumers'>)=>expense.consumers?.length?expense.consumers.map(normalizeMemberName):[...FIXED_MEMBERS]
 /** 各自支付时，记录的 amount 是单人金额；其它付款人记录的是整笔金额。 */
 export const expenseTotal=(amount:number,payer:string,memberCount:number)=>payer===SPLIT_PAYER?amount*Math.max(memberCount,1):amount
 export const EXCHANGE_RATES_KEY='travel-exchange-rates'
@@ -75,8 +79,8 @@ export const loadStored=<T,>(key:string,fallback:T):T=>{
   try{return JSON.parse(localStorage.getItem(key)||'') as T}catch{return fallback}
 }
 
-export const loadExpenses=()=>loadStored<Expense[]>(EXPENSES_KEY,[])
-export const loadMembers=()=>loadStored<string[]>(MEMBERS_KEY,['我','同伴'])
+export const loadExpenses=()=>loadStored<Expense[]>(EXPENSES_KEY,[]).map(expense=>({...expense,payer:normalizeMemberName(expense.payer),consumers:expenseConsumers(expense)}))
+export const loadMembers=()=>[...FIXED_MEMBERS]
 
 export const saveExpenses=(expenses:Expense[])=>{
   localStorage.setItem(EXPENSES_KEY,JSON.stringify(expenses))

@@ -1,6 +1,6 @@
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from './supabaseClient'
-import type { Expense } from './expenseStore'
+import { expenseConsumers, type Expense } from './expenseStore'
 
 export type CloudState={session:Session|null;tripId:string|null;inviteCode:string|null;error:string}
 const TRIP_ID_KEY='travel-cloud-trip-id'
@@ -43,8 +43,8 @@ export const joinCloudTrip=async(code:string,name='旅伴')=>{
   if(error)throw error
   saveCloudTrip(data.id,data.invite_code);return data
 }
-const toRow=(expense:Expense,tripId:string,userId:string)=>({id:expense.id,trip_id:tripId,created_by:userId,expense_date:expense.date,title:expense.title,amount:expense.amount,currency:expense.currency,payer:expense.payer,category:expense.category,booking_id:expense.bookingId||null,receipt_name:expense.receiptName||null})
-const fromRow=(row:Record<string,unknown>):Expense=>({id:String(row.id),date:String(row.expense_date),title:String(row.title),amount:Number(row.amount),currency:row.currency as Expense['currency'],payer:String(row.payer),category:String(row.category),bookingId:row.booking_id?String(row.booking_id):undefined,receiptName:row.receipt_name?String(row.receipt_name):undefined})
+const toRow=(expense:Expense,tripId:string,userId:string)=>({id:expense.id,trip_id:tripId,created_by:userId,expense_date:expense.date,title:expense.title,amount:expense.amount,currency:expense.currency,payer:expense.payer,consumers:expenseConsumers(expense),category:expense.category,booking_id:expense.bookingId||null,receipt_name:expense.receiptName||null})
+const fromRow=(row:Record<string,unknown>):Expense=>({id:String(row.id),date:String(row.expense_date),title:String(row.title),amount:Number(row.amount),currency:row.currency as Expense['currency'],payer:String(row.payer),consumers:Array.isArray(row.consumers)?row.consumers.map(String):undefined,category:String(row.category),bookingId:row.booking_id?String(row.booking_id):undefined,receiptName:row.receipt_name?String(row.receipt_name):undefined})
 export const pullCloudExpenses=async()=>{
   if(!supabase)throw new Error('未配置 Supabase')
   const {tripId}=loadCloudTrip();if(!tripId)return []

@@ -3,6 +3,7 @@ create extension if not exists pgcrypto;
 create table if not exists public.trip_books (id uuid primary key default gen_random_uuid(),name text not null default '欧洲旅行 2026',invite_code text not null unique,created_by uuid not null references auth.users(id) on delete cascade,created_at timestamptz not null default now());
 create table if not exists public.trip_members (trip_id uuid not null references public.trip_books(id) on delete cascade,user_id uuid not null references auth.users(id) on delete cascade,display_name text not null default '旅伴',joined_at timestamptz not null default now(),primary key (trip_id,user_id));
 create table if not exists public.shared_expenses (id uuid primary key default gen_random_uuid(),trip_id uuid not null references public.trip_books(id) on delete cascade,created_by uuid not null references auth.users(id) on delete cascade,expense_date date not null default current_date,title text not null,amount numeric(12,2) not null check (amount > 0),currency text not null,payer text not null,category text not null,booking_id text,receipt_path text,receipt_name text,created_at timestamptz not null default now());
+alter table public.shared_expenses add column if not exists consumers text[] not null default array['周女士','徐女士'];
 alter table public.trip_books enable row level security;
 alter table public.trip_members enable row level security;
 alter table public.shared_expenses enable row level security;

@@ -13,6 +13,8 @@ import {
   loadExchangeRates,
   loadExpenses,
   loadMembers,
+  expenseConsumers,
+  FIXED_MEMBERS,
   hydrateExpenses,
   loadReceipt,
   removeReceipt,
@@ -32,10 +34,10 @@ import { supabase, supabaseConfigured } from './supabaseClient'
 export default function ExpenseLedger(){
   const [members,setMembers]=useState<string[]>(loadMembers)
   const [expenses,setExpenses]=useState<Expense[]>(loadExpenses)
-  const [member,setMember]=useState('')
   const [title,setTitle]=useState('')
   const [amount,setAmount]=useState('')
   const [payer,setPayer]=useState(members[0]||'我')
+  const [consumers,setConsumers]=useState<string[]>([...FIXED_MEMBERS])
   const [currency,setCurrency]=useState<ExpenseCurrency>('EUR')
   const [category,setCategory]=useState('餐饮')
   const [rates,setRates]=useState<ExchangeRates>(loadExchangeRates)
@@ -85,7 +87,8 @@ export default function ExpenseLedger(){
           if(expense.payer===SPLIT_PAYER)return sum+expense.amount
           return sum
         },0)
-        return{name,paid,value:paid-total/Math.max(members.length,1)}
+        const owed=pointExpenses.reduce((sum,expense)=>expenseConsumers(expense).includes(name)?sum+expense.amount/expenseConsumers(expense).length:sum,0)
+        return{name,paid,value:paid-owed}
       }),
     }
   }).filter(item=>item.total>0),[expenses,members])
@@ -96,7 +99,8 @@ export default function ExpenseLedger(){
       if(expense.payer===SPLIT_PAYER)return sum+amountInEUR
       return sum
     },0)
-    return{name,paid,value:paid-cashTotal/Math.max(members.length,1)}
+    const owed=expenses.reduce((sum,expense)=>expenseConsumers(expense).includes(name)?sum+cashToEUR(expense.amount,expense.currency,rates)/expenseConsumers(expense).length:sum,0)
+    return{name,paid,value:paid-owed}
   }),[members,expenses,cashTotal,rates])
 
   const applyRates=()=>{
@@ -118,7 +122,8 @@ export default function ExpenseLedger(){
   const addExpense=()=>{
     const value=Number(amount)
     if(!title.trim()||!value)return
-    const created=createExpense({title:title.trim(),amount:value,currency,payer,category})
+    if(!consumers.length)return
+    const created=createExpense({title:title.trim(),amount:value,currency,payer,consumers,category})
     if(cloudSessionEmail&&cloudTripReady)void pushCloudExpense(created).catch(error=>setCloudMessage(describeCloudError(error,'已保存到本机，但云端同步失败')))
     setTitle('')
     setAmount('')
@@ -156,16 +161,12 @@ export default function ExpenseLedger(){
     const next=expenses.map(item=>item.id===expense.id?(({receiptName,receiptType,receiptSize,...rest})=>rest)(item):item)
     setExpenses(next);saveExpenses(next)
   }
-  const addMember=()=>{
-    const name=member.trim()
-    if(name&&!members.includes(name)){setMembers(current=>[...current,name]);setMember('')}
-  }
   const openBooking=(bookingId:string)=>{
     sessionStorage.setItem('travel-open-booking',bookingId)
     location.hash='/bookings'
   }
   const exportData=()=>{
-    const blob=new Blob([JSON.stringify({members,expenses},null,2)],{type:'application/json'})
+    const blob=new Blob([JSON.stringify({members:FIXED_MEMBERS,expenses},null,2)],{type:'application/json'})
     const url=URL.createObjectURL(blob)
     const anchor=document.createElement('a')
     anchor.href=url
@@ -188,8 +189,8 @@ export default function ExpenseLedger(){
     </details>
     <section className="cloud-ledger"><header><b>共享账本</b><span>{supabaseConfigured?'Supabase 云同步':'尚未配置云同步'}</span></header>{!supabaseConfigured?<p>当前仍使用本机保存。</p>:!cloudSessionEmail?<div className="cloud-row"><input value={cloudEmail} onChange={event=>setCloudEmail(event.target.value)} placeholder="邮箱地址" type="email"/><input value={cloudPassword} onChange={event=>setCloudPassword(event.target.value)} placeholder="密码" type="password"/><button onClick={()=>void sendLogin()}>登录</button></div>:<><p>已登录：{cloudSessionEmail} · 私有账本</p><div className="cloud-row"><button className="cloud-secondary" onClick={()=>void cloudSignOut()}>退出登录</button></div></>}{cloudMessage&&<small>{cloudMessage}</small>}</section>
     <p className="privacy-note">未加入共享账本前，账目和票据只保存在当前浏览器；加入后账目同步到 Supabase，票据文件仍需后续绑定私有 Storage。建议定期导出账目备份。</p>
-    <div className="member-strip"><Users size={18}/>{members.map(name=><span key={name}>{name}</span>)}<input value={member} onChange={event=>setMember(event.target.value)} placeholder="新增成员"/><button onClick={addMember}><Plus size={15}/></button></div>
-    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>{SPLIT_PAYER}</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
+    <div className="member-strip"><Users size={18}/>{FIXED_MEMBERS.map(name=><span key={name}>{name}</span>)}</div>
+    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><div className="consumer-picker"><small>消费人</small>{FIXED_MEMBERS.map(name=><label key={name}><input type="checkbox" checked={consumers.includes(name)} onChange={()=>setConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</div><select value={payer} onChange={event=>setPayer(event.target.value)}>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
     <div className="balance-row">{balances.map(balance=><article key={balance.name}><span><b>{balance.name}</b><small>个人现金支出 €{balance.paid.toFixed(2)}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>
     {pointSettlements.length>0&&<section className="points-settlement"><header><b>积分分账</b><small>不同酒店积分分别结算，不互相换算</small></header><div>{pointSettlements.map(item=><article key={item.value}><header><span>{item.label}</span><b>共 {Math.round(item.total).toLocaleString('zh-CN')}</b></header>{item.balances.map(balance=><p key={balance.name}><span><b>{balance.name}</b><small>已付 {Math.round(balance.paid).toLocaleString('zh-CN')}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} {Math.round(Math.abs(balance.value)).toLocaleString('zh-CN')}</strong></p>)}</article>)}</div></section>}
     {receiptError&&<p className="receipt-error" role="alert">{receiptError}<button onClick={()=>setReceiptError('')} aria-label="关闭"><X size={14}/></button></p>}
