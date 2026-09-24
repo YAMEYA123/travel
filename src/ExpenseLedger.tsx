@@ -67,7 +67,7 @@ export default function ExpenseLedger(){
     if(!cloudSessionEmail||!cloudTripReady||!loadCloudTrip().tripId)return
     const refresh=async()=>{try{const remote=await pullCloudExpenses();if(remote.length){setExpenses(remote);saveExpenses(remote)}}catch(error){setCloudMessage(describeCloudError(error,'云端同步暂时失败，仍可继续使用本地账目'))}}
     void refresh();const timer=window.setInterval(refresh,30000);return()=>window.clearInterval(timer)
-  },[cloudSessionEmail])
+  },[cloudSessionEmail,cloudTripReady])
 
   const cashTotal=useMemo(()=>expenses.reduce((sum,expense)=>sum+cashToEUR(expenseTotal(expense.amount,expense.payer,members.length),expense.currency,rates),0),[expenses,rates,members.length])
   const totalValueCNY=useMemo(()=>expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length),expense.currency,rates),0),[expenses,rates,members.length])
