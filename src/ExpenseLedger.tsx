@@ -50,6 +50,7 @@ export default function ExpenseLedger(){
   const [cloudMessage,setCloudMessage]=useState('')
   const [cloudSessionEmail,setCloudSessionEmail]=useState<string|null>(null)
   const [cloudTripReady,setCloudTripReady]=useState(false)
+  const expenseOwed=(expense:Expense,name:string)=>{const people=expenseConsumers(expense);if(!people.includes(name))return 0;return expense.payer===SPLIT_PAYER?expense.amount:expense.amount/people.length}
 
   useEffect(()=>localStorage.setItem(MEMBERS_KEY,JSON.stringify(members)),[members])
   useEffect(()=>{
@@ -71,13 +72,13 @@ export default function ExpenseLedger(){
     void refresh();const timer=window.setInterval(refresh,30000);return()=>window.clearInterval(timer)
   },[cloudSessionEmail,cloudTripReady])
 
-  const cashTotal=useMemo(()=>expenses.reduce((sum,expense)=>sum+cashToEUR(expenseTotal(expense.amount,expense.payer,members.length),expense.currency,rates),0),[expenses,rates,members.length])
-  const totalValueCNY=useMemo(()=>expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length),expense.currency,rates),0),[expenses,rates,members.length])
-  const pointValueCNY=useMemo(()=>expenses.filter(expense=>isPointCurrency(expense.currency)).reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length),expense.currency,rates),0),[expenses,rates,members.length])
+  const cashTotal=useMemo(()=>expenses.reduce((sum,expense)=>sum+cashToEUR(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates),0),[expenses,rates,members.length])
+  const totalValueCNY=useMemo(()=>expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates),0),[expenses,rates,members.length])
+  const pointValueCNY=useMemo(()=>expenses.filter(expense=>isPointCurrency(expense.currency)).reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates),0),[expenses,rates,members.length])
   const cashValueCNY=totalValueCNY-pointValueCNY
   const pointSettlements=useMemo(()=>CURRENCY_OPTIONS.filter(option=>isPointCurrency(option.value)).map(option=>{
     const pointExpenses=expenses.filter(expense=>expense.currency===option.value)
-    const total=pointExpenses.reduce((sum,expense)=>sum+expenseTotal(expense.amount,expense.payer,members.length),0)
+    const total=pointExpenses.reduce((sum,expense)=>sum+expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),0)
     return{
       ...option,
       total,
@@ -87,7 +88,7 @@ export default function ExpenseLedger(){
           if(expense.payer===SPLIT_PAYER)return sum+expense.amount
           return sum
         },0)
-        const owed=pointExpenses.reduce((sum,expense)=>expenseConsumers(expense).includes(name)?sum+expense.amount/expenseConsumers(expense).length:sum,0)
+        const owed=pointExpenses.reduce((sum,expense)=>sum+expenseOwed(expense,name),0)
         return{name,paid,value:paid-owed}
       }),
     }
@@ -99,7 +100,7 @@ export default function ExpenseLedger(){
       if(expense.payer===SPLIT_PAYER)return sum+amountInEUR
       return sum
     },0)
-    const owed=expenses.reduce((sum,expense)=>expenseConsumers(expense).includes(name)?sum+cashToEUR(expense.amount,expense.currency,rates)/expenseConsumers(expense).length:sum,0)
+    const owed=expenses.reduce((sum,expense)=>sum+cashToEUR(expenseOwed(expense,name),expense.currency,rates),0)
     return{name,paid,value:paid-owed}
   }),[members,expenses,cashTotal,rates])
 
@@ -190,7 +191,7 @@ export default function ExpenseLedger(){
     <section className="cloud-ledger"><header><b>共享账本</b><span>{supabaseConfigured?'Supabase 云同步':'尚未配置云同步'}</span></header>{!supabaseConfigured?<p>当前仍使用本机保存。</p>:!cloudSessionEmail?<div className="cloud-row"><input value={cloudEmail} onChange={event=>setCloudEmail(event.target.value)} placeholder="邮箱地址" type="email"/><input value={cloudPassword} onChange={event=>setCloudPassword(event.target.value)} placeholder="密码" type="password"/><button onClick={()=>void sendLogin()}>登录</button></div>:<><p>已登录：{cloudSessionEmail} · 私有账本</p><div className="cloud-row"><button className="cloud-secondary" onClick={()=>void cloudSignOut()}>退出登录</button></div></>}{cloudMessage&&<small>{cloudMessage}</small>}</section>
     <p className="privacy-note">未加入共享账本前，账目和票据只保存在当前浏览器；加入后账目同步到 Supabase，票据文件仍需后续绑定私有 Storage。建议定期导出账目备份。</p>
     <div className="member-strip"><Users size={18}/>{FIXED_MEMBERS.map(name=><span key={name}>{name}</span>)}</div>
-    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><div className="consumer-picker"><small>消费人</small>{FIXED_MEMBERS.map(name=><label key={name}><input type="checkbox" checked={consumers.includes(name)} onChange={()=>setConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</div><select value={payer} onChange={event=>setPayer(event.target.value)}>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
+    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={payer===SPLIT_PAYER?'单人价格':isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><div className="consumer-picker"><small>消费人</small>{FIXED_MEMBERS.map(name=><label key={name}><input type="checkbox" checked={consumers.includes(name)} onChange={()=>setConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</div><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>各自支付（单人价格）</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
     <div className="balance-row">{balances.map(balance=><article key={balance.name}><span><b>{balance.name}</b><small>个人现金支出 €{balance.paid.toFixed(2)}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>
     {pointSettlements.length>0&&<section className="points-settlement"><header><b>积分分账</b><small>不同酒店积分分别结算，不互相换算</small></header><div>{pointSettlements.map(item=><article key={item.value}><header><span>{item.label}</span><b>共 {Math.round(item.total).toLocaleString('zh-CN')}</b></header>{item.balances.map(balance=><p key={balance.name}><span><b>{balance.name}</b><small>已付 {Math.round(balance.paid).toLocaleString('zh-CN')}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} {Math.round(Math.abs(balance.value)).toLocaleString('zh-CN')}</strong></p>)}</article>)}</div></section>}
     {receiptError&&<p className="receipt-error" role="alert">{receiptError}<button onClick={()=>setReceiptError('')} aria-label="关闭"><X size={14}/></button></p>}

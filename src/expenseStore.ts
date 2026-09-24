@@ -30,7 +30,7 @@ export const FIXED_MEMBERS=['周女士','徐女士'] as const
 export const normalizeMemberName=(name:string)=>name==='我'?'周女士':name==='同伴'?'徐女士':name
 export const expenseConsumers=(expense:Pick<Expense,'consumers'>)=>expense.consumers?.length?expense.consumers.map(normalizeMemberName):[...FIXED_MEMBERS]
 /** 各自支付时，记录的 amount 是单人金额；其它付款人记录的是整笔金额。 */
-export const expenseTotal=(amount:number,payer:string,memberCount:number)=>payer===SPLIT_PAYER?amount*Math.max(memberCount,1):amount
+export const expenseTotal=(amount:number,payer:string,memberCount:number,consumerCount=memberCount)=>payer===SPLIT_PAYER?amount*Math.max(consumerCount,1):amount
 export const EXCHANGE_RATES_KEY='travel-exchange-rates'
 export const EXCHANGE_RATES_CHANGED='travel-exchange-rates-changed'
 export const DEFAULT_EXCHANGE_RATES:ExchangeRates={eurToCny:7.8,usdToCny:7.8/1.16}

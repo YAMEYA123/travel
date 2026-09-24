@@ -5,7 +5,7 @@ import { getActivityGuide } from './activityGuides'
 import type { Activity, Booking, TripDay } from './types'
 import TripMap from './TripMap'
 import Toolbox from './Toolbox'
-import { CURRENCY_OPTIONS, createExpense, EXCHANGE_RATES_CHANGED, EXPENSES_CHANGED, expenseTotal, expenseValueToCNY, isPointCurrency, loadExchangeRates, loadExpenses, loadMembers, SPLIT_PAYER, type ExchangeRates, type Expense, type ExpenseCurrency } from './expenseStore'
+import { CURRENCY_OPTIONS, createExpense, EXCHANGE_RATES_CHANGED, EXPENSES_CHANGED, expenseConsumers, expenseTotal, expenseValueToCNY, isPointCurrency, loadExchangeRates, loadExpenses, loadMembers, SPLIT_PAYER, type ExchangeRates, type Expense, type ExpenseCurrency } from './expenseStore'
 
 type View='overview'|'trip'|'bookings'|'tools';type TripMode='plan'|'day';type Filter='todo'|'all'|'booked';type BookingCategory='all'|'stay'|'sight'|'transport';type BookingPriority='all'|'P0'|'P1'|'P2'|'P3'
 const nav=[{id:'overview' as View,label:'总览',icon:House},{id:'trip' as View,label:'行程',icon:CalendarDays},{id:'bookings' as View,label:'预订',icon:TicketCheck},{id:'tools' as View,label:'工具',icon:Wrench}]
@@ -40,7 +40,7 @@ function Dashboard({go}:{go:(view:View)=>void}){
     addEventListener(EXCHANGE_RATES_CHANGED,syncRates)
     return()=>{removeEventListener(EXPENSES_CHANGED,sync);removeEventListener(EXCHANGE_RATES_CHANGED,syncRates)}
   },[])
-  const spent=expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,loadMembers().length),expense.currency,rates),0)
+  const spent=expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,loadMembers().length,expenseConsumers(expense).length),expense.currency,rates),0)
   const spentLabel=Math.round(spent).toLocaleString('zh-CN')
   const openExpenses=()=>{
     sessionStorage.setItem('travel-open-tool','expense')
@@ -90,7 +90,7 @@ function BookingSheet({item,onClose}:{item:Booking;onClose:()=>void}){
     <section className="booking-expense-card">
       <header><span><CircleDollarSign/><b>创建费用分账</b></span>{linked>0&&<button onClick={openLedger}>{linked}笔已关联 <ChevronRight/></button>}</header>
       <p>项目名称与类别已从当前预订自动带入。</p>
-      <div><label><span>{isPointCurrency(currency)?'积分数量':'金额'}</span><input inputMode="decimal" value={amount} onChange={event=>{setAmount(event.target.value);setSaved(false)}} placeholder={isPointCurrency(currency)?'输入积分':'0.00'}/></label><label><span>币种/积分</span><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select></label><label><span>支付人</span><select value={payer} onChange={event=>setPayer(event.target.value)}>{members.map(name=><option key={name}>{name}</option>)}</select></label><fieldset className="booking-consumers"><legend>消费人</legend>{members.map(name=><label key={name}><input type="checkbox" checked={bookingConsumers.includes(name)} onChange={()=>setBookingConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</fieldset><button disabled={!Number(amount)||!bookingConsumers.length} onClick={save}>{saved?'已添加':'添加到分账'}</button></div>
+      <div><label><span>{isPointCurrency(currency)?'积分数量':'金额'}</span><input inputMode="decimal" value={amount} onChange={event=>{setAmount(event.target.value);setSaved(false)}} placeholder={payer===SPLIT_PAYER?'单人价格':isPointCurrency(currency)?'输入积分':'0.00'}/></label><label><span>币种/积分</span><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select></label><label><span>支付人</span><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>各自支付（单人价格）</option>{members.map(name=><option key={name}>{name}</option>)}</select></label><fieldset className="booking-consumers"><legend>消费人</legend>{members.map(name=><label key={name}><input type="checkbox" checked={bookingConsumers.includes(name)} onChange={()=>setBookingConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</fieldset><button disabled={!Number(amount)||!bookingConsumers.length} onClick={save}>{saved?'已添加':'添加到分账'}</button></div>
     </section>
     {item.url&&<a className="sheet-primary" href={item.url} target="_blank" rel="noreferrer"><ExternalLink/>打开官方网站</a>}
   </Sheet>
