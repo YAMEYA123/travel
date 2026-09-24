@@ -47,6 +47,7 @@ export default function ExpenseLedger(){
   const [cloudPassword,setCloudPassword]=useState('')
   const [cloudMessage,setCloudMessage]=useState('')
   const [cloudSessionEmail,setCloudSessionEmail]=useState<string|null>(null)
+  const [cloudTripReady,setCloudTripReady]=useState(false)
 
   useEffect(()=>localStorage.setItem(MEMBERS_KEY,JSON.stringify(members)),[members])
   useEffect(()=>{
@@ -57,14 +58,14 @@ export default function ExpenseLedger(){
   },[])
   useEffect(()=>{
     if(!supabase)return
-    const syncSession=(session:{user?:{email?:string}|null}|null)=>{setCloudSessionEmail(session?.user?.email||null);if(session)void ensurePrivateTrip().catch(error=>setCloudMessage(describeCloudError(error,'私有账本初始化失败')))}
+    const syncSession=(session:{user?:{email?:string}|null}|null)=>{setCloudSessionEmail(session?.user?.email||null);setCloudTripReady(false);if(session)void ensurePrivateTrip().then(()=>setCloudTripReady(true)).catch(error=>setCloudMessage(describeCloudError(error,'私有账本初始化失败')))}
     void cloudSession().then(syncSession)
     const {data}=supabase.auth.onAuthStateChange((_event,session)=>syncSession(session))
     return()=>data.subscription.unsubscribe()
   },[])
   useEffect(()=>{
-    if(!cloudSessionEmail||!loadCloudTrip().tripId)return
-    const refresh=async()=>{try{const remote=await pullCloudExpenses();if(remote.length){setExpenses(remote);saveExpenses(remote)}}catch{setCloudMessage('云端同步暂时失败，仍可继续使用本地账目')}}
+    if(!cloudSessionEmail||!cloudTripReady||!loadCloudTrip().tripId)return
+    const refresh=async()=>{try{const remote=await pullCloudExpenses();if(remote.length){setExpenses(remote);saveExpenses(remote)}}catch(error){setCloudMessage(describeCloudError(error,'云端同步暂时失败，仍可继续使用本地账目'))}}
     void refresh();const timer=window.setInterval(refresh,30000);return()=>window.clearInterval(timer)
   },[cloudSessionEmail])
 
@@ -118,7 +119,7 @@ export default function ExpenseLedger(){
     const value=Number(amount)
     if(!title.trim()||!value)return
     const created=createExpense({title:title.trim(),amount:value,currency,payer,category})
-    if(cloudSessionEmail)void pushCloudExpense(created).catch(()=>setCloudMessage('已保存到本机，但云端同步失败'))
+    if(cloudSessionEmail&&cloudTripReady)void pushCloudExpense(created).catch(error=>setCloudMessage(describeCloudError(error,'已保存到本机，但云端同步失败')))
     setTitle('')
     setAmount('')
   }
@@ -127,7 +128,7 @@ export default function ExpenseLedger(){
     setExpenses(next)
     saveExpenses(next)
     void removeReceipt(id)
-    if(cloudSessionEmail)void deleteCloudExpense(id).catch(()=>setCloudMessage('本机已删除，但云端删除失败'))
+    if(cloudSessionEmail&&cloudTripReady)void deleteCloudExpense(id).catch(error=>setCloudMessage(describeCloudError(error,'本机已删除，但云端删除失败')))
   }
   const attachReceipt=async(expense:Expense,file:File)=>{
     setReceiptError('')
