@@ -58,7 +58,7 @@ export default function ExpenseLedger(){
   },[])
   useEffect(()=>{
     if(!supabase)return
-    const syncSession=(session:{user?:{email?:string}|null}|null)=>{setCloudSessionEmail(session?.user?.email||null);setCloudTripReady(false);if(session)void ensurePrivateTrip().then(()=>setCloudTripReady(true)).catch(error=>setCloudMessage(describeCloudError(error,'私有账本初始化失败')))}
+    const syncSession=(session:{user?:{email?:string}|null}|null)=>{setCloudSessionEmail(session?.user?.email||null);setCloudTripReady(false);if(session)void Promise.race([ensurePrivateTrip(),new Promise<never>((_,reject)=>window.setTimeout(()=>reject(new Error('私有账本初始化超时，请检查 Supabase SQL 与网络连接')),12000))]).then(()=>{setCloudTripReady(true);setCloudMessage('私有账本已就绪，云端同步已开启')}).catch(error=>setCloudMessage(describeCloudError(error,'私有账本初始化失败')))}
     void cloudSession().then(syncSession)
     const {data}=supabase.auth.onAuthStateChange((_event,session)=>syncSession(session))
     return()=>data.subscription.unsubscribe()
