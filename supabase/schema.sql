@@ -7,6 +7,8 @@ alter table public.shared_expenses add column if not exists consumers text[] not
 alter table public.trip_books enable row level security;
 alter table public.trip_members enable row level security;
 alter table public.shared_expenses enable row level security;
+-- RLS filters rows, but authenticated also needs table privileges to reach the policies.
+grant select, insert, update, delete on table public.shared_expenses to authenticated;
 create or replace function public.is_trip_member(target_trip uuid) returns boolean language sql stable security definer set search_path = public as $$ select exists(select 1 from public.trip_members where trip_id=target_trip and user_id=auth.uid()); $$;
 drop policy if exists "members read trips" on public.trip_books;
 create policy "members read trips" on public.trip_books for select to authenticated using (public.is_trip_member(id) or created_by=auth.uid());
@@ -27,7 +29,7 @@ create policy "members read expenses" on public.shared_expenses for select to au
 drop policy if exists "members add expenses" on public.shared_expenses;
 create policy "members add expenses" on public.shared_expenses for insert to authenticated with check (public.is_trip_member(trip_id) and created_by=auth.uid());
 drop policy if exists "owners update expenses" on public.shared_expenses;
-create policy "owners update expenses" on public.shared_expenses for update to authenticated using (created_by=auth.uid()) with check (created_by=auth.uid());
+create policy "members update expenses" on public.shared_expenses for update to authenticated using (public.is_trip_member(trip_id)) with check (public.is_trip_member(trip_id));
 drop policy if exists "owners delete expenses" on public.shared_expenses;
 create policy "owners delete expenses" on public.shared_expenses for delete to authenticated using (created_by=auth.uid());
 insert into storage.buckets (id,name,public) values ('receipts','receipts',false) on conflict (id) do nothing;

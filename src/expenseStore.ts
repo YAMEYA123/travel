@@ -3,6 +3,7 @@ export type ExchangeRates={eurToCny:number;usdToCny:number}
 
 export type Expense={
   id:string
+  createdBy?:string
   date:string
   title:string
   amount:number
