@@ -33,8 +33,10 @@ import { cloudPasswordSignIn, cloudSession, cloudSignOut, deleteCloudExpense, en
 import { supabase, supabaseConfigured } from './supabaseClient'
 
 export default function ExpenseLedger(){
+  const today=new Date().toISOString().slice(0,10)
   const [members,setMembers]=useState<string[]>(loadMembers)
   const [expenses,setExpenses]=useState<Expense[]>(loadExpenses)
+  const [date,setDate]=useState(today)
   const [title,setTitle]=useState('')
   const [amount,setAmount]=useState('')
   const [payer,setPayer]=useState(members[0]||'我')
@@ -128,6 +130,7 @@ export default function ExpenseLedger(){
 
   const resetExpenseForm=()=>{
     setEditingId(null)
+    setDate(today)
     setTitle('')
     setAmount('')
     setPayer(members[0]||FIXED_MEMBERS[0])
@@ -137,6 +140,7 @@ export default function ExpenseLedger(){
   }
   const startEditing=(expense:Expense)=>{
     setEditingId(expense.id)
+    setDate(expense.date)
     setTitle(expense.title)
     setAmount(String(expense.amount))
     setPayer(expense.payer)
@@ -152,7 +156,7 @@ export default function ExpenseLedger(){
     if(editingId){
       const existing=expenses.find(item=>item.id===editingId)
       if(!existing)return
-      const updated={...existing,title:title.trim(),amount:value,currency,payer,consumers,category}
+      const updated={...existing,date:date||today,title:title.trim(),amount:value,currency,payer,consumers,category}
       const next=expenses.map(item=>item.id===editingId?updated:item)
       setExpenses(next)
       saveExpenses(next)
@@ -229,7 +233,7 @@ export default function ExpenseLedger(){
     <p className="privacy-note">未加入共享账本前，账目和票据只保存在当前浏览器；加入后账目同步到 Supabase，票据文件仍需后续绑定私有 Storage。建议定期导出账目备份。</p>
     <div className="member-strip"><Users size={18}/>{FIXED_MEMBERS.map(name=><span key={name}>{name}</span>)}</div>
     {editingId&&<p className="expense-editing-note">正在修改历史账单，保存后会更新原记录，不会新增重复账单。<button type="button" onClick={resetExpenseForm}>取消修改</button></p>}
-    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={payer===SPLIT_PAYER?'单人价格':isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><div className="consumer-picker"><small>消费人</small>{FIXED_MEMBERS.map(name=><label key={name}><input type="checkbox" checked={consumers.includes(name)} onChange={()=>setConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</div><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>各自支付（单人价格）</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>{editingId?'保存修改':'记一笔'}</button></div>
+    <div className="expense-form"><input type="date" value={date} onChange={event=>setDate(event.target.value)} aria-label="消费日期"/><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={payer===SPLIT_PAYER?'单人价格':isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><div className="consumer-picker"><small>消费人</small>{FIXED_MEMBERS.map(name=><label key={name}><input type="checkbox" checked={consumers.includes(name)} onChange={()=>setConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</div><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>各自支付（单人价格）</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>{editingId?'保存修改':'记一笔'}</button></div>
     <div className="balance-row">{balances.map(balance=><article key={balance.name}><span><b>{balance.name}</b><small>个人现金支出 €{balance.paid.toFixed(2)}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>
     {pointSettlements.length>0&&<section className="points-settlement"><header><b>积分分账</b><small>不同酒店积分分别结算，不互相换算</small></header><div>{pointSettlements.map(item=><article key={item.value}><header><span>{item.label}</span><b>共 {Math.round(item.total).toLocaleString('zh-CN')}</b></header>{item.balances.map(balance=><p key={balance.name}><span><b>{balance.name}</b><small>已付 {Math.round(balance.paid).toLocaleString('zh-CN')}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} {Math.round(Math.abs(balance.value)).toLocaleString('zh-CN')}</strong></p>)}</article>)}</div></section>}
     {receiptError&&<p className="receipt-error" role="alert">{receiptError}<button onClick={()=>setReceiptError('')} aria-label="关闭"><X size={14}/></button></p>}
