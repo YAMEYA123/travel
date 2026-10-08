@@ -183,11 +183,11 @@ export const removeReceipt=async(id:string)=>{
   }catch{/* best effort cleanup */}
 }
 
-export const createExpense=(expense:Omit<Expense,'id'|'date'>)=>{
+export const createExpense=(expense:Omit<Expense,'id'|'date'> & {date?:string})=>{
   const next=[{
     ...expense,
     id:crypto.randomUUID(),
-    date:new Date().toISOString().slice(0,10),
+    date:expense.date||new Date().toISOString().slice(0,10),
   },...loadExpenses()]
   saveExpenses(next)
   return next[0]

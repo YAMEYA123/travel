@@ -164,7 +164,7 @@ export default function ExpenseLedger(){
       resetExpenseForm()
       return
     }
-    const created=createExpense({title:title.trim(),amount:value,currency,payer,consumers,category})
+    const created=createExpense({date:date||today,title:title.trim(),amount:value,currency,payer,consumers,category})
     if(cloudSessionEmail&&cloudTripReady)void pushCloudExpense(created).catch(error=>setCloudMessage(describeCloudError(error,'已保存到本机，但云端同步失败')))
     resetExpenseForm()
   }
