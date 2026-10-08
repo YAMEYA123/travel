@@ -194,6 +194,8 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
   .booking-categories button{height:42px;padding:0 6px;grid-template-columns:16px minmax(0,1fr) auto;gap:3px;border-radius:9px}
   .booking-categories button svg{width:15px}.booking-categories button span{font-size:9px}.booking-categories button b{min-width:18px;height:18px;padding:0 4px;font-size:7px}
 }
+.journey-heading-actions{margin-left:auto;display:flex;align-items:center;gap:8px}.journey-heading-actions>button{height:40px;border:0;border-radius:8px;background:var(--forest);color:#fff;display:flex;align-items:center;gap:5px;padding:0 12px;cursor:pointer}.journey-heading-actions .home-refresh{width:40px;padding:0;justify-content:center;background:var(--lake-soft);color:var(--forest);border:1px solid #c6e5e5}.journey-heading-actions svg{width:16px}.journey-heading-actions .home-refresh svg{width:17px}
+@media(max-width:680px){.journey-heading-actions{gap:5px}.journey-heading-actions>button{height:36px;padding:0 8px;font-size:10px}.journey-heading-actions .home-refresh{width:36px;padding:0}.journey-heading-actions>button svg{width:14px}}
 
 .plan-overview{flex:1;min-height:0;display:flex;flex-direction:column;padding:8px;gap:7px}
 .plan-overview-bar{flex:0 0 auto;min-height:48px;padding:6px 10px;border:1px solid #dbe8e3;border-radius:12px;background:#fffefa;display:flex;align-items:center;justify-content:space-between;gap:10px}
