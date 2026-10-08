@@ -117,6 +117,7 @@ export const persistExpenses=async(expenses:Expense[])=>{
     await new Promise<void>((resolve,reject)=>{
       const transaction=db.transaction(EXPENSE_STORE,'readwrite')
       const store=transaction.objectStore(EXPENSE_STORE)
+      store.clear()
       expenses.forEach(expense=>store.put(expense))
       transaction.oncomplete=()=>resolve()
       transaction.onerror=()=>reject(transaction.error)
@@ -127,6 +128,13 @@ export const persistExpenses=async(expenses:Expense[])=>{
 
 export const hydrateExpenses=async()=>{
   try{
+    // localStorage is the synchronous source used for the first render. If it
+    // exists, make IndexedDB follow it instead of briefly restoring stale rows.
+    if(localStorage.getItem(EXPENSES_KEY)!==null){
+      const local=loadExpenses()
+      await persistExpenses(local)
+      return local
+    }
     const db=await openJournalDB()
     const items=await new Promise<Expense[]>((resolve,reject)=>{
       const request=db.transaction(EXPENSE_STORE,'readonly').objectStore(EXPENSE_STORE).getAll()
