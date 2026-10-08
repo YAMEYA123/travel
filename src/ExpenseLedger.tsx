@@ -41,6 +41,8 @@ export default function ExpenseLedger(){
   const [consumers,setConsumers]=useState<string[]>([...FIXED_MEMBERS])
   const [currency,setCurrency]=useState<ExpenseCurrency>('EUR')
   const [category,setCategory]=useState('餐饮')
+  const [editingId,setEditingId]=useState<string|null>(null)
+  const [categoryFilter,setCategoryFilter]=useState<string|null>(null)
   const [rates,setRates]=useState<ExchangeRates>(loadExchangeRates)
   const [rateDraft,setRateDraft]=useState({eurToCny:String(rates.eurToCny),usdToCny:String(Number(rates.usdToCny.toFixed(4)))})
   const [ratesSaved,setRatesSaved]=useState(false)
@@ -79,6 +81,7 @@ export default function ExpenseLedger(){
   const pointValueCNY=useMemo(()=>expenses.filter(expense=>isPointCurrency(expense.currency)).reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates),0),[expenses,rates,members.length])
   const cashValueCNY=totalValueCNY-pointValueCNY
   const categoryTotals=useMemo(()=>expenseCategoryTotals(expenses,rates),[expenses,rates])
+  const visibleExpenses=useMemo(()=>categoryFilter?expenses.filter(expense=>expense.category===categoryFilter):expenses,[expenses,categoryFilter])
   const pointSettlements=useMemo(()=>CURRENCY_OPTIONS.filter(option=>isPointCurrency(option.value)).map(option=>{
     const pointExpenses=expenses.filter(expense=>expense.currency===option.value)
     const total=pointExpenses.reduce((sum,expense)=>sum+expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),0)
@@ -123,14 +126,43 @@ export default function ExpenseLedger(){
     setRatesSaved(true)
   }
 
+  const resetExpenseForm=()=>{
+    setEditingId(null)
+    setTitle('')
+    setAmount('')
+    setPayer(members[0]||FIXED_MEMBERS[0])
+    setConsumers([...FIXED_MEMBERS])
+    setCurrency('EUR')
+    setCategory('餐饮')
+  }
+  const startEditing=(expense:Expense)=>{
+    setEditingId(expense.id)
+    setTitle(expense.title)
+    setAmount(String(expense.amount))
+    setPayer(expense.payer)
+    setConsumers(expenseConsumers(expense))
+    setCurrency(expense.currency)
+    setCategory(expense.category||'其他')
+    document.querySelector('.expense-form')?.scrollIntoView({behavior:'smooth',block:'center'})
+  }
   const addExpense=()=>{
     const value=Number(amount)
     if(!title.trim()||!value)return
     if(!consumers.length)return
+    if(editingId){
+      const existing=expenses.find(item=>item.id===editingId)
+      if(!existing)return
+      const updated={...existing,title:title.trim(),amount:value,currency,payer,consumers,category}
+      const next=expenses.map(item=>item.id===editingId?updated:item)
+      setExpenses(next)
+      saveExpenses(next)
+      if(cloudSessionEmail&&cloudTripReady)void pushCloudExpense(updated).catch(error=>setCloudMessage(describeCloudError(error,'已保存修改，但云端同步失败')))
+      resetExpenseForm()
+      return
+    }
     const created=createExpense({title:title.trim(),amount:value,currency,payer,consumers,category})
     if(cloudSessionEmail&&cloudTripReady)void pushCloudExpense(created).catch(error=>setCloudMessage(describeCloudError(error,'已保存到本机，但云端同步失败')))
-    setTitle('')
-    setAmount('')
+    resetExpenseForm()
   }
   const removeExpense=(id:string)=>{
     const next=expenses.filter(item=>item.id!==id)
@@ -188,7 +220,7 @@ export default function ExpenseLedger(){
       <div className="expense-total"><small>当前总花销估值</small><strong>¥{Math.round(totalValueCNY).toLocaleString('zh-CN')}</strong><span>{expenses.length} 笔记录 · 含积分估值</span></div>
       <div className="expense-breakdown"><article><span>现金支出</span><b>¥{Math.round(cashValueCNY).toLocaleString('zh-CN')}</b><small>约 €{cashTotal.toFixed(2)}</small></article><article><span>积分估值</span><b>¥{Math.round(pointValueCNY).toLocaleString('zh-CN')}</b><small>按当前设定比例</small></article></div>
     </section>
-    <section className="category-summary" aria-label="按类型汇总"><header><div><p className="eyebrow">CATEGORY TOTALS</p><h3>按类型查看</h3></div><small>按当前汇率折算为人民币，历史账目不变</small></header><div className="category-summary-grid">{['餐饮','住宿','交通','门票'].map(item=><article key={item}><span>{item}</span><b>¥{Math.round(categoryTotals[item]||0).toLocaleString('zh-CN')}</b><small>{categoryTotals[item]?'含现有账单及积分估值':'暂无记录'}</small></article>)}</div></section>
+    <section className="category-summary" aria-label="按类型汇总"><header><div><p className="eyebrow">CATEGORY TOTALS</p><h3>按类型查看</h3></div><div className="category-summary-actions"><small>按当前汇率折算为人民币，历史账目不变</small><button type="button" className="category-filter-reset" onClick={()=>setCategoryFilter(null)} disabled={!categoryFilter}>全部账单</button></div></header><div className="category-summary-grid">{['餐饮','住宿','交通','门票'].map(item=><button type="button" className={categoryFilter===item?'active':''} aria-pressed={categoryFilter===item} key={item} onClick={()=>setCategoryFilter(current=>current===item?null:item)}><span>{item}</span><b>¥{Math.round(categoryTotals[item]||0).toLocaleString('zh-CN')}</b><small>{categoryTotals[item]?'含现有账单及积分估值':'暂无记录'}</small></button>)}</div></section>
     <details className="rate-settings">
       <summary><span><Settings2/><b>汇率设置</b></span><small>€1=¥{rates.eurToCny.toFixed(2)} · $1=¥{rates.usdToCny.toFixed(2)}</small></summary>
       <div><label><span>1 欧元兑人民币</span><input inputMode="decimal" value={rateDraft.eurToCny} onChange={event=>{setRateDraft(current=>({...current,eurToCny:event.target.value}));setRatesSaved(false)}} placeholder={String(DEFAULT_EXCHANGE_RATES.eurToCny)}/></label><label><span>1 美元兑人民币</span><input inputMode="decimal" value={rateDraft.usdToCny} onChange={event=>{setRateDraft(current=>({...current,usdToCny:event.target.value}));setRatesSaved(false)}} placeholder={DEFAULT_EXCHANGE_RATES.usdToCny.toFixed(4)}/></label><button className="rate-reset" onClick={resetRates}><RotateCcw/>恢复默认</button><button className="rate-save" onClick={applyRates}>{ratesSaved?'已应用':'应用汇率'}</button></div>
@@ -196,10 +228,11 @@ export default function ExpenseLedger(){
     <section className="cloud-ledger"><header><b>共享账本</b><span>{supabaseConfigured?'Supabase 云同步':'尚未配置云同步'}</span></header>{!supabaseConfigured?<p>当前仍使用本机保存。</p>:!cloudSessionEmail?<div className="cloud-row"><input value={cloudEmail} onChange={event=>setCloudEmail(event.target.value)} placeholder="邮箱地址" type="email"/><input value={cloudPassword} onChange={event=>setCloudPassword(event.target.value)} placeholder="密码" type="password"/><button onClick={()=>void sendLogin()}>登录</button></div>:<><p>已登录：{cloudSessionEmail} · 私有账本</p><div className="cloud-row"><button className="cloud-secondary" onClick={()=>void cloudSignOut()}>退出登录</button><button className="cloud-upload" disabled={!cloudTripReady||cloudUploadBusy||!expenses.length} onClick={()=>void uploadLocalExpenses()}>{cloudUploadBusy?'上传中…':`上传本地账目（${expenses.length}笔）`}</button></div></>}{cloudMessage&&<small>{cloudMessage}</small>}</section>
     <p className="privacy-note">未加入共享账本前，账目和票据只保存在当前浏览器；加入后账目同步到 Supabase，票据文件仍需后续绑定私有 Storage。建议定期导出账目备份。</p>
     <div className="member-strip"><Users size={18}/>{FIXED_MEMBERS.map(name=><span key={name}>{name}</span>)}</div>
-    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={payer===SPLIT_PAYER?'单人价格':isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><div className="consumer-picker"><small>消费人</small>{FIXED_MEMBERS.map(name=><label key={name}><input type="checkbox" checked={consumers.includes(name)} onChange={()=>setConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</div><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>各自支付（单人价格）</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>记一笔</button></div>
+    {editingId&&<p className="expense-editing-note">正在修改历史账单，保存后会更新原记录，不会新增重复账单。<button type="button" onClick={resetExpenseForm}>取消修改</button></p>}
+    <div className="expense-form"><input value={title} onChange={event=>setTitle(event.target.value)} placeholder="消费项目"/><input inputMode="decimal" value={amount} onChange={event=>setAmount(event.target.value)} placeholder={payer===SPLIT_PAYER?'单人价格':isPointCurrency(currency)?'积分数量':'金额'}/><select value={currency} onChange={event=>setCurrency(event.target.value as ExpenseCurrency)}>{CURRENCY_OPTIONS.map(option=><option value={option.value} key={option.value}>{option.label}</option>)}</select><div className="consumer-picker"><small>消费人</small>{FIXED_MEMBERS.map(name=><label key={name}><input type="checkbox" checked={consumers.includes(name)} onChange={()=>setConsumers(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}/>{name}</label>)}</div><select value={payer} onChange={event=>setPayer(event.target.value)}><option value={SPLIT_PAYER}>各自支付（单人价格）</option>{members.map(name=><option key={name}>{name}</option>)}</select><select value={category} onChange={event=>setCategory(event.target.value)}>{['餐饮','交通','门票','住宿','购物','其他'].map(value=><option key={value}>{value}</option>)}</select><button className="primary compact" onClick={addExpense}>{editingId?'保存修改':'记一笔'}</button></div>
     <div className="balance-row">{balances.map(balance=><article key={balance.name}><span><b>{balance.name}</b><small>个人现金支出 €{balance.paid.toFixed(2)}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} €{Math.abs(balance.value).toFixed(2)}</strong></article>)}</div>
     {pointSettlements.length>0&&<section className="points-settlement"><header><b>积分分账</b><small>不同酒店积分分别结算，不互相换算</small></header><div>{pointSettlements.map(item=><article key={item.value}><header><span>{item.label}</span><b>共 {Math.round(item.total).toLocaleString('zh-CN')}</b></header>{item.balances.map(balance=><p key={balance.name}><span><b>{balance.name}</b><small>已付 {Math.round(balance.paid).toLocaleString('zh-CN')}</small></span><strong className={balance.value>=0?'positive':'negative'}>{balance.value>=0?'应收':'应付'} {Math.round(Math.abs(balance.value)).toLocaleString('zh-CN')}</strong></p>)}</article>)}</div></section>}
     {receiptError&&<p className="receipt-error" role="alert">{receiptError}<button onClick={()=>setReceiptError('')} aria-label="关闭"><X size={14}/></button></p>}
-    <div className="expense-list">{expenses.length===0?<div className="empty">旅途中记下第一笔共同消费，系统会自动均分。</div>:expenses.map(expense=><article className={`${expense.bookingId?'linked-expense ':''}${isPointCurrency(expense.currency)?'points-expense':''}`} key={expense.id}><time>{expense.date.slice(5)}</time><span className="category">{expense.category}</span><div><b>{expense.title}</b><small>{expense.payer===SPLIT_PAYER?`各自支付 · 每人 ${formatExpenseAmount(expense.amount,expense.currency)}`:`${expense.payer} 支付`}{expense.bookingId&&<button className="booking-link" onClick={()=>openBooking(expense.bookingId!)}><Link2/>关联预订</button>}</small><span className="receipt-actions">{expense.receiptName?<><button className="receipt-link" onClick={()=>void openReceipt(expense)}><FileImage size={13}/>查看票据</button><button className="receipt-remove" onClick={()=>void detachReceipt(expense)} aria-label="移除票据"><X size={13}/></button></>:<label className="receipt-link"><Upload size={13}/>{receiptBusy===expense.id?'保存中':'上传票据'}<input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={event=>{const file=event.target.files?.[0];if(file)void attachReceipt(expense,file);event.currentTarget.value=''}} hidden/></label>}</span></div><strong>{formatExpenseAmount(expenseTotal(expense.amount,expense.payer,members.length),expense.currency)}</strong><button onClick={()=>removeExpense(expense.id)} aria-label="删除"><Trash2 size={15}/></button></article>)}</div>
+    <div className="expense-list">{expenses.length===0?<div className="empty">旅途中记下第一笔共同消费，系统会自动均分。</div>:visibleExpenses.length===0?<div className="empty">暂无“{categoryFilter}”类型账单。</div>:visibleExpenses.map(expense=><article className={`${expense.bookingId?'linked-expense ':''}${isPointCurrency(expense.currency)?'points-expense':''}`} key={expense.id}><time>{expense.date.slice(5)}</time><span className="category">{expense.category}</span><div><b>{expense.title}</b><small>{expense.payer===SPLIT_PAYER?`各自支付 · 每人 ${formatExpenseAmount(expense.amount,expense.currency)}`:`${expense.payer} 支付`}{expense.bookingId&&<button className="booking-link" onClick={()=>openBooking(expense.bookingId!)}><Link2/>关联预订</button>}</small><span className="receipt-actions">{expense.receiptName?<><button className="receipt-link" onClick={()=>void openReceipt(expense)}><FileImage size={13}/>查看票据</button><button className="receipt-remove" onClick={()=>void detachReceipt(expense)} aria-label="移除票据"><X size={13}/></button></>:<label className="receipt-link"><Upload size={13}/>{receiptBusy===expense.id?'保存中':'上传票据'}<input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={event=>{const file=event.target.files?.[0];if(file)void attachReceipt(expense,file);event.currentTarget.value=''}} hidden/></label>}</span></div><strong>{formatExpenseAmount(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency)}</strong><div className="expense-row-actions"><button className="expense-edit" onClick={()=>startEditing(expense)} aria-label={`编辑${expense.title}`}>编辑</button><button className="expense-delete" onClick={()=>removeExpense(expense.id)} aria-label="删除"><Trash2 size={15}/></button></div></article>)}</div>
   </section>
 }

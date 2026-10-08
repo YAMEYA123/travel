@@ -13,12 +13,16 @@
 .category-summary>header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}
 .category-summary h3{margin:3px 0 0;font-size:1.05rem;color:var(--ink)}
 .category-summary>header>small{color:var(--muted);font-size:.72rem;text-align:right}
+.category-summary-actions{display:flex;align-items:center;gap:8px}
+.category-filter-reset{border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--forest);padding:5px 9px;font-size:.7rem;cursor:pointer}
+.category-filter-reset:disabled{opacity:.4;cursor:default}
 .category-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
-.category-summary-grid article{padding:12px 11px;border-radius:13px;background:#fff;border:1px solid #e9ebe5;min-width:0}
+.category-summary-grid button{padding:12px 11px;border-radius:13px;background:#fff;border:1px solid #e9ebe5;min-width:0;text-align:left;color:inherit;cursor:pointer;transition:.15s ease}
+.category-summary-grid button:hover,.category-summary-grid button.active{border-color:var(--lake);background:var(--lake-soft);box-shadow:0 3px 0 #c7e4e2}
 .category-summary-grid span,.category-summary-grid small{display:block;color:var(--muted);font-size:.72rem}
 .category-summary-grid b{display:block;margin:7px 0 4px;color:var(--ink);font-size:1rem;letter-spacing:-.02em}
 .category-summary-grid small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:640px){.category-summary>header{align-items:flex-start;flex-direction:column}.category-summary>header>small{text-align:left}.category-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.category-summary>header{align-items:flex-start;flex-direction:column}.category-summary>header>small{text-align:left}.category-summary-actions{width:100%;justify-content:space-between}.category-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* ── 清爽旅行手账 visual system ─────────────────────────────── */
 :root{
