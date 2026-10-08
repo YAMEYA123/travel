@@ -32,6 +32,8 @@ import { cloudPasswordSignIn, cloudSession, cloudSignOut, deleteCloudExpense, en
 import { supabase, supabaseConfigured } from './supabaseClient'
 
 const CSV_HEADERS=['id','date','title','amount','currency','payer','consumers','category'] as const
+const EXPENSE_CATEGORIES=['餐饮','住宿','交通','门票','购物','其他'] as const
+const CATEGORY_COLORS=['#2f8f7a','#4e79a7','#e5a84b','#d96b5f','#8a72b8','#87989b'] as const
 const csvEscape=(value:unknown)=>`"${String(value??'').replaceAll('"','""')}"`
 const parseCsvLine=(line:string)=>{const values:string[]=[];let value='';let quoted=false;for(let index=0;index<line.length;index++){const char=line[index];if(char==='"'){if(quoted&&line[index+1]==='"'){value+='"';index++}else quoted=!quoted}else if(char===','&&!quoted){values.push(value);value=''}else value+=char}values.push(value);return values}
 const parseCsv=(text:string)=>{const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(line=>line.trim());if(lines.length<2)return[];const header=parseCsvLine(lines[0]);const positions=CSV_HEADERS.map(name=>header.indexOf(name));if(positions.some(position=>position<0))throw new Error('CSV列不完整，请使用本账单导出的模板');return lines.slice(1).map(line=>{const values=parseCsvLine(line);return Object.fromEntries(CSV_HEADERS.map((name,index)=>[name,values[positions[index]]||'']))})}
@@ -98,6 +100,19 @@ export default function ExpenseLedger(){
     return totals
   },{}),[expenses,rates,consumerFilters,members.length])
   const visibleExpenses=useMemo(()=>expenses.filter(expense=>(!categoryFilters.length||categoryFilters.includes(expense.category||'其他'))&&(!consumerFilters.length||consumerFilters.some(name=>expenseConsumers(expense).includes(name)))),[expenses,categoryFilters,consumerFilters])
+  const categoryChart=useMemo(()=>{
+    const total=EXPENSE_CATEGORIES.reduce((sum,item)=>sum+(categoryTotals[item]||0),0)
+    let cursor=0
+    const segments=EXPENSE_CATEGORIES.map((item,index)=>{
+      const value=categoryTotals[item]||0
+      const percentage=total?value/total*100:0
+      const segment={item,value,percentage,color:CATEGORY_COLORS[index],from:cursor,to:cursor+percentage}
+      cursor+=percentage
+      return segment
+    })
+    const background=total?'conic-gradient('+segments.map(segment=>segment.color+' '+segment.from+'% '+segment.to+'%').join(',')+')':'conic-gradient(#dce8e5 0 100%)'
+    return{total,segments,background}
+  },[categoryTotals])
   const pointSettlements=useMemo(()=>CURRENCY_OPTIONS.filter(option=>isPointCurrency(option.value)).map(option=>{
     const pointExpenses=expenses.filter(expense=>expense.currency===option.value)
     const total=pointExpenses.reduce((sum,expense)=>sum+expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),0)
@@ -253,7 +268,7 @@ export default function ExpenseLedger(){
       <div className="expense-total"><small>当前总花销估值</small><strong>¥{Math.round(totalValueCNY).toLocaleString('zh-CN')}</strong><span>{expenses.length} 笔记录 · 含积分估值</span></div>
       <div className="expense-breakdown"><article><span>现金支出</span><b>¥{Math.round(cashValueCNY).toLocaleString('zh-CN')}</b><small>约 €{cashTotal.toFixed(2)}</small></article><article><span>积分估值</span><b>¥{Math.round(pointValueCNY).toLocaleString('zh-CN')}</b><small>按当前设定比例</small></article></div>
     </section>
-    <section className="category-summary" aria-label="账单筛选"><header><div><h3>账单筛选</h3><small>类型可多选 · 选中消费人后显示其金额</small></div></header><div className="category-summary-grid">{['餐饮','住宿','交通','门票','购物','其他'].map(item=><button type="button" className={categoryFilters.includes(item)?'active':''} aria-pressed={categoryFilters.includes(item)} key={item} onClick={()=>setCategoryFilters(current=>current.includes(item)?current.filter(value=>value!==item):[...current,item])}><span>{item}</span><b>¥{Math.round(categoryTotals[item]||0).toLocaleString('zh-CN')}</b></button>)}</div><div className="consumer-filter"><div className="consumer-filter-heading"><h3>消费人</h3><small>可多选</small></div><div className="consumer-filter-grid">{FIXED_MEMBERS.map(name=><button type="button" className={consumerFilters.includes(name)?'active':''} aria-pressed={consumerFilters.includes(name)} key={name} onClick={()=>setConsumerFilters(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}><span>消费总额</span><b>{name}</b><small>¥{Math.round(consumerTotals[name]||0).toLocaleString('zh-CN')}</small></button>)}</div></div></section>
+    <section className="category-summary" aria-label="账单筛选"><header><div><h3>账单筛选</h3><small>类型可多选 · 选中消费人后显示其金额</small></div></header><div className="category-chart"><div className="category-donut" style={{background:categoryChart.background} as React.CSSProperties}><div><b>{categoryChart.total?'¥'+Math.round(categoryChart.total).toLocaleString('zh-CN'):'暂无'}</b><small>{consumerFilters.length?'筛选消费总额':'总消费'}</small></div></div><div className="category-chart-legend">{categoryChart.segments.map(segment=><div key={segment.item}><i style={{background:segment.color}}/><span>{segment.item}</span><b>{Math.round(segment.percentage)}%</b></div>)}</div></div><div className="category-summary-grid">{EXPENSE_CATEGORIES.map(item=><button type="button" className={categoryFilters.includes(item)?'active':''} aria-pressed={categoryFilters.includes(item)} key={item} onClick={()=>setCategoryFilters(current=>current.includes(item)?current.filter(value=>value!==item):[...current,item])}><span>{item}</span><b>¥{Math.round(categoryTotals[item]||0).toLocaleString('zh-CN')}</b></button>)}</div><div className="consumer-filter"><div className="consumer-filter-heading"><h3>消费人</h3><small>可多选</small></div><div className="consumer-filter-grid">{FIXED_MEMBERS.map(name=><button type="button" className={consumerFilters.includes(name)?'active':''} aria-pressed={consumerFilters.includes(name)} key={name} onClick={()=>setConsumerFilters(current=>current.includes(name)?current.filter(item=>item!==name):[...current,name])}><span>消费总额</span><b>{name}</b><small>¥{Math.round(consumerTotals[name]||0).toLocaleString('zh-CN')}</small></button>)}</div></div></section>
     <details className="rate-settings">
       <summary><span><Settings2/><b>汇率设置</b></span><small>€1=¥{rates.eurToCny.toFixed(2)} · $1=¥{rates.usdToCny.toFixed(2)}</small></summary>
       <div><label><span>1 欧元兑人民币</span><input inputMode="decimal" value={rateDraft.eurToCny} onChange={event=>{setRateDraft(current=>({...current,eurToCny:event.target.value}));setRatesSaved(false)}} placeholder={String(DEFAULT_EXCHANGE_RATES.eurToCny)}/></label><label><span>1 美元兑人民币</span><input inputMode="decimal" value={rateDraft.usdToCny} onChange={event=>{setRateDraft(current=>({...current,usdToCny:event.target.value}));setRatesSaved(false)}} placeholder={DEFAULT_EXCHANGE_RATES.usdToCny.toFixed(4)}/></label><button className="rate-reset" onClick={resetRates}><RotateCcw/>恢复默认</button><button className="rate-save" onClick={applyRates}>{ratesSaved?'已应用':'应用汇率'}</button></div>
