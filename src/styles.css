@@ -23,6 +23,8 @@
 .category-summary-grid b{display:block;margin:7px 0 4px;color:var(--ink);font-size:1rem;letter-spacing:-.02em}
 .category-summary-grid small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:640px){.category-summary>header{align-items:flex-start;flex-direction:column}.category-summary>header>small{text-align:left}.category-summary-actions{width:100%;justify-content:space-between}.category-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.consumer-filter{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.consumer-filter>span{font-size:.72rem;color:var(--muted);margin-right:3px}.consumer-filter button{border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--muted);padding:5px 10px;font-size:.72rem;cursor:pointer}.consumer-filter button.active,.consumer-filter button:hover{border-color:var(--lake);background:var(--lake-soft);color:var(--forest)}
 
 /* ── 清爽旅行手账 visual system ─────────────────────────────── */
 :root{
