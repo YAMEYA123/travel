@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Download, FileImage, Link2, Plus, RotateCcw, Settings2, Trash2, Upload, Users, X } from 'lucide-react'
+import { Download, FileImage, FileSpreadsheet, Link2, Plus, RotateCcw, Settings2, Trash2, Upload, Users, X } from 'lucide-react'
 import {
   cashToEUR,
   CURRENCY_OPTIONS,
@@ -31,6 +31,11 @@ import {
 } from './expenseStore'
 import { cloudPasswordSignIn, cloudSession, cloudSignOut, deleteCloudExpense, ensurePrivateTrip, loadCloudTrip, pullCloudExpenses, pushCloudExpense, pushCloudExpenses } from './cloudLedger'
 import { supabase, supabaseConfigured } from './supabaseClient'
+
+const CSV_HEADERS=['id','date','title','amount','currency','payer','consumers','category'] as const
+const csvEscape=(value:unknown)=>`"${String(value??'').replaceAll('"','""')}"`
+const parseCsvLine=(line:string)=>{const values:string[]=[];let value='';let quoted=false;for(let index=0;index<line.length;index++){const char=line[index];if(char==='"'){if(quoted&&line[index+1]==='"'){value+='"';index++}else quoted=!quoted}else if(char===','&&!quoted){values.push(value);value=''}else value+=char}values.push(value);return values}
+const parseCsv=(text:string)=>{const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(line=>line.trim());if(lines.length<2)return[];const header=parseCsvLine(lines[0]);const positions=CSV_HEADERS.map(name=>header.indexOf(name));if(positions.some(position=>position<0))throw new Error('CSV列不完整，请使用本账单导出的模板');return lines.slice(1).map(line=>{const values=parseCsvLine(line);return Object.fromEntries(CSV_HEADERS.map((name,index)=>[name,values[positions[index]]||'']))})}
 
 export default function ExpenseLedger(){
   const today=new Date().toISOString().slice(0,10)
@@ -214,12 +219,27 @@ export default function ExpenseLedger(){
     anchor.click()
     URL.revokeObjectURL(url)
   }
+  const exportCsv=()=>{
+    const rows=[CSV_HEADERS.join(','),...expenses.map(expense=>[expense.id,expense.date,expense.title,expense.amount,expense.currency,expense.payer,expenseConsumers(expense).join('、'),expense.category].map(csvEscape).join(','))]
+    const blob=new Blob([`\uFEFF${rows.join('\n')}`],{type:'text/csv;charset=utf-8'})
+    const url=URL.createObjectURL(blob);const anchor=document.createElement('a');anchor.href=url;anchor.download='europe-trip-expenses.csv';anchor.click();URL.revokeObjectURL(url)
+  }
+  const importCsv=async(file:File)=>{
+    try{
+      const records=parseCsv(await file.text())
+      const imported=records.map(record=>{const amount=Number(record.amount);if(!record.date||!record.title||!Number.isFinite(amount)||amount<=0)throw new Error('CSV中存在日期、项目或金额无效的账单');return{id:record.id||crypto.randomUUID(),date:record.date,title:record.title,amount,currency:record.currency as ExpenseCurrency,payer:record.payer||SPLIT_PAYER,consumers:(record.consumers||'周女士、徐女士').split(/[、,，]/).map(item=>item.trim()).filter(Boolean),category:record.category||'其他'}})
+      const importedById=new Map(imported.map(expense=>[expense.id,expense]));const next=[...expenses.filter(expense=>!importedById.has(expense.id)),...imported]
+      setExpenses(next);saveExpenses(next)
+      if(cloudSessionEmail&&cloudTripReady)void pushCloudExpenses(imported).then(result=>setCloudMessage(result.failed.length?`CSV已导入本机，云端成功 ${result.uploaded}/${imported.length} 笔`:`CSV已导入并同步 ${result.uploaded} 笔账单`)).catch(error=>setCloudMessage(describeCloudError(error,'CSV已导入本机，但云端同步失败')))
+      else setCloudMessage(`已导入 ${imported.length} 笔 CSV 账单`)
+    }catch(error){setCloudMessage(describeCloudError(error,'CSV导入失败'))}
+  }
   const describeCloudError=(error:unknown,fallback:string)=>{if(error instanceof Error&&error.message)return`${fallback}：${error.message}`;if(error&&typeof error==='object'){const value=error as {message?:unknown;code?:unknown;details?:unknown;hint?:unknown};const parts=[value.message,value.code&&`代码 ${value.code}`,value.details,value.hint].filter(item=>typeof item==='string'&&item);if(parts.length)return`${fallback}：${parts.join(' · ')}`}return fallback}
   const sendLogin=async()=>{try{await cloudPasswordSignIn(cloudEmail.trim(),cloudPassword);setCloudMessage('登录成功，正在同步私有账本')}catch(error){setCloudMessage(describeCloudError(error,'登录失败'))}}
   const uploadLocalExpenses=async()=>{if(!cloudTripReady||cloudUploadBusy||!expenses.length)return;setCloudUploadBusy(true);setCloudMessage(`正在上传 ${expenses.length} 笔本地账目…`);try{const result=await pushCloudExpenses(expenses);if(result.failed.length){setCloudMessage(`已上传 ${result.uploaded}/${expenses.length} 笔，${result.failed.length} 笔失败：${result.failed[0].message}`)}else setCloudMessage(`已上传 ${result.uploaded} 笔本地账目，第二个账号现在可以同步`)}finally{setCloudUploadBusy(false)}}
 
   return <section className="split-bill">
-    <div className="section-heading"><div><p className="eyebrow">LOCAL LEDGER</p><h2>两人分账</h2></div><button className="ghost" onClick={exportData}><Download size={16}/>导出备份</button></div>
+    <div className="section-heading"><div><p className="eyebrow">LOCAL LEDGER</p><h2>两人分账</h2></div><div className="ledger-actions"><button className="ghost" onClick={exportCsv}><FileSpreadsheet size={16}/>导出 CSV</button><button className="ghost" onClick={exportData}><Download size={16}/>导出备份</button><label className="ghost"><Upload size={16}/>导入 CSV<input type="file" accept=".csv,text/csv" onChange={event=>{const file=event.target.files?.[0];if(file)void importCsv(file);event.currentTarget.value=''}} hidden/></label></div></div>
     <section className="expense-overview" aria-label="总花销">
       <div className="expense-total"><small>当前总花销估值</small><strong>¥{Math.round(totalValueCNY).toLocaleString('zh-CN')}</strong><span>{expenses.length} 笔记录 · 含积分估值</span></div>
       <div className="expense-breakdown"><article><span>现金支出</span><b>¥{Math.round(cashValueCNY).toLocaleString('zh-CN')}</b><small>约 €{cashTotal.toFixed(2)}</small></article><article><span>积分估值</span><b>¥{Math.round(pointValueCNY).toLocaleString('zh-CN')}</b><small>按当前设定比例</small></article></div>
