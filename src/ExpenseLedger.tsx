@@ -24,6 +24,7 @@ import {
   saveExchangeRates,
   SPLIT_PAYER,
   expenseTotal,
+  expenseCategoryTotals,
   type ExchangeRates,
   type Expense,
   type ExpenseCurrency,
@@ -77,6 +78,7 @@ export default function ExpenseLedger(){
   const totalValueCNY=useMemo(()=>expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates),0),[expenses,rates,members.length])
   const pointValueCNY=useMemo(()=>expenses.filter(expense=>isPointCurrency(expense.currency)).reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates),0),[expenses,rates,members.length])
   const cashValueCNY=totalValueCNY-pointValueCNY
+  const categoryTotals=useMemo(()=>expenseCategoryTotals(expenses,rates),[expenses,rates])
   const pointSettlements=useMemo(()=>CURRENCY_OPTIONS.filter(option=>isPointCurrency(option.value)).map(option=>{
     const pointExpenses=expenses.filter(expense=>expense.currency===option.value)
     const total=pointExpenses.reduce((sum,expense)=>sum+expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),0)
@@ -186,6 +188,7 @@ export default function ExpenseLedger(){
       <div className="expense-total"><small>当前总花销估值</small><strong>¥{Math.round(totalValueCNY).toLocaleString('zh-CN')}</strong><span>{expenses.length} 笔记录 · 含积分估值</span></div>
       <div className="expense-breakdown"><article><span>现金支出</span><b>¥{Math.round(cashValueCNY).toLocaleString('zh-CN')}</b><small>约 €{cashTotal.toFixed(2)}</small></article><article><span>积分估值</span><b>¥{Math.round(pointValueCNY).toLocaleString('zh-CN')}</b><small>按当前设定比例</small></article></div>
     </section>
+    <section className="category-summary" aria-label="按类型汇总"><header><div><p className="eyebrow">CATEGORY TOTALS</p><h3>按类型查看</h3></div><small>按当前汇率折算为人民币，历史账目不变</small></header><div className="category-summary-grid">{['餐饮','住宿','交通','门票'].map(item=><article key={item}><span>{item}</span><b>¥{Math.round(categoryTotals[item]||0).toLocaleString('zh-CN')}</b><small>{categoryTotals[item]?'含现有账单及积分估值':'暂无记录'}</small></article>)}</div></section>
     <details className="rate-settings">
       <summary><span><Settings2/><b>汇率设置</b></span><small>€1=¥{rates.eurToCny.toFixed(2)} · $1=¥{rates.usdToCny.toFixed(2)}</small></summary>
       <div><label><span>1 欧元兑人民币</span><input inputMode="decimal" value={rateDraft.eurToCny} onChange={event=>{setRateDraft(current=>({...current,eurToCny:event.target.value}));setRatesSaved(false)}} placeholder={String(DEFAULT_EXCHANGE_RATES.eurToCny)}/></label><label><span>1 美元兑人民币</span><input inputMode="decimal" value={rateDraft.usdToCny} onChange={event=>{setRateDraft(current=>({...current,usdToCny:event.target.value}));setRatesSaved(false)}} placeholder={DEFAULT_EXCHANGE_RATES.usdToCny.toFixed(4)}/></label><button className="rate-reset" onClick={resetRates}><RotateCcw/>恢复默认</button><button className="rate-save" onClick={applyRates}>{ratesSaved?'已应用':'应用汇率'}</button></div>

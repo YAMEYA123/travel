@@ -65,6 +65,11 @@ export const expenseValueToCNY=(amount:number,currency:ExpenseCurrency,rates=loa
   if(currency==='USD')return amount*rates.usdToCny
   return amount*(POINT_USD_VALUE[currency]||0)*rates.usdToCny
 }
+export const expenseCategoryTotals=(expenses:Expense[],rates=loadExchangeRates())=>expenses.reduce<Record<string,number>>((totals,expense)=>{
+  const category=expense.category||'其他'
+  totals[category]=(totals[category]||0)+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,loadMembers().length,expenseConsumers(expense).length),expense.currency,rates)
+  return totals
+}, {})
 export const formatExpenseAmount=(amount:number,currency:ExpenseCurrency)=>{
   if(isPointCurrency(currency))return`${Math.round(amount).toLocaleString('zh-CN')} 积分`
   const symbol=currency==='EUR'?'€':currency==='USD'?'$':'¥'
