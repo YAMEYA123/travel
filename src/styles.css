@@ -320,3 +320,17 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
 
 /* 筛选是高频操作：移动端立即反馈，不等待过渡动画或点击延迟 */
 .category-summary-grid button,.consumer-filter-grid button{touch-action:manipulation;transition:none}
+@media (hover:none){
+  .category-summary-grid button:hover,.consumer-filter-grid button:hover{
+    border-color:#e9ebe5;
+    background:#fff;
+    box-shadow:none;
+    color:inherit;
+  }
+  .category-summary-grid button.active:hover,.consumer-filter-grid button.active:hover{
+    border-color:var(--lake);
+    background:var(--lake-soft);
+    box-shadow:0 3px 0 #c7e4e2;
+    color:var(--forest);
+  }
+}
