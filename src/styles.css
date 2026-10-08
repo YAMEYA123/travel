@@ -315,3 +315,6 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
   .category-summary-grid span{font-size:.62rem}
   .category-summary-grid b{font-size:.78rem}
 }
+
+/* 筛选是高频操作：移动端立即反馈，不等待过渡动画或点击延迟 */
+.category-summary-grid button,.consumer-filter-grid button{touch-action:manipulation;transition:none}
