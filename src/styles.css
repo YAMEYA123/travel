@@ -305,6 +305,7 @@ body{background:var(--canvas);background-image:radial-gradient(#8eb9ad24 .7px,tr
 .consumer-filter-grid button span{font-size:.62rem}
 .consumer-filter-grid button b{margin-top:2px;font-size:.85rem}
 .consumer-filter-grid button small{display:block;margin-top:2px;color:var(--muted);font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.consumer-filter-grid button small+small{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.35}
 @media(max-width:680px){
   .category-summary{padding:9px}
   .category-chart{gap:7px;margin-top:1px;padding:7px}
