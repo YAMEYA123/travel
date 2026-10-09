@@ -14,6 +14,7 @@ import {
   loadExpenses,
   loadMembers,
   expenseConsumers,
+  expenseShareForConsumer,
   FIXED_MEMBERS,
   hydrateExpenses,
   loadReceipt,
@@ -65,7 +66,6 @@ export default function ExpenseLedger(){
   const [cloudSessionEmail,setCloudSessionEmail]=useState<string|null>(null)
   const [cloudTripReady,setCloudTripReady]=useState(false)
   const [cloudUploadBusy,setCloudUploadBusy]=useState(false)
-  const expenseOwed=(expense:Expense,name:string)=>{const people=expenseConsumers(expense);if(!people.includes(name))return 0;return expense.payer===SPLIT_PAYER?expense.amount:expense.amount/people.length}
 
   useEffect(()=>localStorage.setItem(MEMBERS_KEY,JSON.stringify(members)),[members])
   useEffect(()=>{
@@ -91,12 +91,11 @@ export default function ExpenseLedger(){
   const totalValueCNY=useMemo(()=>expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates),0),[expenses,rates,members.length])
   const pointValueCNY=useMemo(()=>expenses.filter(expense=>isPointCurrency(expense.currency)).reduce((sum,expense)=>sum+expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates),0),[expenses,rates,members.length])
   const cashValueCNY=totalValueCNY-pointValueCNY
-  const consumerTotals=useMemo(()=>Object.fromEntries(FIXED_MEMBERS.map(name=>[name,expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseOwed(expense,name),expense.currency,rates),0)])),[expenses,rates])
+  const consumerTotals=useMemo(()=>Object.fromEntries(FIXED_MEMBERS.map(name=>[name,expenses.reduce((sum,expense)=>sum+expenseValueToCNY(expenseShareForConsumer(expense,name),expense.currency,rates),0)])),[expenses,rates])
   const categoryTotals=useMemo(()=>expenses.reduce<Record<string,number>>((totals,expense)=>{
     const category=expense.category||'其他'
-    const consumersToCount=consumerFilters.length?consumerFilters.filter(name=>expenseConsumers(expense).includes(name)):[]
-    const value=consumersToCount.length
-      ? consumersToCount.reduce((sum,name)=>sum+expenseValueToCNY(expenseOwed(expense,name),expense.currency,rates),0)
+    const value=consumerFilters.length
+      ? consumerFilters.reduce((sum,name)=>sum+expenseValueToCNY(expenseShareForConsumer(expense,name),expense.currency,rates),0)
       : expenseValueToCNY(expenseTotal(expense.amount,expense.payer,members.length,expenseConsumers(expense).length),expense.currency,rates)
     totals[category]=(totals[category]||0)+value
     return totals
@@ -128,7 +127,7 @@ export default function ExpenseLedger(){
           if(expense.payer===SPLIT_PAYER)return sum+expense.amount
           return sum
         },0)
-        const owed=pointExpenses.reduce((sum,expense)=>sum+expenseOwed(expense,name),0)
+    const owed=pointExpenses.reduce((sum,expense)=>sum+expenseShareForConsumer(expense,name),0)
         const value=paid-owed
         return{name,paid,value,valueCNY:expenseValueToCNY(value,option.value,rates)}
       }),
@@ -141,7 +140,7 @@ export default function ExpenseLedger(){
       if(expense.payer===SPLIT_PAYER)return sum+amountInEUR
       return sum
     },0)
-    const owed=expenses.reduce((sum,expense)=>sum+cashToEUR(expenseOwed(expense,name),expense.currency,rates),0)
+    const owed=expenses.reduce((sum,expense)=>sum+cashToEUR(expenseShareForConsumer(expense,name),expense.currency,rates),0)
     return{name,paid,value:paid-owed}
   }),[members,expenses,cashTotal,rates])
 
