@@ -26,6 +26,7 @@
 .consumer-filter{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
 .consumer-filter-heading{display:flex;align-items:baseline;gap:8px;margin-bottom:7px}.consumer-filter-heading h3{margin:3px 0 0;font-size:1.05rem;color:var(--ink)}.consumer-filter-heading small{font-size:.65rem;color:var(--muted)}
 .consumer-filter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.consumer-filter-grid button{padding:12px 11px;border-radius:13px;background:#fff;border:1px solid #e9ebe5;min-width:0;text-align:left;color:inherit;cursor:pointer;transition:.15s ease}.consumer-filter-grid button span,.consumer-filter-grid button small{display:block;color:var(--muted);font-size:.72rem}.consumer-filter-grid button b{display:block;margin:7px 0 4px;color:var(--ink);font-size:1rem;letter-spacing:-.02em}.consumer-filter-grid button small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.consumer-filter-grid button.active{border-color:var(--lake);background:var(--lake-soft);box-shadow:0 3px 0 #c7e4e2;color:var(--forest)}
+.consumer-card-title{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 0 5px}.consumer-card-title b{margin:0!important}.consumer-card-title strong{font:600 .95rem 'DM Mono';color:var(--ink);white-space:nowrap}
 
 /* ── 清爽旅行手账 visual system ─────────────────────────────── */
 :root{
